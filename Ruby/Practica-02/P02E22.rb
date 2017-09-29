@@ -8,7 +8,7 @@ class Image
   end
 
   def header_bytes
-    Matrix.rows([(Image.new data.map { |e| e**@filters }).data.first(size)])
+    Matrix.rows([(Image.new (data.map { |e| e**@filters })).data.first(size)])
   end
 
   # Distintos filtros de imágenes:

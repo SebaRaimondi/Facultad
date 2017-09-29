@@ -19,11 +19,11 @@ class Concreta
 
   def hi
     p 'Hi!'
-    end
+  end
 
   def initialize(*_args)
     @var = true
-    end
+  end
 end
 
 # Cambie self.create a create.

@@ -1,7 +1,7 @@
 class Array
   def randomly
     return shuffle.map { |x| yield x }
-  rescue LocalJumpError => e
+  rescue LocalJumpError
     return each
   end
 end
