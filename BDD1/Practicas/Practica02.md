@@ -154,14 +154,14 @@ d) Obtener el id de aquel cliente con el puntaje más alto.
 ```
 a)
     A   <---    σ nombreCliente = Juan CLIENTE
-    B   <---    A || RESERVA
+    B   <---    A |X| RESERVA
     C   <---    π id_automovil B
-    D   <---    AUTOMOVIL || C
+    D   <---    AUTOMOVIL |X| C
     E   <---    π nombreCliente D
 
 b)
-    A   <---    CLIENTE || RESERVA
-    B   <---    A || AUTOMOVIL
+    A   <---    CLIENTE |X| RESERVA
+    B   <---    A |X| AUTOMOVIL
     C   <---    σ color = verde B
     D   <---    π nombreCliente C
     E   <---    π nombreCliente CLIENTE
@@ -170,9 +170,9 @@ b)
 c)
     A   <---    P a RESERVA
     B   <---    P b RESERVA
-    C   <---    A ||a.id_automovil != b.id_automovil or a.fecha != b.fecha B
+    C   <---    A |X|a.id_automovil != b.id_automovil or a.fecha != b.fecha B
     D   <---    π id_cliente C
-    E   <---    CLIENTE || D
+    E   <---    CLIENTE |X| D
     F   <---    π nombreCliente E
 
 d)
@@ -199,14 +199,14 @@ b) Obtener el legajo de los estudiantes que se hayan anotado en TODAS las materi
 ```
 a)
     A   <---    σ nacionalidad = Argentina ESTUDIANTE
-    B   <---    ESTUDIANTA || CARRERA
+    B   <---    ESTUDIANTA |X| CARRERA
     C   <---    σ codigoDeCarrera = LI07 B
     D   <---    π nombreCompleto A
     E   <---    π nombreCompleto C
     F   <---    A - C
 
 b)
-    A   <---    ESTUDIANTE || INSCRIPCIONMATERIA
+    A   <---    ESTUDIANTE |X| INSCRIPCIONMATERIA
     B   <---    π codigoDeMateria MATERIA
     C   <---    A % B
     D   <---    π nombreCompleto C
@@ -227,7 +227,7 @@ que realizaron.
 a)
     A   <---    σ nota < 7 ENTREGA
     B   <---    π #alumno A
-    C   <---    ALUMNO || B
+    C   <---    ALUMNO |X| B
     D   <---    ALUMNO - C
 ```
 
@@ -250,24 +250,24 @@ c)  Obtener los imei de PDA que han labrado actas de tipo “Velocidad” sólo 
 a)
     A   <---    σ nombre = "La Plata" JURISDICCION
     B   <---    π id_jurisdiccion A
-    C   <---    ACTA_INFRACCION || B
+    C   <---    ACTA_INFRACCION |X| B
     D   <---    π #acta C
-    E   <---    D || INFRACCION_ALTA
+    E   <---    D |X| INFRACCION_ALTA
     F   <---    π codigo E
 
 b)
     A   <---    P A ACTA_INFRACCION
     C   <---    P C CONDUCTOR
-    D   <---    A || ((A.id_Jurisdiccion = C.id_Jurisdiccion) and (A.dni_conductor = C.dni_conductor)) C
+    D   <---    A |X| ((A.id_Jurisdiccion = C.id_Jurisdiccion) and (A.dni_conductor = C.dni_conductor)) C
 
 c)
     A   <---    σ tipo = "Velocidad" TIPO_INFRACCION
-    B   <---    INFRACCION_ALTA || A
+    B   <---    INFRACCION_ALTA |X| A
     C   <---    π #acta B
-    D   <---    ACTA || C
+    D   <---    ACTA |X| C
     E   <---    σ nombre = "Mar del Plata" JURISDICCION
     F   <---    π id_jurisdiccion E
-    G   <---    D || F
+    G   <---    D |X| F
     H   <---    π imei G
 
 ```
@@ -290,7 +290,7 @@ a)
     A   <---    π id_formulario FORMULARIO
     B   <---    π id_formulario, id_usuario APORTE
     C   <---    B % A
-    D   <---    USUARIO || C
+    D   <---    USUARIO |X| C
     E   <---    π nombre D
 
 b)
@@ -307,7 +307,7 @@ c)
     C   <---    σ APORTE.valoracion < A.valoracion B
     D   <---    π Aporte.valoracion C
     E   <---    P E(valoracion) D
-    F   <---    E || APORTE
+    F   <---    E |X| APORTE
     G   <---    APORTE - F
     H   <---    π id_usuario G
 
@@ -328,18 +328,18 @@ c) Obtener el nombre de los idiomas que no tengan diccionarios posteriores al 20
 ```
 a)
     A   <---    π id_usuario DEFINICION
-    B   <---    USUARIO || A
+    B   <---    USUARIO |X| A
     C   <---    USUARIO - B
     D   <---    σ fecha_ingreso C
 
 b)
     A   <---    σ nombre = "Espanol" IDIOMA
     B   <---    π id_idioma IDIOMA
-    C   <---    DICCIONARIO || B
+    C   <---    DICCIONARIO |X| B
     D   <---    π id_diccionario C
-    E   <---    DEFINICION || D
+    E   <---    DEFINICION |X| D
     F   <---    π id_usuario E
-    F   <---    USUARIO || F
+    F   <---    USUARIO |X| F
     F   <---    π nombre F
 
 c)
@@ -347,7 +347,7 @@ c)
     B   <---    π id_lenguaje A
     C   <---    π id_lenguaje DICCIONARIO
     D   <---    C - B
-    E   <---    IDIOMA || D
+    E   <---    IDIOMA |X| D
     F   <---    π nombre E
 
 ```
@@ -368,11 +368,11 @@ b) Obtener el identificador del usuario que posee el auto con la capacidad más 
 a)
     A   <---    π id_lugar (σ nombre = "La Plata" LUGAR)
     B   <---    π id_lugar (σ nombre = "Rosario" LUGAR)
-    C   <---    VIAJE || (VIAJE.id_lugar_origen = A.id_lugar) A
-    D   <---    C || (C.id_lugar_destino = B.id_lugar) B
+    C   <---    VIAJE |X| (VIAJE.id_lugar_origen = A.id_lugar) A
+    D   <---    C |X| (C.id_lugar_destino = B.id_lugar) B
     E   <---    σ fecha > 30/11 D
     F   <---    π id_viaje PASAJERO
-    G   <---    E || F          // Viajes desde y hasta con fecha posterior, que tienen algun pasajero
+    G   <---    E |X| F          // Viajes desde y hasta con fecha posterior, que tienen algun pasajero
     H   <---    E - G           // Viajes que no.
 
 b)
@@ -382,7 +382,7 @@ b)
     D   <---    σ A.capacidad < B.capacidad C
     E   <---    π A.capacidad D
     F   <---    P F(capacidad) E
-    G   <---    VEHICULO || F
+    G   <---    VEHICULO |X| F
     H   <---    VEHICULO - G
     I   <---    π id_usuario H
 
