@@ -245,17 +245,30 @@ jurisdicción “La Plata”.
 b) Obtener los #Actas en donde el conductor pertenezca a la misma jurisdicción del lugar del labrado del 
 acta
 c)  Obtener los imei de PDA que han labrado actas de tipo “Velocidad” sólo en la ciudad de “Mar del Plata”.
-Facultad de Informática – Universidad Nacional de La Plata
-Cátedra de Bases de Datos 1
-Cursada 2017
 
 ```
-    A   <---    
-    B   <---    
-    C   <---    
-    D   <---    
-    E   <---    
-    F   <---    
+a)
+    A   <---    σ nombre = "La Plata" JURISDICCION
+    B   <---    π id_jurisdiccion A
+    C   <---    ACTA_INFRACCION || B
+    D   <---    π #acta C
+    E   <---    D || INFRACCION_ALTA
+    F   <---    π codigo E
+
+b)
+    A   <---    P A ACTA_INFRACCION
+    C   <---    P C CONDUCTOR
+    D   <---    A || ((A.id_Jurisdiccion = C.id_Jurisdiccion) and (A.dni_conductor = C.dni_conductor)) C
+
+c)
+    A   <---    σ tipo = "Velocidad" TIPO_INFRACCION
+    B   <---    INFRACCION_ALTA || A
+    C   <---    π #acta B
+    D   <---    ACTA || C
+    E   <---    σ nombre = "Mar del Plata" JURISDICCION
+    F   <---    π id_jurisdiccion E
+    G   <---    D || F
+    H   <---    π imei G
 
 ```
 
@@ -273,12 +286,31 @@ participa.
 c) Obtener el identificador del usuario que realizo la publicación con mayor valoración.
 
 ```
-    A   <---    
-    B   <---    
-    C   <---    
-    D   <---    
-    E   <---    
-    F   <---    
+a)
+    A   <---    π id_formulario FORMULARIO
+    B   <---    π id_formulario, id_usuario APORTE
+    C   <---    B % A
+    D   <---    USUARIO || C
+    E   <---    π nombre D
+
+b)
+    A   <---    ?
+    B   <---    ?
+    C   <---    ?
+    D   <---    ?
+    E   <---    ?
+    F   <---    ?
+
+c)
+    A   <---    P A APORTE
+    B   <---    APORTE X A
+    C   <---    σ APORTE.valoracion < A.valoracion B
+    D   <---    π Aporte.valoracion C
+    E   <---    P E(valoracion) D
+    F   <---    E || APORTE
+    G   <---    APORTE - F
+    H   <---    π id_usuario G
+
 ```
 
 ---
@@ -294,12 +326,30 @@ b) Obtener los nombres de todos los usuarios que hayan aportado alguna definici�
 c) Obtener el nombre de los idiomas que no tengan diccionarios posteriores al 2015
 
 ```
-    A   <---    
-    B   <---    
-    C   <---    
-    D   <---    
-    E   <---    
-    F   <---    
+a)
+    A   <---    π id_usuario DEFINICION
+    B   <---    USUARIO || A
+    C   <---    USUARIO - B
+    D   <---    σ fecha_ingreso C
+
+b)
+    A   <---    σ nombre = "Espanol" IDIOMA
+    B   <---    π id_idioma IDIOMA
+    C   <---    DICCIONARIO || B
+    D   <---    π id_diccionario C
+    E   <---    DEFINICION || D
+    F   <---    π id_usuario E
+    F   <---    USUARIO || F
+    F   <---    π nombre F
+
+c)
+    A   <---    σ fecha_version > 2015 DICCIONARIO
+    B   <---    π id_lenguaje A
+    C   <---    π id_lenguaje DICCIONARIO
+    D   <---    C - B
+    E   <---    IDIOMA || D
+    F   <---    π nombre E
+
 ```
 
 ---
