@@ -1,47 +1,53 @@
 require 'matrix'
 class Image
-    attr_accessor :data, :size
-    def initialize (data = nil, size = 1024)
-        @filters = 1
-        self.size = size
-        self.data = data || Matrix.build(size) { Math::PI }
-    end
-    def header_bytes
-        Matrix.rows([(Image.new data.map { | e | e ** @filters }).data.first(size)])
-    end
+  attr_accessor :data, :size
+  def initialize(data = nil, size = 1024)
+    @filters = 1
+    self.size = size
+    self.data = data || Matrix.build(size) { Math::PI }
+  end
 
-    # Distintos filtros de imágenes:
-    def filter_a
-        @filters *= 1.2
-        self
-    end
-    def filter_b
-        @filters *= 1.4
-        self
-    end
-    def filter_c
-        @filters *= 1.8
-        self
-    end
-    def filter_d
-        @filters *= 2
-        self
-    end
-    def filter_e
-        @filters *= 2.2
-        self
-    end
-    def filter_f
-        @filters *= 2.4
-        self
-    end
+  def header_bytes
+    Matrix.rows([(Image.new data.map { |e| e**@filters }).data.first(size)])
+  end
 
-    #- Fin de filtros
-    def all_filters
-        ('a'..'f').inject(self) do | pipe, type|
-            pipe.public_send "filter_#{type}"
-        end
+  # Distintos filtros de imágenes:
+  def filter_a
+    @filters *= 1.2
+    self
+  end
+
+  def filter_b
+    @filters *= 1.4
+    self
+  end
+
+  def filter_c
+    @filters *= 1.8
+    self
+  end
+
+  def filter_d
+    @filters *= 2
+    self
+  end
+
+  def filter_e
+    @filters *= 2.2
+    self
+  end
+
+  def filter_f
+    @filters *= 2.4
+    self
+  end
+
+  #- Fin de filtros
+  def all_filters
+    ('a'..'f').inject(self) do |pipe, type|
+      pipe.public_send "filter_#{type}"
     end
+  end
 end
 
 image = Image.new

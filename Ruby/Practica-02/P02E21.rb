@@ -1,7 +1,7 @@
 class Array
-	def randomly
-		return self.shuffle.map { |x| yield x }
-	rescue LocalJumpError => e
-		return self.each
-	end
+  def randomly
+    return shuffle.map { |x| yield x }
+  rescue LocalJumpError => e
+    return each
+  end
 end

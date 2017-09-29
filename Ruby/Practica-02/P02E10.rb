@@ -1,14 +1,15 @@
 module Reverso
-    def di_tcejbo
-        self.object_id.to_s.reverse
-    end
-    def ssalc
-        self.class.to_s.reverse
-    end
+  def di_tcejbo
+    object_id.to_s.reverse
+  end
+
+  def ssalc
+    self.class.to_s.reverse
+  end
 end
 
 class Prueba
-    include Reverso
+  include Reverso
 end
 
 prueba = Prueba.new

@@ -2,7 +2,7 @@
 # ¿Cómo podrías invocar el método? Por ejemplo, teniendo la siguiente variable con los números a ordenar:
 
 def ordenar(*params)
-	params.sort
+  params.sort
 end
 
 entrada = [10, 9, 1, 2, 3, 5, 7, 8]

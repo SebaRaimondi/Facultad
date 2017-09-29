@@ -3,10 +3,10 @@
 # Por ejemplo:
 
 def longitud(*params)
-	params.each { | a | p "#{a.to_s} --> #{a.to_s.size}" }
+  params.each { |a| p "#{a} --> #{a.to_s.size}" }
 end
 
-p longitud(9, Time.now, 'Hola', {un: 'hash'}, :ruby)
+p longitud(9, Time.now, 'Hola', { un: 'hash' }, :ruby)
 # Debe imprimir:
 # "9" --> 1
 # "2017-09-14 13:22:10 +0000" --> 25

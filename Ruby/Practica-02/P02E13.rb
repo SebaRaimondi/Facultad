@@ -1,30 +1,28 @@
 module GenericFactory
+  module ClassMethods
+    def create(**args)
+      new(**args)
+    end
+  end
 
-	module ClassMethods
-		def create (**args)
-			new(**args)
-		end
-	end
+  def initialize(**_args)
+    raise NotImplementedError
+  end
 
-	def initialize (**args)
-		raise NotImplementedError
-	end
-
-	def self.included(base)
-		base.extend(ClassMethods)
-	end
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
 end
 
 class Concreta
+  extend GenericFactory
 
-	extend GenericFactory
-
-	def hi
-        p "Hi!"
+  def hi
+    p 'Hi!'
     end
 
-	def initialize(*args)
-        @var = true
+  def initialize(*_args)
+    @var = true
     end
 end
 

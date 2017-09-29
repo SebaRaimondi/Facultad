@@ -1,7 +1,7 @@
 module Opposite
-	def opposite
-		!self
-	end
+  def opposite
+    !self
+  end
 end
 
 true.class.extend Opposite
