@@ -207,8 +207,9 @@ a)
 
 b)
     A   <---    ESTUDIANTE || INSCRIPCIONMATERIA
-    B   <---    A % MATERIA
-    C   <---    π nombreCompleto B
+    B   <---    π codigoDeMateria MATERIA
+    C   <---    A % B
+    D   <---    π nombreCompleto C
 ```
 
 ---
@@ -224,12 +225,10 @@ que realizaron.
 
 ```
 a)
-    A   <---    
-    B   <---    
-    C   <---    
-    D   <---    
-    E   <---    
-    F   <---    
+    A   <---    σ nota < 7 ENTREGA
+    B   <---    π #alumno A
+    C   <---    ALUMNO || B
+    D   <---    ALUMNO - C
 ```
 
 ---
@@ -251,6 +250,13 @@ Cátedra de Bases de Datos 1
 Cursada 2017
 
 ```
+    A   <---    
+    B   <---    
+    C   <---    
+    D   <---    
+    E   <---    
+    F   <---    
+
 ```
 
 ---
@@ -267,6 +273,12 @@ participa.
 c) Obtener el identificador del usuario que realizo la publicación con mayor valoración.
 
 ```
+    A   <---    
+    B   <---    
+    C   <---    
+    D   <---    
+    E   <---    
+    F   <---    
 ```
 
 ---
@@ -282,6 +294,12 @@ b) Obtener los nombres de todos los usuarios que hayan aportado alguna definici�
 c) Obtener el nombre de los idiomas que no tengan diccionarios posteriores al 2015
 
 ```
+    A   <---    
+    B   <---    
+    C   <---    
+    D   <---    
+    E   <---    
+    F   <---    
 ```
 
 ---
@@ -297,4 +315,10 @@ tengan pasajeros registrados.
 b) Obtener el identificador del usuario que posee el auto con la capacidad más alta.
 
 ```
+    A   <---    
+    B   <---    
+    C   <---    
+    D   <---    
+    E   <---    
+    F   <---    
 ```
