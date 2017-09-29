@@ -1,0 +1,3 @@
+Investigar 
+	Metodo tr, para el de gsub 
+	Enumerador, para fib
