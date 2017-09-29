@@ -365,10 +365,25 @@ tengan pasajeros registrados.
 b) Obtener el identificador del usuario que posee el auto con la capacidad más alta.
 
 ```
-    A   <---    
-    B   <---    
-    C   <---    
-    D   <---    
-    E   <---    
-    F   <---    
+a)
+    A   <---    π id_lugar (σ nombre = "La Plata" LUGAR)
+    B   <---    π id_lugar (σ nombre = "Rosario" LUGAR)
+    C   <---    VIAJE || (VIAJE.id_lugar_origen = A.id_lugar) A
+    D   <---    C || (C.id_lugar_destino = B.id_lugar) B
+    E   <---    σ fecha > 30/11 D
+    F   <---    π id_viaje PASAJERO
+    G   <---    E || F          // Viajes desde y hasta con fecha posterior, que tienen algun pasajero
+    H   <---    E - G           // Viajes que no.
+
+b)
+    A   <---    P A VEHICULO
+    B   <---    P B VEHICULO
+    C   <---    A X B
+    D   <---    σ A.capacidad < B.capacidad C
+    E   <---    π A.capacidad D
+    F   <---    P F(capacidad) E
+    G   <---    VEHICULO || F
+    H   <---    VEHICULO - G
+    I   <---    π id_usuario H
+
 ```
