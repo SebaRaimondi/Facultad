@@ -33,8 +33,8 @@ b) Listar el #alumno de los alumnos que no estén matriculados en BBDD.
 a)
     A   <---    σ año = 2 (ASIGNATURA)          // Asignaturas de segundo año
     B   <---    π #asignatura (B)               // Me interesa nada mas el nro de asignatura
-    C   <---    MATRICULA % B                   // Matriculas que cumplen con todas las asignaturas
-    D   <---    π #alumno C                     // Me interesa solo el #alumno
+    C   <---    π #alumno, #asignatura MATRICULA    // Me interesa solo el #alumno y #asignatura
+    D   <---    C % B                           // Matriculas que cumplen con todas las asignaturas
     E   <---    ALUMNO |X| D                    // Alumnos de dichas matriculas
     F   <---    π nombre_alumno E
 
@@ -73,12 +73,19 @@ a)
     D   <---    B % C
 
 b)
-    A   <---    σ nombremadera = Pino TIPOMADERA
+    A   <---    σ nombremadera = "Pino" TIPOMADERA
     B   <---    π id_tipomadera A
     C   <---    MUEBLE |X| A
     D   <---    π id_fabricante C
     E   <---    FABRICANTE |X| D
-    F   <---    π nombrefabricante E
+    F   <---    π nombrefabricante E        // Los que fabrican de pino
+
+    G   <---    MUEBLE - C
+    H   <---    π id_fabricante G
+    I   <---    FABRICANTE |X| H
+    J   <---    π nombrefabricante I        // Los que fabrican de otro tipo de madera
+
+    K   <---    F - J                       // Los que solo fabrican de pino
 
 c)
     A   <---    MUEBLE |X| MUEBLEAMBIENTE
@@ -153,11 +160,11 @@ d) Obtener el id de aquel cliente con el puntaje más alto.
 
 ```
 a)
-    A   <---    σ nombreCliente = Juan CLIENTE
+    A   <---    σ nombreCliente = "Juan" CLIENTE
     B   <---    A |X| RESERVA
     C   <---    π id_automovil B
     D   <---    AUTOMOVIL |X| C
-    E   <---    π nombreCliente D
+    E   <---    π color D
 
 b)
     A   <---    CLIENTE |X| RESERVA
@@ -168,10 +175,10 @@ b)
     F   <---    E - D
 
 c)
-    A   <---    P a RESERVA
-    B   <---    P b RESERVA
-    C   <---    A |X|a.id_automovil != b.id_automovil or a.fecha != b.fecha B
-    D   <---    π id_cliente C
+    A   <---    P A RESERVA
+    B   <---    P B RESERVA
+    C   <---    A |X| A.id_cliente = B.id_cliente AND ( A.id_automovil != B.id_automovil OR A.fecha != B.fecha ) B
+    D   <---    P D(id_cliente) (π A.id_cliente C)
     E   <---    CLIENTE |X| D
     F   <---    π nombreCliente E
 
@@ -180,7 +187,7 @@ d)
     B   <---    P b Cliente
     C   <---    A X B
     D   <---    σ a.puntaje < b.puntaje C
-    E   <---    π nombreCliente D
+    E   <---    P E(nombreCliente) (π A.nombreCliente D)
     F   <---    π nombreCliente Cliente
     G   <---    F - E
 ```
@@ -192,8 +199,7 @@ ESTUDIANTE (#legajo, nombreCompleto, nacionalidad, añoDeIngreso, códigoDeCarre
 CARRERA (códigoDeCarrera, nombre)
 INSCRIPCIONAMATERIA (#legajo, códigoDeMateria)
 MATERIA (códigoDeMateria, nombre)
-a) Obtener el nombre de los estudiantes con nacionalidad “Argentina” que NO estén en la carrera con código 
-“LI07”
+a) Obtener el nombre de los estudiantes con nacionalidad “Argentina” que NO estén en la carrera con código “LI07”
 b) Obtener el legajo de los estudiantes que se hayan anotado en TODAS las materias.
 
 ```
@@ -203,7 +209,7 @@ a)
     C   <---    σ codigoDeCarrera = LI07 B
     D   <---    π nombreCompleto A
     E   <---    π nombreCompleto C
-    F   <---    A - C
+    F   <---    D - E
 
 b)
     A   <---    ESTUDIANTE |X| INSCRIPCIONMATERIA
@@ -220,8 +226,7 @@ CURSA (#alumno, #curso)
 CURSO (#curso, nombre_curso)
 PRACTICA (#practica, #curso)
 ENTREGA (#alumno, #practica, nota)
-a) Obtener #alumno y nombre de los alumnos que aprobaron con 7 o más todas las prácticas de los cursos 
-que realizaron.
+a) Obtener #alumno y nombre de los alumnos que aprobaron con 7 o más todas las prácticas de los cursos que realizaron.
 
 ```
 a)
@@ -240,10 +245,8 @@ CONDUCTOR (dni_conductor, nombre, apellido, id_Jurisdiccion)
 TIPO_INFRACCION (codigo, descripcion, puntos, tipo)
 ACTA_INFRACCION (#acta, imei, fecha, dni_conductor, id_Jurisdiccion)
 INFRACCION_ACTA (#acta, codigo)
-a) Obtener los códigos de los tipos de infracciones que no fueron utilizadas en las actas labradas de la 
-jurisdicción “La Plata”.    
-b) Obtener los #Actas en donde el conductor pertenezca a la misma jurisdicción del lugar del labrado del 
-acta
+a) Obtener los códigos de los tipos de infracciones que no fueron utilizadas en las actas labradas de la jurisdicción “La Plata”.    
+b) Obtener los #Actas en donde el conductor pertenezca a la misma jurisdicción del lugar del labrado del acta
 c)  Obtener los imei de PDA que han labrado actas de tipo “Velocidad” sólo en la ciudad de “Mar del Plata”.
 
 ```
@@ -252,23 +255,34 @@ a)
     B   <---    π id_jurisdiccion A
     C   <---    ACTA_INFRACCION |X| B
     D   <---    π #acta C
-    E   <---    D |X| INFRACCION_ALTA
+    E   <---    D |X| INFRACCION_ACTA
     F   <---    π codigo E
+    G   <---    π codigo INFRACCION_ACTA
+    H   <---    G - F
 
 b)
-    A   <---    P A ACTA_INFRACCION
-    C   <---    P C CONDUCTOR
-    D   <---    A |X| ((A.id_Jurisdiccion = C.id_Jurisdiccion) and (A.dni_conductor = C.dni_conductor)) C
+    A   <---    CONDUCTOR |X| ACTA_INFRACCION
+    E   <---    π #acta D
 
 c)
     A   <---    σ tipo = "Velocidad" TIPO_INFRACCION
-    B   <---    INFRACCION_ALTA |X| A
+    B   <---    INFRACCION_ACTA |X| A
     C   <---    π #acta B
-    D   <---    ACTA |X| C
+    D   <---    ACTA_INFRACCION |X| C       // Actas de Velocidad
+
     E   <---    σ nombre = "Mar del Plata" JURISDICCION
-    F   <---    π id_jurisdiccion E
+    F   <---    π id_jurisdiccion E         // Jurisdiccion de Mar del Plata
+
     G   <---    D |X| F
-    H   <---    π imei G
+    H   <---    π imei G                    // Los imei de las de velocidad y Mar Del Plata
+
+    I   <---    σ nombre != "Mar del Plata" JURISDICCION
+    J   <---    π id_jurisdiccion I         
+
+    K   <---    D |X| J
+    L   <---    π imei K                    // Los imei de las de velocidad que no fueron en Mar del Plata
+
+    M   <---    H - L                       // Los imei que solo hicieron de velocidad en Mar del Plata
 
 ```
 
@@ -279,10 +293,8 @@ USUARIO (id_usuario, email, nombre)
 FORMULARIO (id_formulario, titulo, fecha_publicacion)
 USUARIO_PARTICIPA (id_usuario, id_formulario)
 APORTE (id_aporte, id_formulario, id_usuario, nombre, tipo, datos, valoracion)
-a) Obtener los nombres de los usuarios que hicieron aportes en todos los formularios, independientemente 
-de si participan o no en el mismo.
-b) Obtener los nombres de los usuarios que han realizado aportes en todos los formularios en los que 
-participa.
+a) Obtener los nombres de los usuarios que hicieron aportes en todos los formularios, independientemente de si participan o no en el mismo.
+b) Obtener los nombres de los usuarios que han realizado aportes en todos los formularios en los que participa.
 c) Obtener el identificador del usuario que realizo la publicación con mayor valoración.
 
 ```
@@ -294,12 +306,12 @@ a)
     E   <---    π nombre D
 
 b)
-    A   <---    ?
-    B   <---    ?
-    C   <---    ?
-    D   <---    ?
-    E   <---    ?
-    F   <---    ?
+    A   <---    π id_usuario, id_formulario APORTE
+    B   <---    USUARIO_PARTICIPA - A
+    C   <---    USUARIO || B
+    D   <---    π id_usuario, email, nombre C   // Los que participan en algun formulario en el que no aportaron
+    E   <---    USUARIO - D                     // Los que aportaron a todos los que participan
+    F   <---    π nombre E
 
 c)
     A   <---    P A APORTE
@@ -320,8 +332,7 @@ IDIOMA (id_idioma, nombre)
 DICCIONARIO (id_diccionario, id_lenguaje, fecha_version)
 USUARIO (id_usuario, nombre, fecha_ingreso)
 DEFINICION (id_diccionario, id_usuario, palabra, significado)
-a) Obtener los nombres de los usuarios que hayan ingresado antes del 2010 y no hayan aportado ninguna 
-definición
+a) Obtener los nombres de los usuarios que hayan ingresado antes del 2010 y no hayan aportado ninguna definición
 b) Obtener los nombres de todos los usuarios que hayan aportado alguna definición para el idioma Español
 c) Obtener el nombre de los idiomas que no tengan diccionarios posteriores al 2015
 
@@ -330,7 +341,8 @@ a)
     A   <---    π id_usuario DEFINICION
     B   <---    USUARIO |X| A
     C   <---    USUARIO - B
-    D   <---    σ fecha_ingreso C
+    D   <---    σ fecha_ingreso < 2010 C
+    E   <---    π nombre D
 
 b)
     A   <---    σ nombre = "Espanol" IDIOMA
@@ -360,8 +372,7 @@ LUGAR (id_lugar, nombre)
 VEHICULO (id_vehiculo, id_usuario, capacidad)
 USUARIO (id_usuario, nombre, apellido)
 PASAJERO (id_viaje, id_usuario)
-a) Obtener fecha y hora de los viajes posteriores al 30/11 que vayan desde La Plata hacia Rosario y que no 
-tengan pasajeros registrados.
+a) Obtener fecha y hora de los viajes posteriores al 30/11 que vayan desde La Plata hacia Rosario y que no tengan pasajeros registrados.
 b) Obtener el identificador del usuario que posee el auto con la capacidad más alta.
 
 ```
@@ -371,17 +382,20 @@ a)
     C   <---    VIAJE |X| (VIAJE.id_lugar_origen = A.id_lugar) A
     D   <---    C |X| (C.id_lugar_destino = B.id_lugar) B
     E   <---    σ fecha > 30/11 D
+
     F   <---    π id_viaje PASAJERO
     G   <---    E |X| F          // Viajes desde y hasta con fecha posterior, que tienen algun pasajero
+
     H   <---    E - G           // Viajes que no.
+    I   <---    π fecha, hora H
 
 b)
     A   <---    P A VEHICULO
     B   <---    P B VEHICULO
     C   <---    A X B
     D   <---    σ A.capacidad < B.capacidad C
-    E   <---    π A.capacidad D
-    F   <---    P F(capacidad) E
+    E   <---    π A.id_vehiculo D
+    F   <---    P F(id_vehiculo) E
     G   <---    VEHICULO |X| F
     H   <---    VEHICULO - G
     I   <---    π id_usuario H
