@@ -1,8 +1,10 @@
 1) Dados los siguientes esquemas
+```
 DUEÑO(id_dueño, nombre, teléfono, dirección, dni)
 CHOFER(id_chofer, nombre, teléfono, dirección, fecha_licencia_desde, fecha_licencia_hasta, dni)
 AUTO(patente, id_dueño, id_chofer, marca, modelo, año)
 VIAJE(patente, hora_desde, hora_hasta, origen, destino, tarifa, metraje)
+```
 a) Listar el dni, nombre y teléfono de todos los dueños que NO son choferes.
 b) Listar la patente y el id_chofer de todos los autos a cuyos choferes les caduca la licencia el 01/01/2018.
 
@@ -22,10 +24,12 @@ b)
 ---
 
 2) Dados los siguientes esquemas
+```
 ALUMNO(#alumno, nombre_alumno, edad, provincia, beca)
 MATRICULA(#alumno, #asignatura, grupo)
 ASIGNATURA (#asignatura, nombre_asignatura, grupo, año)
 PROFESOR(#profesor, #asignatura, nombre_prefesor, grupo)
+```
 a) Listar el nombre de los alumnos matriculados en todas las asignaturas de segundo año.
 b) Listar el #alumno de los alumnos que no estén matriculados en BBDD.
 
@@ -51,12 +55,14 @@ b)
 ---
 
 3) Dados los siguientes esquemas
+```
 TIPOMUEBLE (id_tipomueble,descripción)
 FABRICANTE (id_fabricante,nombrefabricante,cuit)
 TIPOMADERA (id_tipomadera,nombremadera)
 AMBIENTE (id_ambiente,descripcionambiente)
 MUEBLE (id_mueble, id_tipomueble, id_fabricante, id_tipomadera, precio, dimensiones, descripcion)
 MUEBLEAMBIENTE (id_mueble,id_ambiente)
+```
 a) Obtener los nombres de los fabricantes que fabrican muebles en todos los tipos de Madera.
 b) Obtener los nombres de los fabricantes que sólo fabrican muebles en Pino.
 c) Obtener los nombres de los fabricantes que fabrican muebles para todos los ambientes.
@@ -149,9 +155,11 @@ g)
 ---
 
 4) Dados los siguientes esquemas
+```
 CLIENTE (id_cliente, nombreCliente, puntaje, edad)
 AUTOMOVIL (id_automovil, marca, color)
 RESERVA (id_cliente, id_automovil, fecha)
+```
 Tener en cuenta que un cliente puede realizar diversas reservas
 a) Obtener los colores de los automóviles reservados por Juan.
 b) Obtener los nombres de los clientes que no han reservado un automóvil verde.
@@ -195,10 +203,12 @@ d)
 ---
 
 5) Dados los siguientes esquemas
+```
 ESTUDIANTE (#legajo, nombreCompleto, nacionalidad, añoDeIngreso, códigoDeCarrera)
 CARRERA (códigoDeCarrera, nombre)
 INSCRIPCIONAMATERIA (#legajo, códigoDeMateria)
 MATERIA (códigoDeMateria, nombre)
+```
 a) Obtener el nombre de los estudiantes con nacionalidad “Argentina” que NO estén en la carrera con código “LI07”
 b) Obtener el legajo de los estudiantes que se hayan anotado en TODAS las materias.
 
@@ -221,11 +231,13 @@ b)
 ---
 
 6) Dados los siguientes esquemas
+```
 ALUMNO (#alumno, nombre)
 CURSA (#alumno, #curso)
 CURSO (#curso, nombre_curso)
 PRACTICA (#practica, #curso)
 ENTREGA (#alumno, #practica, nota)
+```
 a) Obtener #alumno y nombre de los alumnos que aprobaron con 7 o más todas las prácticas de los cursos que realizaron.
 
 ```
@@ -239,12 +251,14 @@ a)
 ---
 
 7) Dados los siguientes esquemas
+```
 PDA (imei, marca, numero_serie)
 JURISDICCIÓN (id_jurisdiccion, nombre)
 CONDUCTOR (dni_conductor, nombre, apellido, id_Jurisdiccion)
 TIPO_INFRACCION (codigo, descripcion, puntos, tipo)
 ACTA_INFRACCION (#acta, imei, fecha, dni_conductor, id_Jurisdiccion)
 INFRACCION_ACTA (#acta, codigo)
+```
 a) Obtener los códigos de los tipos de infracciones que no fueron utilizadas en las actas labradas de la jurisdicción “La Plata”.    
 b) Obtener los #Actas en donde el conductor pertenezca a la misma jurisdicción del lugar del labrado del acta
 c)  Obtener los imei de PDA que han labrado actas de tipo “Velocidad” sólo en la ciudad de “Mar del Plata”.
@@ -289,10 +303,12 @@ c)
 ---
 
 8) Dados los siguientes esquemas
+```
 USUARIO (id_usuario, email, nombre)
 FORMULARIO (id_formulario, titulo, fecha_publicacion)
 USUARIO_PARTICIPA (id_usuario, id_formulario)
 APORTE (id_aporte, id_formulario, id_usuario, nombre, tipo, datos, valoracion)
+```
 a) Obtener los nombres de los usuarios que hicieron aportes en todos los formularios, independientemente de si participan o no en el mismo.
 b) Obtener los nombres de los usuarios que han realizado aportes en todos los formularios en los que participa.
 c) Obtener el identificador del usuario que realizo la publicación con mayor valoración.
@@ -328,10 +344,12 @@ c)
 ---
 
 9) Dados los siguientes esquemas
+```
 IDIOMA (id_idioma, nombre)
 DICCIONARIO (id_diccionario, id_lenguaje, fecha_version)
 USUARIO (id_usuario, nombre, fecha_ingreso)
 DEFINICION (id_diccionario, id_usuario, palabra, significado)
+```
 a) Obtener los nombres de los usuarios que hayan ingresado antes del 2010 y no hayan aportado ninguna definición
 b) Obtener los nombres de todos los usuarios que hayan aportado alguna definición para el idioma Español
 c) Obtener el nombre de los idiomas que no tengan diccionarios posteriores al 2015
@@ -367,11 +385,13 @@ c)
 ---
 
 10) Dados los siguientes esquemas
+```
 VIAJE (id_viaje, fecha, hora, id_lugar_origen, id_lugar_destino, id_vehiculo)
 LUGAR (id_lugar, nombre)
 VEHICULO (id_vehiculo, id_usuario, capacidad)
 USUARIO (id_usuario, nombre, apellido)
 PASAJERO (id_viaje, id_usuario)
+```
 a) Obtener fecha y hora de los viajes posteriores al 30/11 que vayan desde La Plata hacia Rosario y que no tengan pasajeros registrados.
 b) Obtener el identificador del usuario que posee el auto con la capacidad más alta.
 
