@@ -124,10 +124,12 @@ Monitor Maquina {
 
 }
 
-Process Persona [p: 1..100] {
-    Maquina.pedir(p)
-    "La persona usa la maquina"
-    Maquina.liberar()
+Process Persona [p: 1..N] {
+    while (true)
+        Maquina.pedir(p)
+        "La persona usa la maquina"
+        Maquina.liberar()
+    end
 }
 ```
 
