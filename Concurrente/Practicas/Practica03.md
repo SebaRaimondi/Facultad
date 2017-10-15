@@ -53,19 +53,19 @@ Monitor Puente
     cond cola;
     boolean ocupado = false;
 
-    Procedure entrarPuente (int au)
-        if (ocupado) wait (cola);
-        else ocupado = true;
-    end;
+    Procedure entrarPuente ()
+        while (ocupado) wait (cola);
+        ocupado = true;
+    end
 
-    Procedure salirPuente (int au)
+    Procedure salirPuente ()
         ocupado = false;
         signal(cola);
-    end;
-End Monitor;
+    end
+End Monitor
 ```
 
-c.  Ambas lo respetan, asumiendo que la primera funcionara.
+c.  Ninguna de las dos lo respeta.
 
 ---
 
@@ -75,15 +75,15 @@ c.  Ambas lo respetan, asumiendo que la primera funcionara.
 ```
 Monitor BD
     cond cola;
-    int lectores = 0;
+    int slots = 5;
 
     Procedure leer(int l)
-        if ( lectores > 5 ) wait (cola);
-        else lectores = lectores + 1;
+        while ( slots == 0 ) wait (cola);
+        slots--;
     end;
 
     Procedure liberar(int l)
-        lectores = lectores – 1;
+        slots++;
         signal(cola);
     end;
 End Monitor;
