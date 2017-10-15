@@ -306,7 +306,7 @@ Process Alumno [a: 1..50] {
     Aula.llegoAlumno(a)             // Aviso que llegue
     // Hace la practica
     Aula.entregar(a)                // Entrega y se queda esperando a que le devuelvan la nota
-    Aula.verNota(a)
+    Aula.verNota(a, nota)
     // Se va
 }
 
@@ -371,8 +371,8 @@ Monitor Aula {
         signal_All(waitNotas[grupo])
     }
 
-    procedure verNota(int a) {
-        return notas[grupos[a]]
+    procedure verNota(int a, var int nota) {
+        nota = notas[grupos[a]]
     }
 }
 
