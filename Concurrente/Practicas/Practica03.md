@@ -237,29 +237,59 @@ Con Borre
 
 Process Jugador [j: 1..20] {
     equipo = DarEquipo()
-    Entrenamiento.llegue(equipo)
-    delay(50)  // Juega durante 50min
+    Equipo[equipo].llegue(cancha)
+    Cancha[cancha].jugar()
 }
 
-Monitor Entrenamiento {
-    int[4] llegaronEquipo
-    cond[4] equipo
-    queue completos
-    int cancha = 1
+Monitor Equipo [e: 1..4] {
+    int llegaron = 0
+    cond esperandoGrupo
 
-    Procedure llegue(int i) {
-        llegaronEquipo[i]++
-        if (llegaronEquipo[i] < 5) wait(equipo[i])
-        else {
-            if(completos.empty) {
-                completos.encolar(i)
-                wait(equipo[i])
-            }
-            else {
-                signal_All(equipo[i])
-                signal_All(equipo[completos.next])
-            }
+    Procedure llegue(var int cancha) {
+        if (llegaron < 5) {
+            llegaron++
+            wait(esperandoGrupo)
         }
+        else {
+            Coordinador.pedirCancha(c)
+            signal_all(esperandoGrupo)
+        }
+        cancha = c
+    }
+
+}
+
+Monitor Cancha [c: 1..2] {
+    int jugadores = 0
+    cond esperando
+
+    Procedure jugar() {
+        if (jugadores < 10) {
+            jugadores++
+            wait(esperando)
+        }
+        else {
+            delay(50)
+            signal_all(esperando)
+        }
+    }
+}
+
+Monitor Coordinador {
+    int cancha = 0
+    int listos = 0
+    cond esperandoRival
+
+    Procedure pedirCancha(var int c) {
+        listos++
+        if (listos mod 2 == 0) {
+            cancha++
+            signal(esperandoRival)
+        }
+        else {
+            wait(esperandoRival)
+        }
+        c = cancha
     }
 }
 ```
