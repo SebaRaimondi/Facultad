@@ -518,5 +518,4 @@ Monitor Depósito [d: 1..8] {
         material--
     }
 }
-
 ```
