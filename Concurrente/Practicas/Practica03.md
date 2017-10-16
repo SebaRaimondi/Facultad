@@ -207,7 +207,10 @@ Process Timer [t: 1..N] {
 
 ```
 Process Empleado [e: 1..50] {
-    Empresa.llegue()
+    int grupo
+
+    Empresa.llegue(grupo)
+    Grupo[grupo].llegue()
     "Se va a verificar un pozo con su grupo."
 }
 
@@ -216,15 +219,24 @@ Monitor Empresa {
     int[10] grupos = 0
     cond llegaronTodosGrupo
 
-    Procedure llegue() {
+    Procedure llegue(var int grupo) {
+        grupo = actual
         grupos[actual]++
-        if (grupos[actual] < 5) wait(llegaronTodosGrupo)
-        else {
-            signal_all(llegaronTodosGrupo)
-            actual++
-        }
+        if (grupos[actual] < 5) actual++
     }
 }
+
+Monitor Grupo [g: 1..10] {
+    int cantEsperando
+    cond esperando
+
+    procedure llegue() {
+        cantEsperando++
+        if (cantEsperando < 5) wait(esperando)
+        else delay(loQueTardenEnVerificarUnPozo) // Se van a verificar el pozo
+    }
+}
+
 ```
 
 ---
