@@ -392,94 +392,131 @@ Monitor Aula {
 Con Borre
 
 Process Operario [o: 1..40] {
-    Fabrica.informarLlegada(o)          // Aviso que llegue
-    Fabrica.esperarEquipo(o)            // Espero a que llegue mi equipo
-    while (Fabrica.sigoFabricando?(o)) {
-        // Busco materiales hasta que mi equipo tenga 8
-        while (!Fabrica.alcanzanMateriales(o)) buscarMateriales(o) 
-        Fabrica.esperarParaFabricar(o)  // Espero a que este listo mi equipo
-        // Fabrican camisa
+    int grupo
+    int material
+    bool seguir
+
+    Fabrica.llegue(o, grupo)
+    Grupo[grupo].esperar()
+
+    Fabrica.seguir?(grupo, seguir)
+    while (seguir) {
+        Grupo[grupo].material(material)
+
+        while(material != 0) {
+            Deposito[material].buscarMaterial()
+            Grupo[grupo].material(material)
+        }
+
+        Grupo[grupo].camisa()
+        Fabrica.seguir?(grupo, seguir)
     }
 }
 
-Process Encargado [] {
-    Fabrica.esperarEmpleados()
-    for (int i; i < 40; i++) {
-        Fabrica.darGrupo (i, elegirGrupo())
-    }
-    Fabrica.todosTienenGrupo()
+Process Encargado {
+	int[40] grupos
+
+	Fabrica.esperarEmpleados()
+
+    for int i = 1 to 40 do grupos[i] = asignarGrupo()
+
+    Fabrica.darGrupos(grupos)
 }
 
 Monitor Fabrica {
-    bool esperando = false
     bool[1..10] fabricando = false
-    cond encargado
-    cond llegaron
-    cond[1..10] equipo
-    cond[1..10] cParaFabricar
-    int cantOperarios = 0
-    int camisas = 0
-    int[1..10] integrantes = 0
-    int[1..10] materiales = 0
-    int[1..10] aParaFabricar = 0
-    int[1..40] grupoAsignado = 0
 
-    Procedure informarLlegada(int i) {
-        cantOperarios++;
-        if (cantOperarios == 50 and esperando) {
-            signal(encargado) 
-        }
-        wait(llegaron)
+    cond operarios
+    cond encargado
+    cond[1..10] equipo
+
+    int camisas = 0
+    int cantOperarios = 0
+    int[1..10] consultaron = 0
+    int[1..10] integrantes = 0
+    int[1..40] grupos
+
+    Procedure llegue(int o, var int grupo) {
+        cantOperarios++
+        if (cantOperarios == 40) signal(encargado)
+
+        wait(operarios)
+        grupo = grupos[o]
     }
 
     Procedure esperarEmpleados() {
-        if (cantOperarios < 50) wait(encargado)
+        if (cantOperarios < 40) wait(encargado)
     }
 
-    Procedure darGrupo(int empleado, int grupo) {
-        grupoAsignado[empleado] = grupo;
+    Procedure darGrupo(int[40] g) {
+        grupos = g
+        signal_All(operarios)
     }
 
-    Procedure todosTienenGrupo {
-        signal_all(llegaron)
-    }
-
-    Procedure esperarEquipo(int i){
-        integrantes[grupoAsignado[i]]++;
-        if (integrantes[grupoAsignado[i]] == 4) {
-            signalAll(equipo[i])
+    Procedure seguir?(int grupo, var bool seguir) {
+        if (fabricando[grupo]) {
+            consultaron[grupo]++
+            if (consultaron[grupo] == 4) {
+                consultaron[grupo] = 0
+                fabricando[grupo] = false
+            }
+            seguir = true
         }
-        else {
-            wait(equipo[i])
-        }
-    }
-
-    Procedure alcanzanMateriales(int ope) {
-        return materiales[grupoAsignado[ope]] >= 8
-    }
-
-    Procedure buscarMateriales(int ope) {
-        materiales[grupoAsignado[ope]]++
-    }
-
-    Procedure esperarParaFabricar(int ope) {
-        aParaFabricar[grupoAsignado[ope]]++
-        if (aParaFabricar[grupoAsignado[ope]] == 8) {
-            aParaFabricar[grupoAsignado[ope]] = 0
-            materiales[grupoAsignado[ope]] = 0
-            signal_all(cParaFabricar[ope])
-        }
-        else wait(cParaFabricar[ope])
-    }
-
-    Procedure sigoFabricando?(int ope) {
-        if (fabricando[grupo(ope)]) return true
-        if (camisas < 5000) {
-            fabricando[grupo(ope)] = true
+        else if (camisas < 5000) {
+            fabricando[grupo] = true;
+            consultaron[grupo]++
             camisas++
-            return true
+            seguir = true
         }
-        return false
+        else seguir = false
     }
 }
+
+Monitor Grupo [g: 1..10] {
+    int cantEsperando = 0
+    int fabricando = 0
+    int[8] materiales = 0
+    int[8] necesarios = N
+    cond esperando
+    cond camisa
+
+    Procedure esperar(){
+        cantEsperando++
+        if (cantEsperando == 4) {
+            cantEsperando = 0
+            signalAll(esperando)
+        }
+        else wait(esperando)
+    }
+
+    Procedure camisa(){
+        fabricando++;
+        if (fabricando == 4){
+            fabricando = 0;
+            for int i = 1 to 8 do materiales[i] = materiales[i] - necesarios[i]
+            delay(tiempoQueSeTardeEnFabricarUnaCamisa)
+            signalAll(esperando)
+        }
+        else wait(esperando)
+    }
+
+    Procedure material(var int material){
+        material = 0
+        for int i = 1 to 8 do {
+            if materiales[i] < necesarios[i] {
+                material = i
+                materiales[i]++
+            }
+        }
+    }
+}
+
+Monitor Depósito [d: 1..8] {
+    int material = cantQueTengaElDepositoDeSuMaterial
+
+    Procedure buscarMaterial() {
+        material--
+    }
+}
+
 ```
