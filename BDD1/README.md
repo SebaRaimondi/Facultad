@@ -11,7 +11,6 @@
 * [Practica 2 - Álgebra Relacional - Ejercicio 8](Practicas/Practica02.md#ejercicio-8)
 * [Practica 2 - Álgebra Relacional - Ejercicio 9](Practicas/Practica02.md#ejercicio-9)
 * [Practica 2 - Álgebra Relacional - Ejercicio 10](Practicas/Practica02.md#ejercicio-10)
-* [Practica 2 - Álgebra Relacional - Ejercicio 11](Practicas/Practica02.md#ejercicio-11)
 
 ---
 
@@ -24,5 +23,8 @@
 * [Practica 3 - Normalización - Ejercicio 6](Practicas/Practica03.md#ejercicio-6)
 * [Practica 3 - Normalización - Ejercicio 7](Practicas/Practica03.md#ejercicio-7)
 * [Practica 3 - Normalización - Ejercicio 8](Practicas/Practica03.md#ejercicio-8)
+* [Practica 3 - Normalización - Ejercicio 9](Practicas/Practica03.md#ejercicio-9)
+* [Practica 3 - Normalización - Ejercicio 10](Practicas/Practica03.md#ejercicio-10)
+* [Practica 3 - Normalización - Ejercicio 11](Practicas/Practica03.md#ejercicio-11)
 
 ---
