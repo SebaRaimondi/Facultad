@@ -1,3 +1,4 @@
+### Ejercicio 1.
 1) Dados los siguientes esquemas
 ```
 DUEÑO(id_dueño, nombre, teléfono, dirección, dni)
@@ -23,6 +24,7 @@ b)
 
 ---
 
+### Ejercicio 2.
 2) Dados los siguientes esquemas
 ```
 ALUMNO(#alumno, nombre_alumno, edad, provincia, beca)
@@ -54,6 +56,7 @@ b)
 
 ---
 
+### Ejercicio 3.
 3) Dados los siguientes esquemas
 ```
 TIPOMUEBLE (id_tipomueble,descripción)
@@ -154,6 +157,7 @@ g)
 
 ---
 
+### Ejercicio 4.
 4) Dados los siguientes esquemas
 ```
 CLIENTE (id_cliente, nombreCliente, puntaje, edad)
@@ -202,6 +206,7 @@ d)
 
 ---
 
+### Ejercicio 5.
 5) Dados los siguientes esquemas
 ```
 ESTUDIANTE (#legajo, nombreCompleto, nacionalidad, añoDeIngreso, códigoDeCarrera)
@@ -230,6 +235,7 @@ b)
 
 ---
 
+### Ejercicio 6.
 6) Dados los siguientes esquemas
 ```
 ALUMNO (#alumno, nombre)
@@ -250,6 +256,7 @@ a)
 
 ---
 
+### Ejercicio 7.
 7) Dados los siguientes esquemas
 ```
 PDA (imei, marca, numero_serie)
@@ -302,6 +309,7 @@ c)
 
 ---
 
+### Ejercicio 8.
 8) Dados los siguientes esquemas
 ```
 USUARIO (id_usuario, email, nombre)
@@ -343,6 +351,7 @@ c)
 
 ---
 
+### Ejercicio 9.
 9) Dados los siguientes esquemas
 ```
 IDIOMA (id_idioma, nombre)
@@ -384,6 +393,7 @@ c)
 
 ---
 
+### Ejercicio 10.
 10) Dados los siguientes esquemas
 ```
 VIAJE (id_viaje, fecha, hora, id_lugar_origen, id_lugar_destino, id_vehiculo)
