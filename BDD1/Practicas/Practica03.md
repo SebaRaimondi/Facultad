@@ -5,14 +5,14 @@ Todos los esquemas ya se encuentran en 1FN. Utilizar las claves candidatas y Dep
 1) LIBRERIAS_ASOCIADAS ( idLibreria, nombreLibreria, idArticulo, nombreArticulo, idComponente, nombreComponente, idFabricanteArticulo, idDueño)
 
 Donde:
-• Para cada librería se conoce su identificador, el cual es único. Además se conoce su nombre, que puede repetirse en distintas librerías.
-• Cada librería posee uno o varios dueños (idDueño)
-• Cada librería registra los artículos (idArticulo) que tiene en su inventario. Para cada artículo de una librería se conoce su nombre.
-• Los identificadores de artículos se pueden repetir en diferentes librerías, pero no dentro de una misma librería.
-• Los artículos de una librería están compuestos por diversos componentes (idComponente).
-• Los identificadores de componentes se pueden repetir en diferentes librerías para diferentes artículos, pero no para el mismo componente de un artículo dentro de una misma librería.
-• Para cada componente de un artículo de una librería se conoce su nombre.
-• Cada artículo de una librería tiene varios fabricantes que lo proveen (idFabricanteArticulo)
+* Para cada librería se conoce su identificador, el cual es único. Además se conoce su nombre, que puede repetirse en distintas librerías.
+* Cada librería posee uno o varios dueños (idDueño)
+* Cada librería registra los artículos (idArticulo) que tiene en su inventario. Para cada artículo de una librería se conoce su nombre.
+* Los identificadores de artículos se pueden repetir en diferentes librerías, pero no dentro de una misma librería.
+* Los artículos de una librería están compuestos por diversos componentes (idComponente).
+* Los identificadores de componentes se pueden repetir en diferentes librerías para diferentes artículos, pero no para el mismo componente de un artículo dentro de una misma librería.
+* Para cada componente de un artículo de una librería se conoce su nombre.
+* Cada artículo de una librería tiene varios fabricantes que lo proveen (idFabricanteArticulo)
 
 Clave Candidata:
 Cc1: (idLibreria, idArticulo, idComponente, idFabricanteArtículo, idDueño)
@@ -42,13 +42,13 @@ LA5(**idLibreria**, **idArticulo**, idFabricanteArticulo)
 2) EMPLEADO ( idEmpleado, nombreEmpleado, idOficina, nombreOficina, idResponsableOficina, cargaHorariaEnOficina, nombreResponsableOficina, añoIngresoOficina, idActividadEmpleadoOficina, nombreActividadOficina, dniEmpleado)
 
 Donde:
-• El idEmpleado es único por oficina. El mismo idEmpleado no se repite en diferentes oficinas
-• Cada empleado tiene asignada una única carga horaria para la oficina en la que trabaja e ingreso a la oficina en un año determinado
-• El nombre del empleado no es único, es decir puede haber más de un “Juan Perez” trabajando en una oficina
-• El nombre del responsable de la oficina no es único, es decir puede haber más de un “Juan Perez” responsable de una oficina
-• En una oficina existen muchos responsables (tener en cuenta que el esquema ya se encuentra en 1FN)
-• Los responsables de oficina pueden repetirse para diferentes oficinas
-• idActividadEmpleadoOficina es cada actividad que un empleado realiza en la oficina
+* El idEmpleado es único por oficina. El mismo idEmpleado no se repite en diferentes oficinas
+* Cada empleado tiene asignada una única carga horaria para la oficina en la que trabaja e ingreso a la oficina en un año determinado
+* El nombre del empleado no es único, es decir puede haber más de un “Juan Perez” trabajando en una oficina
+* El nombre del responsable de la oficina no es único, es decir puede haber más de un “Juan Perez” responsable de una oficina
+* En una oficina existen muchos responsables (tener en cuenta que el esquema ya se encuentra en 1FN)
+* Los responsables de oficina pueden repetirse para diferentes oficinas
+* idActividadEmpleadoOficina es cada actividad que un empleado realiza en la oficina
 
 Claves candidatas:
 Cc1: (idEmpleado, idResponsableOficina, idActividadEmpleadoOficina)
@@ -79,8 +79,18 @@ Para los esquemas propuestos en cada ejercicio aplicar el proceso de normalizaci
 Tener en cuenta que los esquemas dados ya se encuentran en 1FN.
 
 ### Ejercicio 3.
+3) INFORME_MEDICO (idMedico, apynMedico, tipoDocM, nroDocM, fechaNacM, matricula, direcciónM, teléfonoM, idPaciente, apynPaciente, tipoDocP, nroDocP, fechaNacP, idObraSoc, nroAfiliado, direcciónP, teléfonoP, nombreOS, direcciónOS, teléfonoOS, idÓrgano, descripción, idEstudio, resultado, fechaEstudio, informe)
+Donde
+* De cada médico se conoce su nombre y apellido, tipo y número de documento, fecha de nacimiento, matricula, dirección y teléfono.
+* De cada paciente se conoce su nombre y apellido, tipo y número de documento, fecha de nacimiento, dirección, teléfono, obra social y número de afiliado. Cada obra social numera a sus afiliados de forma independiente, con lo cual los nroAfiliado podrían repetirse en diferentes obras sociales.
+* De cada obra social se conoce su nombre, dirección y teléfono.
+* Para cada órgano se conoce su descripción
+* De cada estudio se registra a que paciente pertenece, que médico lo realizo, que órgano se estudio, un informe, el resultado y en qué fecha se realizó.
 
 ```
+
+
+
 ```
 
 ---
