@@ -28,9 +28,11 @@ Dependencias Multivaluadas
     idLibreria, idArticulo -->> idFabricanteArticulo
     idLibreria, idArticulo -->> idComponente
 
-LA1(**idLibreria**, nombreLibreria, idDueño)
-LA2(**idLibreria**, **idArticulo**, nombreArticulo, idFabricante)
-LA3(**idLibreria**, **idArticulo**, **idComponente**, nombreComponente)
+LA1(**idLibreria**, idDueño)
+LA2(**idLibreria**, nombreLibreria)
+LA3(**idLibreria**, **idArticulo**, nombreArticulo)
+LA4(**idLibreria**, **idArticulo**, idComponente, nombreComponente)
+LA5(**idLibreria**, **idArticulo**, idFabricanteArticulo)
 
 ```
 
@@ -41,11 +43,9 @@ LA3(**idLibreria**, **idArticulo**, **idComponente**, nombreComponente)
 
 Donde:
 • El idEmpleado es único por oficina. El mismo idEmpleado no se repite en diferentes oficinas
-• Cada empleado tiene asignada una única carga horaria para la oficina en la que trabaja e ingreso a la oficina en
-un año determinado
+• Cada empleado tiene asignada una única carga horaria para la oficina en la que trabaja e ingreso a la oficina en un año determinado
 • El nombre del empleado no es único, es decir puede haber más de un “Juan Perez” trabajando en una oficina
-• El nombre del responsable de la oficina no es único, es decir puede haber más de un “Juan Perez” responsable
-de una oficina
+• El nombre del responsable de la oficina no es único, es decir puede haber más de un “Juan Perez” responsable de una oficina
 • En una oficina existen muchos responsables (tener en cuenta que el esquema ya se encuentra en 1FN)
 • Los responsables de oficina pueden repetirse para diferentes oficinas
 • idActividadEmpleadoOficina es cada actividad que un empleado realiza en la oficina
@@ -61,6 +61,17 @@ dniEmpleado -> nombreEmpleado, idOficina, añoIngresoOficina, idEmpleado, cargaH
 idActividadEmpleadoOficina -> nombreActividadOficina
 
 ```
+Dependencias Multivaluadas
+    idEmpleado -->> idResponsableOficina
+    idEmpleado -->> idActividadEmpleadoOficina
+
+E1(idOficina, nombreOficina)
+E2(idResponsableOficina, idOficina, nombreResponsableOficina)
+E3(idEmpleado, nombreEmpleado, idOficina, añoIngresoOficina, dniEmpleado, cargaHorariaEnOficina)
+E4(idActividadEmpleadoOficina, nombreActividadOficina)
+E5(idEmpleado, idResponsableOficina)
+E6(idActividadEmpleadoOficina)
+
 ```
 
 ---
