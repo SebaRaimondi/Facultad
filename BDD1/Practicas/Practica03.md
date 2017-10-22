@@ -80,6 +80,7 @@ Tener en cuenta que los esquemas dados ya se encuentran en 1FN.
 
 ### Ejercicio 3.
 3) INFORME_MEDICO (idMedico, apynMedico, tipoDocM, nroDocM, fechaNacM, matricula, direcciónM, teléfonoM, idPaciente, apynPaciente, tipoDocP, nroDocP, fechaNacP, idObraSoc, nroAfiliado, direcciónP, teléfonoP, nombreOS, direcciónOS, teléfonoOS, idÓrgano, descripción, idEstudio, resultado, fechaEstudio, informe)
+
 Donde
 * De cada médico se conoce su nombre y apellido, tipo y número de documento, fecha de nacimiento, matricula, dirección y teléfono.
 * De cada paciente se conoce su nombre y apellido, tipo y número de documento, fecha de nacimiento, dirección, teléfono, obra social y número de afiliado. Cada obra social numera a sus afiliados de forma independiente, con lo cual los nroAfiliado podrían repetirse en diferentes obras sociales.
@@ -88,9 +89,28 @@ Donde
 * De cada estudio se registra a que paciente pertenece, que médico lo realizo, que órgano se estudio, un informe, el resultado y en qué fecha se realizó.
 
 ```
+Claves candidatas:
+    ??????????????
 
+Dependencias Funcionales:
+    idMedico    --> apynMedico, tipoDocM, nroDocM, fechaNacM, matricula, direccionM, telefonoM
+    idPaciente  --> apynPaciente, tipoDocP, nroDocP, fechaNacP, direcciónP, teléfonoP, idObraSoc, nroAfiliado
+    idObraSoc   --> nombreOS, direcciónOS, teléfonoOS
+    idOrgano    --> descripción
+    idEstudio   --> idPaciente, idMedico, idOrgano, informe, resultado, fechaEstudio
+    ????    idObraSoc, nroAfiliado  --> idPaciente, blablabla   ???? (Creo que no igual porque podes no tener obra social)
 
+Dependencias Multivaluadas:
+    idEstudio   -->> idMedico
+    idEstduio   -->> idÓrgano
 
+IM1(**idMedico**, apynMedico, tipoDocM, nroDocM, fechaNacM, matricula, direcciónM, teléfonoM)
+IM2(**idPaciente**, apynPaciente, tipoDocP, nroDocP, fechaNacP, direcciónP, teléfonoP, idObraSoc, nroAfiliado)
+IM3(**idObraSoc**, nombreOS, direcciónOS, teléfonoOS)
+IM4(**idÓrgano**, descripción)
+IM5(**idEstudio**, idPaciente, informe, resultado, fechaEstudio)
+IM6(**idEstudio**, idMedico)
+IM7(**idEstudio**, idOrgano)
 ```
 
 ---
