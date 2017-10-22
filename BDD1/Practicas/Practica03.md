@@ -65,13 +65,12 @@ Dependencias Multivaluadas
     idEmpleado -->> idResponsableOficina
     idEmpleado -->> idActividadEmpleadoOficina
 
-E1(idOficina, nombreOficina)
-E2(idResponsableOficina, idOficina, nombreResponsableOficina)
-E3(idEmpleado, nombreEmpleado, idOficina, añoIngresoOficina, dniEmpleado, cargaHorariaEnOficina)
-E4(idActividadEmpleadoOficina, nombreActividadOficina)
-E5(idEmpleado, idResponsableOficina)
-E6(idActividadEmpleadoOficina)
-
+E1(**idOficina**, nombreOficina)
+E2(**idResponsableOficina**, **idOficina**, nombreResponsableOficina)
+E3(**idEmpleado**, nombreEmpleado, idOficina, añoIngresoOficina, dniEmpleado, cargaHorariaEnOficina)
+E4(**idActividadEmpleadoOficina**, nombreActividadOficina)
+E5(**idEmpleado**, idResponsableOficina)
+E6(**idEmpleado**, idActividadEmpleadoOficina)
 ```
 
 ---
