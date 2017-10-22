@@ -129,6 +129,18 @@ un mismo aeropuerto.
 * Un avión puede realizar despegues de distintos aeropuertos
 
 ```
+
+Claves Candidatas:
+    
+
+Dependencias Funcionales:
+    #aeropuerto, #avion, fecha  --> #pista
+
+Dependencias Multivaluadas:
+    ????    Ninguna     ????
+
+A1(#aeropuerto, #pista, fecha, #avion)
+
 ```
 
 ---
