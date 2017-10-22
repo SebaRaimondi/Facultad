@@ -22,6 +22,16 @@ idLibreria, idArticulo -> nombreArticulo
 idLibreria, idArticulo, idComponente-> nombreComponente
 
 ```
+
+Dependencias Multivaluadas
+    idLibreria -->> idDueño
+    idLibreria, idArticulo -->> idFabricanteArticulo
+    idLibreria, idArticulo -->> idComponente
+
+LA1(**idLibreria**, nombreLibreria, idDueño)
+LA2(**idLibreria**, **idArticulo**, nombreArticulo, idFabricante)
+LA3(**idLibreria**, **idArticulo**, **idComponente**, nombreComponente)
+
 ```
 
 ---
@@ -43,7 +53,6 @@ de una oficina
 Claves candidatas:
 Cc1: (idEmpleado, idResponsableOficina, idActividadEmpleadoOficina)
 Cc2: (dniEmpleado, idResponsableOficina, idActividadEmpleadoOficina)
-
 Dependencias funcionales:
 idOficina -> nombreOficina
 idResponsableOficina, idOficina -> nombreResponsableOficina
