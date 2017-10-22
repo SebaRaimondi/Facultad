@@ -129,9 +129,8 @@ un mismo aeropuerto.
 * Un avión puede realizar despegues de distintos aeropuertos
 
 ```
-
 Claves Candidatas:
-    
+    #aeropuerto, #avion, fecha
 
 Dependencias Funcionales:
     #aeropuerto, #avion, fecha  --> #pista
@@ -140,46 +139,67 @@ Dependencias Multivaluadas:
     ????    Ninguna     ????
 
 A1(#aeropuerto, #pista, fecha, #avion)
-
 ```
 
 ---
 
 ### Ejercicio 5.
-5) DISPOSITIVOS (Marca_id, descripMarca, modelo_id, descripModelo, equipo_tipo_id, descripEquipoTipo,
-empresa_id, nombreEmpresa, cuit, direcciónEmpresa, usuario_id, apyn, nro_doc, direcciónUsuario, cuil,
-plan_id, descripPlan, importe, equipo_id, imei, fec_alta, fec_baja, observaciones, línea_id, nroContrato,
-fec_alta_linea, fec_baja_linea)
+5) DISPOSITIVOS (Marca_id, descripMarca, modelo_id, descripModelo, equipo_tipo_id, descripEquipoTipo, empresa_id, nombreEmpresa, cuit, direcciónEmpresa, usuario_id, apyn, nro_doc, direcciónUsuario, cuil, plan_id, descripPlan, importe, equipo_id, imei, fec_alta, fec_baja, observaciones, línea_id, nroContrato, fec_alta_linea, fec_baja_linea)
+
 Donde
-* Para cada equipo interesa conocer su tipo, modelo, imei, fecha en que se dio de alta, fecha en que se da de baja
-y las observaciones que sean necesarias.
+* Para cada equipo interesa conocer su tipo, modelo, imei, fecha en que se dio de alta, fecha en que se da de baja y las observaciones que sean necesarias.
 * De cada marca se conoce su descripción
 * De cada modelo se conoce su descripción y a que marca pertenece.
 * Para cada plan, se registra que empresa lo brinda, la descripción e importe del mismo.
 * Para cada tipo de equipo se conoce la descripción
 * Para cada empresa se registra el nombre, cuit y dirección
 * De cada usuario se registra su nombre y apellido, número de documento, dirección y cuil.
-* Para cada línea se necesita registrar el número de contrato, que plan posee, la fecha de alta de la línea, la
-fecha de baja, el equipo que la posee y el usuario de la misma.
+* Para cada línea se necesita registrar el número de contrato, que plan posee, la fecha de alta de la línea, la fecha de baja, el equipo que la posee y el usuario de la misma.
 
 ```
+Claves Candidatas
+    linea_id
+
+Dependencias Funcionales
+    equipo_id       --> equipo_tipo_id, modelo_id, imei, fec_alta, fec_baja, observaciones
+    imei            --> equipo_tipo_id, modelo_id, equipo_id, fec_alta, fec_baja, observaciones
+    Marca_id        --> descripMarca
+    modelo_id       --> descripModelo, Marca_id
+    plan_id         --> empresa_id, descripPlan, importe
+    equipo_tipo_id  --> descripEquipoTipo
+    empresa_id      --> nombreEmpresa, cuit, direcciónEmpresa
+    cuit            --> nombreEmpresa, empresa_id, direcciónEmpresa
+    usuario_id      --> apyn, nro_doc, direcciónUsuario, cuil
+    nro_doc         --> apyn, usuario_id, direcciónUsuario, cuil
+    cuil            --> apyn, nro_doc, direcciónUsuario, usuario_id
+    línea_id        --> nroContrato, plan_id, fec_alta_linea, fec_baja_linea, equipo_id, usuario_id
+
+Dependencias Multivaluadas
+    ----    ----    ----
+
+DISPOSITIVOS (Marca_id, modelo_id, equipo_tipo_id, empresa_id, usuario_id, plan_id, equipo_id, línea_id,)
+
+D1(equipo_id, equipo_tipo_id, modelo_id, imei, fec_alta, fec_baja, observaciones)
+D2(Marca_id, descripMarca)
+D3(modelo_id, descripModelo, Marca_id)
+D4(plan_id, empresa_id, descripPlan, importe)
+D5(equipo_tipo_id, descripEquipoTipo)
+D6(empresa_id, nombreEmpresa, cuit, direcciónEmpresa)
+D7(usuario_id, apyn, nro_doc, direcciónUsuario, cuil)
+D8(línea_id, nroContrato, plan_id, fec_alta_linea, fec_baja_linea, equipo_id, usuario_id)
 ```
 
 ---
 
 ### Ejercicio 6.
-6) TOMAS_FOTOGRAFICAS ( idElemento, descripcionElemento, idFoto, fechaFoto, obturacionCamaraFoto,
-idCamara, caracteristicaTecnicaCamara, descripcionCaracteristica)
-Cuando se toma una fotografía, se indican todos los elementos que aparecen en ella, se registra la cámara con la que se
-tomó, el valor de obturación del lente de la cámara y todas las características técnicas de la cámara con la que se toma
-la foto.
-* En una foto puede haber varios elementos, un elemento puede aparecer en varias fotos, pero en una misma foto
-solo parece una vez
+6) TOMAS_FOTOGRAFICAS ( idElemento, descripcionElemento, idFoto, fechaFoto, obturacionCamaraFoto, idCamara, caracteristicaTecnicaCamara, descripcionCaracteristica)
+
+Donde
+* Cuando se toma una fotografía, se indican todos los elementos que aparecen en ella, se registra la cámara con la que se tomó, el valor de obturación del lente de la cámara y todas las características técnicas de la cámara con la que se toma la foto.
+* En una foto puede haber varios elementos, un elemento puede aparecer en varias fotos, pero en una misma foto solo parece una vez
 * El idElemento y el idFoto son únicos en el sistema
 * obturacionCamaraFoto es la obturación del lente de la cámara usada en una foto
-* caracteristicaTecnicasCamara es una característica técnica de una cámara. Cada cámara puede tener muchas
-características, pero tener en cuenta que la misma característica NO pertenece a mas de una cámara. Dos
-caracteristicaTecnicasCamara pueden tener la misma descripción pero pertenecerán a cámaras diferentes.
+* caracteristicaTecnicasCamara es una característica técnica de una cámara. Cada cámara puede tener muchas características, pero tener en cuenta que la misma característica NO pertenece a mas de una cámara. Dos caracteristicaTecnicasCamara pueden tener la misma descripción pero pertenecerán a cámaras diferentes.
 
 ```
 ```
