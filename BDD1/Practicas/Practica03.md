@@ -202,6 +202,25 @@ Donde
 * caracteristicaTecnicasCamara es una característica técnica de una cámara. Cada cámara puede tener muchas características, pero tener en cuenta que la misma característica NO pertenece a mas de una cámara. Dos caracteristicaTecnicasCamara pueden tener la misma descripción pero pertenecerán a cámaras diferentes.
 
 ```
+
+Claves Candidatas
+    idFoto
+
+Dependencias Funcionales
+    idFoto  --> idElementos, idCamara, obturacionCamaraFoto
+    idElemento  --> descripcionElementento
+    caracteristicaTecnicaCamara --> idCamara, descripcionCaracteristica
+
+Dependencias Multivaluadas
+    idFoto      -->> idElementos
+    idElementos -->> idFoto
+    idCamara    -->> caracteristicaTecnicaCamara
+
+TF1(idFoto, idCamara, obturacionCamaraFoto)
+TF2(idFoto, idElemento)
+TF3(idElemento, descripcionElemento)
+TF4(idCamara, caracteristicaTecnicaCamara, descripcionCaracteristica)
+
 ```
 
 ---
