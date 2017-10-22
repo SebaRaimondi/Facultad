@@ -90,7 +90,7 @@ Donde
 
 ```
 Claves candidatas:
-    ????????????
+    ????    Cc1: (idMedico)    ????
 
 Dependencias Funcionales:
     idMedico    --> apynMedico, tipoDocM, nroDocM, fechaNacM, matricula, direccionM, telefonoM
@@ -98,7 +98,12 @@ Dependencias Funcionales:
     idObraSoc   --> nombreOS, direcciónOS, teléfonoOS
     idOrgano    --> descripción
     idEstudio   --> idPaciente, idMedico, idOrgano, informe, resultado, fechaEstudio
+
+    tipoDocM, nroDocM   --> idMedico, blabla
+    matricula           --> idMedico, blabla
+    tipoDocP, nroDocP   --> idPaciente, blabla
     ????    idObraSoc, nroAfiliado  --> idPaciente, blablabla   ???? (Creo que no igual porque podes no tener obra social)
+
 
 Dependencias Multivaluadas:
     idEstudio   -->> idMedico
