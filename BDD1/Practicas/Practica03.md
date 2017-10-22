@@ -216,7 +216,7 @@ Dependencias Multivaluadas
     idElementos -->> idFoto
     idCamara    -->> caracteristicaTecnicaCamara
 
-TF1(idFoto, idCamara, obturacionCamaraFoto)
+TF1(idFoto, idCamara, obturacionCamaraFoto, fechaFoto)
 TF2(idFoto, idElemento)
 TF3(idElemento, descripcionElemento)
 TF4(idCamara, caracteristicaTecnicaCamara, descripcionCaracteristica)
