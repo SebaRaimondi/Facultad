@@ -219,7 +219,7 @@ Dependencias Multivaluadas
 TF1(**idFoto**, idCamara, obturacionCamaraFoto, fechaFoto)
 TF2(**idElemento**, descripcionElemento)
 TF3(**idFoto**, idElemento)
-TF4(**caracteristicaTecnicaCamara**, idCamara, descripcionCaracteristica)
+TF4(**caracteristicaTecnicaCamara**, **idCamara**, descripcionCaracteristica)
 ```
 
 ---
