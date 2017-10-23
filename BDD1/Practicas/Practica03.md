@@ -237,7 +237,29 @@ Donde
 * Para cada ramal existe al menos un chofer asignado.
 
 ```
+Claves Candidatas
+    Cc1: (#Colectivo, dniChofer, dniInspector, dniEmpleado)
 
+Dependencias Funcionales
+    #Linea              --> nombreLinea
+    dniChofer           --> nombreChofer
+    dniInspector        --> nombreInspector
+    dniEmpleado         --> nombreEmpleado
+    #Ramal              --> #Linea
+    #Colectivo, #Linea  --> #Ramal
+
+Dependencias Multivaluadas
+    #Linea      -->> #Ramal
+    #Colectivo  -->> #Linea
+    #Ramal      -->> dniChofer
+
+
+EC1(#Linea, nombreLinea)
+EC2(dniChofer, nombreChofer)
+EC3(dniInspector, nombreInspector)
+EC4(dniEmpleado, nombreEmpleado)
+EC5(#Ramal, #Linea)
+EC6(#Colectivo, #Linea, #Ramal)
 ```
 
 ---
