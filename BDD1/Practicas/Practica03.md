@@ -207,20 +207,18 @@ Claves Candidatas
     idFoto
 
 Dependencias Funcionales
-    idFoto  --> idElementos, idCamara, obturacionCamaraFoto
-    idElemento  --> descripcionElementento
-    caracteristicaTecnicaCamara --> idCamara, descripcionCaracteristica
+    idFoto      --> idCamara, obturacionCamaraFoto, fechaFoto
+    idElemento  --> descripcionElemento
 
 Dependencias Multivaluadas
-    idFoto      -->> idElementos
-    idElementos -->> idFoto
-    idCamara    -->> caracteristicaTecnicaCamara
+    idFoto      ->> idElemento
+    idElemento  ->> idFoto
+    idCamara    ->> caracteristicaTecnicaCamara, descripcionCaracteristica
 
-TF1(idFoto, idCamara, obturacionCamaraFoto, fechaFoto)
-TF2(idFoto, idElemento)
-TF3(idElemento, descripcionElemento)
-TF4(idCamara, caracteristicaTecnicaCamara, descripcionCaracteristica)
-
+TF1(**idFoto**, idCamara, obturacionCamaraFoto, fechaFoto)
+TF1(**idElemento**, descripcionElemento)
+TF1(**idFoto**, idElemento)
+TF1(**idCamara**, caracteristicaTecnicaCamara, descripcionCaracteristica)
 ```
 
 ---
