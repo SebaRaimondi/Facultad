@@ -296,8 +296,6 @@ Dependencias Multivaluadas
     dniPaciente, fechaInicioInternacion -->> insumoEmpleadoInternacion
     directorHospital    -->> codHospital
 
-INTERNACION (codHospital, dniPaciente, fechaInicioInternacion)
-
 I1(codHospital, cantidadHabitaciones, directorHospital, domicilioHospital, ciudadHospital)
 I2(dniPaciente, domicilioPaciente, nombreApellidoPaciente)
 I3(dniPaciente, fechaInicioInternacion, direccionInternacionPaciente, telefonoInternacionPaciente, cantDiasInternacion, codHospital)
