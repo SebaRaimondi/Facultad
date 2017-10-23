@@ -296,6 +296,7 @@ Dependencias Multivaluadas
     dniPaciente, fechaInicioInternacion -->> insumoEmpleadoInternacion
     directorHospital    -->> codHospital
 
+
 I1(codHospital, cantidadHabitaciones, directorHospital, domicilioHospital, ciudadHospital)
 I2(dniPaciente, domicilioPaciente, nombreApellidoPaciente)
 I3(dniPaciente, fechaInicioInternacion, direccionInternacionPaciente, telefonoInternacionPaciente, cantDiasInternacion, codHospital)
@@ -315,6 +316,26 @@ Donde
 * de cada infracción que se labra se registra el número de cedula del conductor del auto. Además se conoce la fecha y el tipo de infracción.
 
 ```
+Claves Candidatas
+    Cc1: (#propietario, #infraccion)
+
+Dependencias Funcionales
+    #auto       --> modeloAuto
+    #cedula     --> #auto, #conductor, fechaVto
+    #infraccion --> #cedula, fechaInfraccion, tipoInfraccion    
+
+Dependencias Multivaluadas
+    #auto           -->> #cedula
+    #auto           -->> #propietario
+    #propietario    -->> #auto
+
+IR1(#auto, #cedula)
+IR2(#auto, modeloAuto)
+IR3(#auto, #propietario)
+IR4(#cedula, #conductor, fechaVto)
+IR5(#infraccion, #cedula, fechaInfraccion, tipoInfraccion)
+
+????    IR5(#propietario, #infraccion)  ????
 ```
 
 ---
