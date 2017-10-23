@@ -209,6 +209,7 @@ Claves Candidatas
 Dependencias Funcionales
     idFoto      --> idCamara, obturacionCamaraFoto, fechaFoto
     idElemento  --> descripcionElemento
+    caracteristicaTecnicaCamara --> idCamara, descripcionCamara
 
 Dependencias Multivaluadas
     idFoto      ->> idElemento
@@ -218,7 +219,7 @@ Dependencias Multivaluadas
 TF1(**idFoto**, idCamara, obturacionCamaraFoto, fechaFoto)
 TF1(**idElemento**, descripcionElemento)
 TF1(**idFoto**, idElemento)
-TF1(**idCamara**, caracteristicaTecnicaCamara, descripcionCaracteristica)
+TF1(**caracteristicaTecnicaCamara**, idCamara, descripcionCaracteristica)
 ```
 
 ---
