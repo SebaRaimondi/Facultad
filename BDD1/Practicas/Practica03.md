@@ -282,6 +282,27 @@ Donde
 * En un domicilioHospital de una ciudad existe un único hospital
 
 ```
+Claves Candidatas
+
+
+Dependencias Funcionales
+    codHospital     --> cantidadHabitaciones, directorHospital, domicilioHospital, ciudadHospital
+    dniPaciente, fechaInicioInternacion --> direccionInternacionPaciente, telefonoInternacionPaciente, cantDiasInternacion, codHospital
+    dniPaciente     --> domicilioPaciente, nombreApellidoPaciente
+
+
+Dependencias Multivaluadas
+    dniPaciente, fechaInicioInternacion -->> doctorQueAtiendePaciente
+    dniPaciente, fechaInicioInternacion -->> insumoEmpleadoInternacion
+    directorHospital    -->> codHospital
+
+INTERNACION (codHospital, dniPaciente, fechaInicioInternacion)
+
+I1(codHospital, cantidadHabitaciones, directorHospital, domicilioHospital, ciudadHospital)
+I2(dniPaciente, domicilioPaciente, nombreApellidoPaciente)
+I3(dniPaciente, fechaInicioInternacion, direccionInternacionPaciente, telefonoInternacionPaciente, cantDiasInternacion, codHospital)
+I4(dniPaciente, fechaInicioInternacion, doctorQueAtiendePaciente)
+I5(dniPaciente, fechaInicioInternacion, insumoEmpleadoInternacion)
 ```
 
 ---
