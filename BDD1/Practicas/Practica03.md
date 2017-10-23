@@ -248,6 +248,9 @@ Dependencias Funcionales
     #Ramal              --> #Linea
     #Colectivo, #Linea  --> #Ramal
 
+    ????    dniChofer   --> #Ramal  ????
+
+
 Dependencias Multivaluadas
     #Linea      -->> #Ramal
     #Colectivo  -->> #Linea
