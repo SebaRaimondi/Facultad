@@ -226,8 +226,8 @@ TF4(**caracteristicaTecnicaCamara**, **idCamara**, descripcionCaracteristica)
 ---
 
 ### Ejercicio 7.
-7) EMPRESA_COLECTIVO (#Línea, #Ramal, #Colectivo, dniChofer, dniInspector, dniEmpleado, nombreLinea,
-nombreChofer, nombreInspector, nombreEmpleado)
+7) EMPRESA_COLECTIVO (#Línea, #Ramal, #Colectivo, dniChofer, dniInspector, dniEmpleado, nombreLinea, nombreChofer, nombreInspector, nombreEmpleado)
+
 Donde
 * Una línea posee varios ramales
 * Los #Ramal no se repiten en distintas líneas
@@ -237,19 +237,17 @@ Donde
 * Para cada ramal existe al menos un chofer asignado.
 
 ```
+
 ```
 
 ---
 
 ### Ejercicio 8.
-8) INTERNACION (codHospital, cantidadHabitaciones, direcciónInternacionPaciente,
-telefonoInternacionPaciente, dniPaciente, domicilioPaciente, nombreApellidoPaciente, domicilioHospital,
-ciudadHospital, directorHospital, fechaInicioInternacion, cantDiasIntenacion, doctorQueAtiendePaciente,
-insumoEmpleadoInternación)
+8) INTERNACION (codHospital, cantidadHabitaciones, direcciónInternacionPaciente, telefonoInternacionPaciente, dniPaciente, domicilioPaciente, nombreApellidoPaciente, domicilioHospital, ciudadHospital, directorHospital, fechaInicioInternacion, cantDiasIntenacion, doctorQueAtiendePaciente, insumoEmpleadoInternación)
+
 Donde
 * cantidadHabitaciones es la cantidad de habitaciones que hay en cada hospital
-* direcciónInternacionPaciente y telefonoInternacionPaciente, indican la dirección y el teléfono que deja un
-paciente cuando se interna
+* direcciónInternacionPaciente y telefonoInternacionPaciente, indican la dirección y el teléfono que deja un paciente cuando se interna
 * domicilioPaciente es el domicilio que figura en el dni del paciente
 * Un paciente para una internación es atendido por muchos doctores (doctorQueAtiendePaciente)
 * Para una internación de un paciente, se emplean varios insumos (insumoEmpleadoInternación)
@@ -264,16 +262,13 @@ paciente cuando se interna
 ---
 
 ### Ejercicio 9.
-9) INFRACCIONES_REALIZADAS (#auto, modeloAuto, #cedula, #conductor, fechaVto, #propietario, #infraccion,
-fechaInfraccion, tipoInfraccion)
+9) INFRACCIONES_REALIZADAS (#auto, modeloAuto, #cedula, #conductor, fechaVto, #propietario, #infraccion, fechaInfraccion, tipoInfraccion)
+
 Donde
-* un auto tiene una o más cédulas asociadas que corresponden a los conductores autorizados. Cada cédula se
-asocia a un único auto y a un único conductor, y tiene una fecha de vencimiento.
-* los #cedula y #conductor son únicos en el sistema. Si bien un conductor puede conducir varios autos, para cada
-uno de ellos tendrá una cédula diferente.
+* un auto tiene una o más cédulas asociadas que corresponden a los conductores autorizados. Cada cédula se asocia a un único auto y a un único conductor, y tiene una fecha de vencimiento.
+* los #cedula y #conductor son únicos en el sistema. Si bien un conductor puede conducir varios autos, para cada uno de ellos tendrá una cédula diferente.
 * un auto puede tener más de un propietario y un propietario puede tener más de un auto.
-* de cada infracción que se labra se registra el número de cedula del conductor del auto. Además se
-conoce la fecha y el tipo de infracción.
+* de cada infracción que se labra se registra el número de cedula del conductor del auto. Además se conoce la fecha y el tipo de infracción.
 
 ```
 ```
@@ -281,31 +276,18 @@ conoce la fecha y el tipo de infracción.
 ---
 
 ### Ejercicio 10.
-10) RESERVA (#Reserva, #Agencia, nombreAgencia, fechaReservaVuelo, ciudadOrigen, ciudadDestino,
-tipoPago, nombreAerolínea, #Vuelo, dniPasajero, nombrePasajero, dirPasajero, telPasajero, clase, fechaPartida,
-fechaLlegada, horaPartida, horaLlegada, modeloAvión, #Asiento, tipoComida, compañíaPasajero, dirCompañía,
-telCompañía)
+10) RESERVA (#Reserva, #Agencia, nombreAgencia, fechaReservaVuelo, ciudadOrigen, ciudadDestino, tipoPago, nombreAerolínea, #Vuelo, dniPasajero, nombrePasajero, dirPasajero, telPasajero, clase, fechaPartida, fechaLlegada, horaPartida, horaLlegada, modeloAvión, #Asiento, tipoComida, compañíaPasajero, dirCompañía, telCompañía)
+
 Donde
 * Una reserva puede involucrar uno o varios pasajeros (por ejemplo un tour).
-* Si bien todos los pasajeros de una reserva viajan en la misma clase del mismo vuelo, cada uno de ellos decide el
-tipo de pago de su asiento (El tipo de pago se refiere al la forma de pago: efectivo, tarjeta de crédito, etc.). Notar
-que para cada vuelo el tipo pago puede ser potencialmente diferente.
-* Una reserva puede involucrar muchos vuelos (por ejemplo para desplazarse de A a C se debe pasar por una
-escala intermedia B); tener en cuenta que no necesariamente todos los pasajeros de una reserva viajan en todos
-lo vuelos de esa reserva. Para cada vuelo de una reserva se conoce la fecha para la cual se realiza. Para una
-fecha puede haber varios vuelos de una o varias reservas.
+* Si bien todos los pasajeros de una reserva viajan en la misma clase del mismo vuelo, cada uno de ellos decide el tipo de pago de su asiento (El tipo de pago se refiere al la forma de pago: efectivo, tarjeta de crédito, etc.). Notar que para cada vuelo el tipo pago puede ser potencialmente diferente.
+* Una reserva puede involucrar muchos vuelos (por ejemplo para desplazarse de A a C se debe pasar por una escala intermedia B); tener en cuenta que no necesariamente todos los pasajeros de una reserva viajan en todos lo vuelos de esa reserva. Para cada vuelo de una reserva se conoce la fecha para la cual se realiza. Para una fecha puede haber varios vuelos de una o varias reservas.
 * La reserva es realizada a través de una única agencia de turismo.
 * Los pasajeros pueden estar independientemente involucrados en distintas reservas.
-* Cada aerolínea maneja su propia forma de asignar el #Reserva, con lo cuál no hay garantía que estos no se
-repitan para las distintas aerolíneas.
-* Las aerolíneas siempre usan el mismo modelo de avión para el mismo vuelo. Y el mismo vuelo de una aerolínea
-siempre sale de la misma ciudad a la misma hora, y llega a la misma ciudad destino a la misma hora de llegada,
-los días que ese vuelo es ofrecido por la aerolínea.
-* El tipo de comida significa si corresponde desayuno, almuerzo, cena o merienda o cualquier combinación de
-ellos para cada vuelo.
-* Para cada reserva de un pasajero se conoce el domicilio del pasajero y datos de su lugar de trabajo. Un pasajero
-puede trabajar en más de una compañía, una compañía puede tener más de una dirección y en cada dirección
-de una compañía puede haber más de un teléfono.
+* Cada aerolínea maneja su propia forma de asignar el #Reserva, con lo cuál no hay garantía que estos no se repitan para las distintas aerolíneas.
+* Las aerolíneas siempre usan el mismo modelo de avión para el mismo vuelo. Y el mismo vuelo de una aerolínea siempre sale de la misma ciudad a la misma hora, y llega a la misma ciudad destino a la misma hora de llegada, los días que ese vuelo es ofrecido por la aerolínea.
+* El tipo de comida significa si corresponde desayuno, almuerzo, cena o merienda o cualquier combinación de ellos para cada vuelo.
+* Para cada reserva de un pasajero se conoce el domicilio del pasajero y datos de su lugar de trabajo. Un pasajero puede trabajar en más de una compañía, una compañía puede tener más de una dirección y en cada dirección de una compañía puede haber más de un teléfono.
 
 
 ```
@@ -314,10 +296,8 @@ de una compañía puede haber más de un teléfono.
 ---
 
 ### Ejercicio 11.
-11) BUQUE (nombreBuque, nYApDueño, dniDueño, tipoBuque, tonelaje, tipoCasco, #Viaje, puertoOrigen,
-puertoDestino puertoIntermedio, nomPaísPuertoDestino, nombrePaisPuertoOrigen,
-nombrePaisPuertoIntermedio, posicionActual, fechaPosicionActual, nYApPasajero, dniPasajero, dirPasajero,
-puertoInicioPasajero, puertoFinalPasajero)
+11) BUQUE (nombreBuque, nYApDueño, dniDueño, tipoBuque, tonelaje, tipoCasco, #Viaje, puertoOrigen, puertoDestino puertoIntermedio, nomPaísPuertoDestino, nombrePaisPuertoOrigen, nombrePaisPuertoIntermedio, posicionActual, fechaPosicionActual, nYApPasajero, dniPasajero, dirPasajero, puertoInicioPasajero, puertoFinalPasajero)
+
 Donde
 * El #Viaje es un número consecutivo que identifica cada partida de cada buque.
 * Un buque hace varios viajes. El #Viaje se puede repetir para distintos buques
