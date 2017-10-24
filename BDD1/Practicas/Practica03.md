@@ -359,14 +359,14 @@ Donde
 Claves Candidatas
 
 Dependencias Funcionales
-    dniPasajero             --> nombrePasajero, dirPasajero, telPasajero
-    #Agencia                --> nombreAgencia
-    #Agencia, #Reserva      --> clase, fechaReservaVuelo, #Agencia
-    nombreAerolínea, #Vuelo    --> ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, tipoComida, modeloAvion
+    dniPasajero                 --> nombrePasajero, dirPasajero, telPasajero
+    #Agencia                    --> nombreAgencia
+    nombreAerolínea, #Reserva          --> clase, fechaReservaVuelo, #Agencia
+    nombreAerolínea, #Vuelo     --> ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, tipoComida, modeloAvion
 
 Dependencias Multivaluadas
-    #Agencia, #Reserva                  -->> dniPasajero, tipoPago
-    #Agencia, #Reserva, dniPasajero     -->> #Vuelo
+    nombreAerolínea, #Reserva                  -->> dniPasajero, tipoPago
+    nombreAerolínea, #Reserva, dniPasajero     -->> #Vuelo
     fechaPartida                        -->> #Vuelo
     dniPasajero                         -->> #Agencia, #Reserva     (dm1)
     dniPasajero                         -->> compañiaPasajero
@@ -378,10 +378,10 @@ R2(**dniPasajero**, **compañiaPasajero**)
 R3(**compañiaPasajero**, **dirCompañia**)
 R4(**dirCompañia**, **telCompañia**)
 R5(**#Agencia**, nombreAgencia)
-R6(**#Agencia**, **#Reserva**, clase, fechaReservaVuelo, #Agencia)
+R6(**nombreAerolínea**, **#Reserva**, clase, fechaReservaVuelo, #Agencia)
 R7(**nombreAerolínea**, **#Vuelo**, ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, tipoComida, modeloAvion)
-R8(**#Agencia**, **#Reserva**, **dniPasajero**, tipoPago)
-R9(**#Agencia**, **#Reserva**, **dniPasajero**, **#Vuelo**)
+R8(**nombreAerolínea**, **#Reserva**, **dniPasajero**, tipoPago)
+R9(**nombreAerolínea**, **#Reserva**, **dniPasajero**, **#Vuelo**)
 R10(**fechaPartida**, **#Vuelo**)
 ```
 
