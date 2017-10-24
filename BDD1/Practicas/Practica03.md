@@ -361,11 +361,13 @@ Claves Candidatas
 Dependencias Funcionales
     dniPasajero                 --> nombrePasajero, dirPasajero, telPasajero
     #Agencia                    --> nombreAgencia
-    nombreAerolínea, #Reserva   --> clase, fechaReservaVuelo, #Agencia
+    nombreAerolínea, #Reserva   --> fechaReservaVuelo, #Agencia
     nombreAerolínea, #Vuelo     --> ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, modeloAvion
+    nombreAerolinea, #Reserva, #Vuelo               --> clase
+    nombreAerolinea, #Reserva, #Vuelo, dniPasajero  --> #Asiento, tipoPago
 
 Dependencias Multivaluadas
-    nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo, #Asiento, tipoPago
+    nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo
     nombreAerolinea, #Vuelo                 -->> fechaPartida, fechaLlegada
     nombreAerolinea, #Vuelo                 -->> tipoComida
     dniPasajero                             -->> #Agencia, #Reserva     (dm1)
