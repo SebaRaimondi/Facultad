@@ -385,10 +385,9 @@ R6(nombreAerolinea, #Reserva, #Vuelo, dniPasajero, #Asiento, tipoPago)
 R7(nombreAerolinea, #Reserva, dniPasajero, #Vuelo)
 R8(nombreAerolinea, #Vuelo, fechaPartida, fechaLlegada)
 R9(nombreAerolinea, #Vuelo, tipoComida)
-R10(dniPasajero, nombreAerolinea, #Reserva)
-R11(dniPasajero, compañiaPasajero)
-R12(compañiaPasajero, dirCompañia)
-R13(dirCompañia, telCompañia)
+R10(dniPasajero, compañiaPasajero)
+R11(compañiaPasajero, dirCompañia)
+R12(dirCompañia, telCompañia)
 ```
 
 ---
