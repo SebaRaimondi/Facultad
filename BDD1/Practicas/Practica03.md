@@ -370,22 +370,25 @@ Dependencias Multivaluadas
     nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo
     nombreAerolinea, #Vuelo                 -->> fechaPartida, fechaLlegada
     nombreAerolinea, #Vuelo                 -->> tipoComida
-    dniPasajero                             -->> #Agencia, #Reserva     (dm1)
+    dniPasajero                             -->> nombreAerolinea, #Reserva     (dm1)
     dniPasajero                             -->> compañiaPasajero
     compañiaPasajero                        -->> dirCompañia
     dirCompañia                             -->> telCompañia
 
-R1(**dniPasajero**, nombrePasajero, dirPasajero, telPasajero)
-R2(**dniPasajero**, **compañiaPasajero**)
-R3(**compañiaPasajero**, **dirCompañia**)
-R4(**dirCompañia**, **telCompañia**)
-R5(**#Agencia**, nombreAgencia)
-R6(**nombreAerolínea**, **#Reserva**, clase, fechaReservaVuelo, #Agencia)
-R7(**nombreAerolínea**, **#Vuelo**, ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, modeloAvion)
-R8(**nombreAerolínea**, **#Reserva**, **dniPasajero**, tipoPago)
-R9(**nombreAerolínea**, **#Reserva**, **dniPasajero**, **#Vuelo**)
-R10(**nombreAerolinea**, **#Vuelo**, fechaPartida, fechaLlegada)
-R11(**nomrbeAerolinea**, **#Vuelo**, tipoComida)
+R1(dniPasajero, nombrePasajero, dirPasajero, telPasajero)
+R2(#Agencia, nombreAgencia)
+R3(nombreAerolínea, #Reserva, fechaReservaVuelo, #Agencia)
+R4(nombreAerolínea, #Vuelo, ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, modeloAvion)
+R5(nombreAerolinea, #Reserva, #Vuelo, clase)
+R6(nombreAerolinea, #Reserva, #Vuelo, dniPasajero, #Asiento, tipoPago)
+
+R7(nombreAerolinea, #Reserva, dniPasajero, #Vuelo)
+R8(nombreAerolinea, #Vuelo, fechaPartida, fechaLlegada)
+R9(nombreAerolinea, #Vuelo, tipoComida)
+R10(dniPasajero, #Agencia, #Reserva)
+R11(dniPasajero, compañiaPasajero)
+R12(compañiaPasajero, dirCompañia)
+R13(dirCompañia, telCompañia)
 ```
 
 ---
