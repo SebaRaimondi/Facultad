@@ -422,18 +422,16 @@ Dependencias Multivaluadas
     nombreBuque, #Viaje -->> nombrePaisPuertoIntermedio, puertoIntermedio
 
 
-BUQUE (nombreBuque, dniDueño, #Viaje, puertoIntermedio, nombrePaisPuertoIntermedio, posicionActual, fechaPosicionActual, dniPasajero)
-
 B1(dniDueño, nYApDueño)
-B1(nombreBuque, tipoBuque)
-B1(tipoBuque, tonelaje, tipoCasco)
-B1(nombreBuque, #Viaje, nombrePaisPuertoOrigen, puertoOrigen, nombrePaisPuertoDestino, puertoDestino)
-B1(dniPasajero, nYApPasajero, dirPasajero)
-B1(nombreBuque, #Viaje, dniPasajero, puertoInicioPasajero, puertoFinalPasajero)
-B1(nombreBuque, #Viaje)
-B1(nombreBuque, dniDueño)
-B1(nombreBuque, fechaPosicionActual, posicionActual)
-B1(nombreBuque, #Viaje, nombrePaisPuertoIntermedio, puertoIntermedio)
+B2(nombreBuque, tipoBuque)
+B3(tipoBuque, tonelaje, tipoCasco)
+B4(nombreBuque, #Viaje, nombrePaisPuertoOrigen, puertoOrigen, nombrePaisPuertoDestino, puertoDestino)
+B5(dniPasajero, nYApPasajero, dirPasajero)
+B6(nombreBuque, #Viaje, dniPasajero, puertoInicioPasajero, puertoFinalPasajero)
+B7(nombreBuque, #Viaje)
+B8(nombreBuque, dniDueño)
+B9(nombreBuque, fechaPosicionActual, posicionActual)
+B10(nombreBuque, #Viaje, nombrePaisPuertoIntermedio, puertoIntermedio)
 ```
 
 ---
