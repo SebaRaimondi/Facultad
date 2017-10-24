@@ -375,6 +375,7 @@ Dependencias Multivaluadas
     compañiaPasajero                        -->> dirCompañia
     dirCompañia                             -->> telCompañia
 
+
 R1(dniPasajero, nombrePasajero, dirPasajero, telPasajero)
 R2(#Agencia, nombreAgencia)
 R3(nombreAerolínea, #Reserva, fechaReservaVuelo, #Agencia)
