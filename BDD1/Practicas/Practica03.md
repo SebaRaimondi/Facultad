@@ -365,8 +365,7 @@ Dependencias Funcionales
     nombreAerolínea, #Vuelo     --> ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, modeloAvion
 
 Dependencias Multivaluadas
-    nombreAerolínea, #Reserva               -->> dniPasajero, tipoPago
-    nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo, #Asiento
+    nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo, #Asiento, tipoPago
     nombreAerolinea, #Vuelo                 -->> fechaPartida, fechaLlegada
     nombreAerolinea, #Vuelo                 -->> tipoComida
     dniPasajero                             -->> #Agencia, #Reserva     (dm1)
