@@ -356,6 +356,33 @@ Donde
 
 
 ```
+Claves Candidatas
+
+Dependencias Funcionales
+    dniPasajero             --> nombrePasajero, dirPasajero, telPasajero
+    #Agencia                --> nombreAgencia
+    #Agencia, #Reserva      --> clase, fechaReservaVuelo, #Agencia
+    nombreAerolínea, #Vuelo    --> ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, tipoComida, modeloAvion
+
+Dependencias Multivaluadas
+    #Agencia, #Reserva                  -->> dniPasajero, tipoPago
+    #Agencia, #Reserva, dniPasajero     -->> #Vuelo
+    fechaPartida                        -->> #Vuelo
+    dniPasajero                         -->> #Agencia, #Reserva     (dm1)
+    dniPasajero                         -->> compañiaPasajero
+    compañiaPasajero                    -->> dirCompañia
+    dirCompañia                         -->> telCompañia
+
+R1(**dniPasajero**, nombrePasajero, dirPasajero, telPasajero)
+R2(**dniPasajero**, **compañiaPasajero**)
+R3(**compañiaPasajero**, **dirCompañia**)
+R4(**dirCompañia**, **telCompañia**)
+R5(**#Agencia**, nombreAgencia)
+R6(**#Agencia**, **#Reserva**, clase, fechaReservaVuelo, #Agencia)
+R7(**nombreAerolínea**, **#Vuelo**, ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, tipoComida, modeloAvion)
+R8(**#Agencia**, **#Reserva**, **dniPasajero**, tipoPago)
+R9(**#Agencia**, **#Reserva**, **dniPasajero**, **#Vuelo**)
+R10(**fechaPartida**, **#Vuelo**)
 ```
 
 ---
@@ -376,6 +403,37 @@ Donde
 * Un pasajero tiene un único puerto origen y puerto destino por cada viaje de un buque.
 
 ```
+Claves Candidatas
+
+
+Dependencias Funcionales
+    dniDueño                            --> nYApDueño
+    nombreBuque                         --> tipoBuque
+    tipoBuque                           --> tonelaje, tipoCasco
+    nombreBuque, #Viaje                 --> nombrePaisPuertoOrigen, puertoOrigen, nombrePaisPuertoDestino, puertoDestino
+    dniPasajero                         --> nYApPasajero, dirPasajero
+    nombreBuque, #Viaje, dniPasajero    --> puertoInicioPasajero, puertoFinalPasajero
+    nombreBuque, fechaPosicionActual    --> posicionActual                      (dm3?)
+
+Dependencias Multivaluadas
+    nombreBuque         -->> #Viaje
+    nombreBuque         -->> dniDueño
+    nombreBuque         -->> posicionActual, fechaPosicionActual                (ultima df?)
+    nombreBuque, #Viaje -->> nombrePaisPuertoIntermedio, puertoIntermedio
+
+
+BUQUE (nombreBuque, dniDueño, #Viaje, puertoIntermedio, nombrePaisPuertoIntermedio, posicionActual, fechaPosicionActual, dniPasajero)
+
+B1(dniDueño, nYApDueño)
+B1(nombreBuque, tipoBuque)
+B1(tipoBuque, tonelaje, tipoCasco)
+B1(nombreBuque, #Viaje, nombrePaisPuertoOrigen, puertoOrigen, nombrePaisPuertoDestino, puertoDestino)
+B1(dniPasajero, nYApPasajero, dirPasajero)
+B1(nombreBuque, #Viaje, dniPasajero, puertoInicioPasajero, puertoFinalPasajero)
+B1(nombreBuque, #Viaje)
+B1(nombreBuque, dniDueño)
+B1(nombreBuque, fechaPosicionActual, posicionActual)
+B1(nombreBuque, #Viaje, nombrePaisPuertoIntermedio, puertoIntermedio)
 ```
 
 ---
