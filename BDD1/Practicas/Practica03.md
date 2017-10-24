@@ -366,7 +366,7 @@ Dependencias Funcionales
 
 Dependencias Multivaluadas
     nombreAerolínea, #Reserva               -->> dniPasajero, tipoPago
-    nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo
+    nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo, #Asiento
     nombreAerolinea, #Vuelo                 -->> fechaPartida, fechaLlegada
     nombreAerolinea, #Vuelo                 -->> tipoComida
     dniPasajero                             -->> #Agencia, #Reserva     (dm1)
