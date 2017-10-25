@@ -329,13 +329,12 @@ Dependencias Multivaluadas
     #auto           -->> #propietario
     #propietario    -->> #auto
 
-IR1(#auto, #cedula)
-IR2(#auto, modeloAuto)
-IR3(#auto, #propietario)
-IR4(#cedula, #conductor, fechaVto)
-IR5(#infraccion, #cedula, fechaInfraccion, tipoInfraccion)
+IR1(#auto, modeloAuto)
+IR2(#cedula, #conductor, fechaVto, #auto)
+IR3(#infraccion, #cedula, fechaInfraccion, tipoInfraccion)
+IR4(#propietario, #infraccion)
 
-????    IR5(#propietario, #infraccion)  ????
+IR5(#auto, #propietario)
 ```
 
 ---
