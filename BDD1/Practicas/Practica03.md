@@ -237,32 +237,94 @@ Donde
 * Para cada ramal existe al menos un chofer asignado.
 
 ```
-Claves Candidatas
-    Cc1: (#Colectivo, dniChofer, dniInspector, dniEmpleado)
-
 Dependencias Funcionales
-    #Linea              --> nombreLinea
-    dniChofer           --> nombreChofer
-    dniInspector        --> nombreInspector
-    dniEmpleado         --> nombreEmpleado
-    #Ramal              --> #Linea
-    #Colectivo, #Linea  --> #Ramal
+    df1: #Linea              --> nombreLinea
+    df2: dniChofer           --> #Ramal, nombreChofer
+    df3: dniInspector        --> nombreInspector
+    df4: dniEmpleado         --> nombreEmpleado
+    df5: #Ramal              --> #Linea
+    df6: #Colectivo, #Linea  --> #Ramal
 
-    ????    dniChofer   --> #Ramal  ????
+Claves Candidatas
+    Cc1: {dniChofer, dniInspector, dniEmpleado, #Colectivo}
 
+EMPRESA_COLECTIVO cumple con la definicion de BCNF?
+    No, ya que al menos encontramos la df1 donde #Linea no es superclave del esquema EMPRESA_COLECTIVO y sabemos que se puede particionar para eliminar anomalias.
+
+    R1(#Linea, nombreLinea)
+    R2(#Línea, #Ramal, #Colectivo, dniChofer, dniInspector, dniEmpleado, nombreChofer, nombreInspector, nombreEmpleado)
+
+a. Perdi informacion?
+    No, porque R1 ∩ R2 = #Linea, que es clave en R1
+
+b. Perdi dependencias funcionales?
+    No, porque en R1 vale df1 y en R2 valen df2, df3, df4, df5 y df6
+
+c. R1 cumple con la definicion de BCNF?
+    Si, porque el determinante de la df1 es superclave en R1
+
+d. R2 cumple con la definicion de BCNF?
+    No, porque al menos encontramos la df2 donde dniChofer no es superclave en R2.
+
+    R3(dniChofer, #Ramal, nombreChofer)
+    R4(#Línea, #Colectivo, dniChofer, dniInspector, dniEmpleado, nombreInspector, nombreEmpleado)
+
+a. Perdi informacion?
+    No, porque R3 ∩ R4 = dniChofer, que es clave en R3
+
+b. Perdi dependencias funcionales?
+    En R3 vale df2, en R4 valen df3 y df4, pero los atributos de las dependencias funcionales 5 y 6 quedaron distribuidos en mas de una particion, por lo que es necesario aplicar el algoritmo para analizar la perdida de dependencias funcionales.
+    Se comprueba que se pierde la dependencias funcionales, por lo cual no se puede llevar a BCNF. Intento llevarlo a 3FN
+
+    R5(dniInspector, nombreInspector)
+    R6(dniEmpleado, nombreEmpleado)
+    R7(#Ramal, #Linea)
+    R8(#Colectivo, #Linea, #Ramal)
+
+Como la clave del esquema original no esta incluido en ninguna de las particiones generadas durante el proceso, se construye una tabla con la clave:
+
+    R9(#Colectivo, dniChofer, dniInspector, dniEmpleado)
+
+Las particiones del esquema en 3FN son:
+    R1(#Linea, nombreLinea)
+    R3(dniChofer, #Ramal, nombreChofer)
+    R5(dniInspector, nombreInspector)
+    R6(dniEmpleado, nombreEmpleado)
+    R7(#Ramal, #Linea)
+    R8(#Colectivo, #Linea, #Ramal)
+    R9(#Colectivo, dniChofer, dniInspector, dniEmpleado)
+
+Clave Primaria: {#Colectivo, dniChofer, dniInspector, dniEmpleado}
 
 Dependencias Multivaluadas
-    #Linea      -->> #Ramal
-    #Colectivo  -->> #Linea
-    #Ramal      -->> dniChofer
+    dm1: #Linea      -->> #Ramal
+    dm2: #Colectivo  -->> #Linea, #Ramal
+    dm3: #Ramal      -->> dniChofer
+    dm4: Ø   -->> dniInspector
+    dm5: Ø   -->> dniEmpleado
 
+En R7 encontramos la dm1 pero es trivial.
+En R8 encontramos la dm2 pero es trivial.
+En R3 encontramos la dm3 pero es trivial.
 
-EC1(#Linea, nombreLinea)
-EC2(dniChofer, nombreChofer)
-EC3(dniInspector, nombreInspector)
-EC4(dniEmpleado, nombreEmpleado)
-EC5(#Ramal, #Linea)
-EC6(#Colectivo, #Linea, #Ramal)
+R9 no esta en 4FN ya que en ella valen dm5, dm6 que no son triviales. Particiono R9
+    R10(dniInspector)
+    R11(dniEmpleado)
+    R12(#Colectivo, dniChofer)
+
+En R10 encontramos la dm4 pero es trivial.
+En R11 encontramos la dm5 pero es trivial.
+
+Particiones finales:
+    R1(#Linea, nombreLinea)
+    R3(dniChofer, #Ramal, nombreChofer)
+    R5(dniInspector, nombreInspector)
+    R6(dniEmpleado, nombreEmpleado)
+    R7(#Ramal, #Linea)
+    R8(#Colectivo, #Linea, #Ramal)
+    R10(dniInspector)
+    R11(dniEmpleado)
+    R12(#Colectivo, dniChofer)
 ```
 
 ---
