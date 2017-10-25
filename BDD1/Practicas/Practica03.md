@@ -316,25 +316,74 @@ Donde
 * de cada infracción que se labra se registra el número de cedula del conductor del auto. Además se conoce la fecha y el tipo de infracción.
 
 ```
+INFRACCIONES_REALIZADAS (#auto, modeloAuto, #cedula, #conductor, fechaVto, #propietario, #infraccion, fechaInfraccion, tipoInfraccion)
+
+Se pueden deducir las siguientes dependencias funcionales:
+    df1: #auto          --> modeloAuto
+    df2: #cedula        --> #conductor, #auto, fechaVto
+    df3: #infraccion    --> #cedula, fechaInfraccion, tipoInfraccion
+
 Claves Candidatas
-    Cc1: (#propietario, #infraccion)
+    Cc1: {#propietario, #infraccion}
 
-Dependencias Funcionales
-    #auto       --> modeloAuto
-    #cedula     --> #auto, #conductor, fechaVto
-    #infraccion --> #cedula, fechaInfraccion, tipoInfraccion    
+INFRACCIONES_REALIZADAS cumple con la definicion de BCNF?
+    No, ya que al menos encontramos a la df1, donde #auto no es superclave del esquema y sabemos que se puede particionar para eliminar anomalias, procedemos a particionar contemplando la df1:
+    
+    R1(#auto, modeloAuto)
+    R2(#auto, #cedula, #conductor, fechaVto, #propietario, #infraccion, fechaInfraccion, tipoInfraccion)
 
-Dependencias Multivaluadas
-    #auto           -->> #cedula
-    #auto           -->> #propietario
-    #propietario    -->> #auto
+a. Perdi informacion?
+    No, porque R1 ∩ R2 = #auto, que es clave en R1
 
-IR1(#auto, modeloAuto)
-IR2(#cedula, #conductor, fechaVto, #auto)
-IR3(#infraccion, #cedula, fechaInfraccion, tipoInfraccion)
-IR4(#propietario, #infraccion)
+b. Perdi dependencias funcionales?
+    No, porque en R1 vale df1 y en R2 valen df2 y df3
 
-IR5(#auto, #propietario)
+c. R1 cumple con la definicion de BCNF?
+    Si, porque el determinante de la df1 es superclave en R1
+
+d. R2 cumple con la definicion de BCNF?
+    No, porque al menos encontramos la df2 donde #cedula no es superclave en R2.
+
+    R3(#cedula, #conductor, #auto, fechaVto)
+    R4(#cedula, #propietario, #infraccion, fechaInfraccion, tipoInfraccion)
+
+a. Perdi informacion?
+    No, porque R3 ∩ R4 = #cedula, que es clave en R3
+
+b. Perdi dependencias funcionales?
+    No, porque en R3 vale df2 y en R4 vale df3
+
+c. R3 cumple con la definicion de BCNF?
+    Si, porque el determinante de la df2 es superclave en R3
+
+d. R4 cumple con la definicion de BCNF?
+    No, porque al menos encontramos la df3 donde #infraccion no es superclave en R4.
+
+    R5(#infraccion, #cedula, fechaInfraccion, tipoInfraccion)
+    R6(#propietario, #infraccion)
+
+a. Perdi informacion?
+    No, porque R5 ∩ R6 = #infraccion, que es clave en R5
+
+b. Perdi dependencias funcionales?
+    No, porque en R5 vale df3
+
+c. R1 cumple con la definicion de BCNF?
+    Si, porque el determinante de la df3 es superclave en R5
+
+d. R2 cumple con la definicion de BCNF?
+    Si, porque representa la clave del esquema, por lo cual todas las dependencias funcionales que se puedan llegar a plantear sobre el mismo seran triviales.
+
+Las particiones que quedaron en BCNF son:
+    R1(#auto, modeloAuto)
+    R3(#cedula, #conductor, #auto, fechaVto)
+    R5(#infraccion, #cedula, fechaInfraccion, tipoInfraccion)
+    R6(#propietario, #infraccion)
+
+Clave Primaria: {#propietario, #infraccion}
+
+En R1, R3 y R5 no vale ninguna dependencia multivaluada no trivial, por ese motivo se puede decir que estas particiones estan en 4FN.
+En R6 existe la dependencia multivaluada #propietario -->> #infraccion, la cual es trivial en R6, por lo tanto esta en 4FN.
 ```
 
 ---
@@ -355,15 +404,17 @@ Donde
 
 
 ```
-Claves Candidatas
+Clave Primaria
+    {#Reserva, nombreAerolinea, #Vuelo, dniPasajero, dirCompañia, telCompañia       }
 
 Dependencias Funcionales
-    dniPasajero                 --> nombrePasajero, dirPasajero, telPasajero
+    dniPasajero                 --> nombrePasajero, telPasajero
     #Agencia                    --> nombreAgencia
-    nombreAerolínea, #Reserva   --> fechaReservaVuelo, #Agencia
+    nombreAerolínea, #Reserva   --> #Agencia
     nombreAerolínea, #Vuelo     --> ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, modeloAvion
-    nombreAerolinea, #Reserva, #Vuelo               --> clase
+    nombreAerolinea, #Reserva, #Vuelo               --> clase, fechaReservaVuelo, fechaPartida, fechaLlegada
     nombreAerolinea, #Reserva, #Vuelo, dniPasajero  --> #Asiento, tipoPago
+    nombreAerolinea, #Reserva, dniPasajero  --> dirPasajero
 
 Dependencias Multivaluadas
     nombreAerolínea, #Reserva, dniPasajero  -->> #Vuelo
@@ -374,20 +425,22 @@ Dependencias Multivaluadas
     compañiaPasajero                        -->> dirCompañia
     dirCompañia                             -->> telCompañia
 
-
-R1(dniPasajero, nombrePasajero, dirPasajero, telPasajero)
+R1(dniPasajero, nombrePasajero, telPasajero)
 R2(#Agencia, nombreAgencia)
-R3(nombreAerolínea, #Reserva, fechaReservaVuelo, #Agencia)
-R4(nombreAerolínea, #Vuelo, ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, modeloAvion)
-R5(nombreAerolinea, #Reserva, #Vuelo, clase)
+R3(nombreAerolinea, #Reserva, #Agencia)
+R4(nombreAerolinea, #Vuelo, ciudadOrigen, ciudadDestino, horaPartida, horaLlegada, modeloAvion)
+R5(nombreAerolinea, #Reserva, #Vuelo, clase, fechaReservaVuelo, fechaPartida, fechaLlegada)
 R6(nombreAerolinea, #Reserva, #Vuelo, dniPasajero, #Asiento, tipoPago)
+R7(nombreAerolinea, #Reserva, dniPasajero, dirPasajero)
 
-R7(nombreAerolinea, #Reserva, dniPasajero, #Vuelo)
-R8(nombreAerolinea, #Vuelo, fechaPartida, fechaLlegada)
-R9(nombreAerolinea, #Vuelo, tipoComida)
-R10(dniPasajero, compañiaPasajero)
-R11(compañiaPasajero, dirCompañia)
-R12(dirCompañia, telCompañia)
+Dependencias Multivaluadas
+    nombreAerolinea, #Vuelo -->> tipoComida
+    #Reserva, nombreAerolinea, #Vuelo, dniPasajero -->> compañiaPasajero
+    #Reserva, nombreAerolinea, #Vuelo, dniPasajero, compañiaPasajero -->> dirCompañia
+    #Reserva, nombreAerolinea, #Vuelo, dniPasajero, compañiaPasajero, dirCompañia-->> telCompañia
+
+R8(nombreAerolinea, #Vuelo, tipoComida)
+R9(#Reserva, nombreAerolinea, #Vuelo, dniPasajero, compañiaPasajero, dirCompañia, telCompañia)
 ```
 
 ---
