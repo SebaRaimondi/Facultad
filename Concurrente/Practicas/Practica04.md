@@ -140,6 +140,45 @@ Se desea modelar el funcionamiento de un banco en el cual existen 5 cajas para r
 
 Nota: maximizando la concurrencia, deben usarse los valores actualizados del tamaño de las colas para seleccionar la caja con menos gente esperando.
 
+```
+chan buscarCola(int)
+chan menorCola[1..N](int)
+chan esperarCaja[1..N](int)
+chan atiende[1..P]()
+chan termino(int)
+
+Process Banco {
+    while (true) {
+        if (!empty(buscarCola) && empty(termino)) {
+            receive buscarCola(id)
+            send menorCola[id](cola.min)
+            cola[cola.min]++
+        }
+        if (!empty(termino)) {
+            receive termino(caja)
+            cola[caja]--
+        }
+    }
+}
+
+Process Caja [c = 1 to 5] {
+    while (true) {
+        receive esperarCaja[c](id)
+        delay(LoQueTardeEnAtenderlo)
+        send atiende[id]()
+    }
+}
+
+Process Persona [p = 1 to N] {
+    send buscarCola(p)
+    receive menorCola[p](caja)
+    send esperarCaja[caja](p)
+    receive atiende[p]()
+    send termino(caja)
+}
+
+```
+
 ---
 
 ### Ejercicio 3.
