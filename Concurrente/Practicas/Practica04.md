@@ -105,6 +105,32 @@ Process ChicoA [a = N+C+1 to A+N+C] {
 
 b) Modificar el ejercicio para que a los niños de tipo A se les puede asignar un lápiz sólo cuando: hay lápiz negro disponible y ningún pedido pendiente de tipo N, o si hay lápiz de color disponible y ningún pedido pendiente de tipo C.
 
+```
+Process Abuela {
+    ...
+    
+    while (true) {
+        ...
+
+        if (!empty(pedidoCualquiera) && color > 0 && empty(pedidoColor)) {
+            recive pedidoCualquiera(id)
+            send canalLapiz[id]("color")
+            color--
+        }
+        if (!empty(pedidoCualquiera) && negro > 0 && empty(pedidoNegro)) {
+            recive pedidoCualquiera(id)
+            send canalLapiz[id]("negro")
+            negro--
+        }
+
+        ...
+    }
+}
+
+...
+
+```
+
 Nota: se deben modelar los procesos niño y el proceso abuela.
 
 ---
