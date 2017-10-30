@@ -283,7 +283,17 @@ Existe una casa de comida rápida que es atendida por 1 empleado. Cuando una per
 
 a) Implementar una solución utilizando un proceso intermedio entre cada persona y el empleado.
 
+```
+lostimersmedanmiedo
+
+```
+
 b) Implementar una solución sin utilizar un proceso intermedio entre cada persona y el empleado.
+
+```
+lostimersmedanmiedo
+
+```
 
 ---
 
