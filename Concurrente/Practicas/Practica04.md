@@ -226,7 +226,43 @@ Se desea modelar una competencia de atletismo. Para eso existen dos tipos de pro
 
 a) Implementar usando un coordinador.
 
+```
+chan llegoCorredor()
+chan comenzar()
+
+Process Corredor [c = 1..N] {
+    send llegoCorredor()
+    receive comenzar()
+}
+
+Process Portero {
+    receive llegaronTodos()
+    for i = 1 to N do send comenzar()
+}
+
+Process Coordinador {
+    for i = 1 to C do receive llegoCorredor()
+    send llegaronTodos()
+}
+```
+
 b) Implementar sin usar un coordinador.
+
+```
+chan llegoCorredor()
+chan comenzar()
+
+Process Corredor [c = 1..N] {
+    send llegoCorredor()
+    receive comenzar()
+}
+
+Process Portero {
+    for i = 1 to N do receive llegoCorredor()
+    for i = 1 to N do send comenzar()
+}
+
+```
 
 NOTAS: el proceso portero NO puede contabilizar nada, su única función es habilitar la entrada a la pista; NO se puede suponer ningún orden en la llegada de los corredores al punto de partida.
 
