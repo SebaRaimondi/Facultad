@@ -6,13 +6,15 @@
 • Por ser pasaje de mensajes asincrónico el send no bloquea al emisor.
 • Se puede usar la sentencia empty para saber si hay algún mensaje en el canal, pero no se puede consultar por la cantidad de mensajes encolados.
 • Se puede utilizar el if/do no determinístico donde cada opción es una condición boolena donde se puede preguntar por variables locales y/o por empty de canales.
-```
-    if (cond 1) → Acciones 1;
-     (cond 2) → Acciones 2;
-    ...
-     (cond N) → Acciones N;
-    end if
-```
+
+    ```
+        if (cond 1) → Acciones 1;
+         (cond 2) → Acciones 2;
+        ...
+         (cond N) → Acciones N;
+        end if
+    ```
+
     De todas las opciones cuya condición sea Verdadera elige una en forma no determinística y ejecuta las acciones correspondientes. Si ninguna es verdadera sale del if/do si hacer nada.
 • Se debe tratar de evitar hacer busy waiting (sólo hacerlo si no hay otra opción).
 • En todos los ejercicios el tiempo debe representarse con la función delay.
