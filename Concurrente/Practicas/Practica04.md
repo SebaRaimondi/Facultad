@@ -26,6 +26,83 @@ Supongamos que tenemos una abuela que tiene dos tipos de lápices para dibujar: 
 
 a) Implemente un código para cada clase de niño de manera que ejecute pedido de lápiz, lo use por 10 minutos y luego lo devuelva y además el proceso abuela encargada de asignar los lápices.
 
+```
+chan pedidoColor
+chan pedidoNegro
+chan pedidoCualquiera
+chan devolverColor
+chan devolverNegro
+chan canalLapiz[1..N]
+
+Process Abuela {
+    color = 10
+    negro = 15
+
+    while (true) {
+        if (!empty(pedidoColor) && color > 0) {
+            recive pedidoColor(id)
+            send canalLapiz[id]("color")
+            color--
+        }
+        if (!empty(pedidoNegro) && negro > 0) {
+            recive pedidoNegro(id)
+            send canalLapiz[id]("negro")
+            negro--
+        }
+        if (!empty(pedidoCualquiera) && color > 0) {
+            recive pedidoCualquiera(id)
+            send canalLapiz[id]("color")
+            color--
+        }
+        if (!empty(pedidoCualquiera) && negro > 0) {
+            recive pedidoCualquiera(id)
+            send canalLapiz[id]("negro")
+            negro--
+        }
+        if (!empty(devolverColor)) {
+            recive devolverColor()
+            color++
+        }
+        if (!empty(devolverNegro)) {
+            recive devolverNegro()
+            negro++
+        }
+    }
+}
+
+Process ChicoC [c = 1 to C] {
+    string lapiz
+    while (true) {
+        send pedidoColor(c)
+        receive canalLapiz[i](lapiz)
+        delay(10)
+        send devolverColor()
+    }
+}
+
+Process ChicoN [n = C+1 to N+C] {
+    string lapiz
+    while (true) {
+        send pedidoNegro(n)
+        receive canalLapiz[i](lapiz)
+        delay(10)
+        send devolverNegro()
+    }
+}
+
+Process ChicoA [a = N+C+1 to A+N+C] {
+    string lapiz
+    while (true) {
+        send pedidoCualquiera(a)
+        receive canalLapiz[i](lapiz)
+        delay(10)
+        if (lapiz == "color") send devolverColor()
+        else send devolverNegro()
+    }
+}
+
+```
+
 b) Modificar el ejercicio para que a los niños de tipo A se les puede asignar un lápiz sólo cuando: hay lápiz negro disponible y ningún pedido pendiente de tipo N, o si hay lápiz de color disponible y ningún pedido pendiente de tipo C.
 
 Nota: se deben modelar los procesos niño y el proceso abuela.
