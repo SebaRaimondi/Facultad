@@ -1,11 +1,11 @@
 # Práctica 4 – Pasaje de Mensajes
 
 ##### CONSIDERACIONES PARA RESOLVER LOS EJERCICIOS DE PMA:
-• Los canales son compartidos por todos los procesos.
-• Cada canal es una cola de mensajes, por lo tanto el primer mensaje encolado es el primero en ser atendido.
-• Por ser pasaje de mensajes asincrónico el send no bloquea al emisor.
-• Se puede usar la sentencia empty para saber si hay algún mensaje en el canal, pero no se puede consultar por la cantidad de mensajes encolados.
-• Se puede utilizar el if/do no determinístico donde cada opción es una condición boolena donde se puede preguntar por variables locales y/o por empty de canales.
+* Los canales son compartidos por todos los procesos.
+* Cada canal es una cola de mensajes, por lo tanto el primer mensaje encolado es el primero en ser atendido.
+* Por ser pasaje de mensajes asincrónico el send no bloquea al emisor.
+* Se puede usar la sentencia empty para saber si hay algún mensaje en el canal, pero no se puede consultar por la cantidad de mensajes encolados.
+* Se puede utilizar el if/do no determinístico donde cada opción es una condición boolena donde se puede preguntar por variables locales y/o por empty de canales.
 
     ```
         if (cond 1) → Acciones 1;
@@ -16,8 +16,8 @@
     ```
 
     De todas las opciones cuya condición sea Verdadera elige una en forma no determinística y ejecuta las acciones correspondientes. Si ninguna es verdadera sale del if/do si hacer nada.
-• Se debe tratar de evitar hacer busy waiting (sólo hacerlo si no hay otra opción).
-• En todos los ejercicios el tiempo debe representarse con la función delay.
+* Se debe tratar de evitar hacer busy waiting (sólo hacerlo si no hay otra opción).
+* En todos los ejercicios el tiempo debe representarse con la función delay.
 
 ---
 
@@ -63,16 +63,16 @@ Existe una casa de comida rápida que es atendida por 1 empleado. Cuando una per
 ---
 
 ##### CONSIDERACIONES PARA RESOLVER LOS EJERCICIOS DE PMS:
-• Los canales son punto a punto y no deben declararse.
-• No se puede usar la sentencia empty para saber si hay algún mensaje en un canal.
-• Tanto el envío como la recepción de mensajes es bloqueante.
-• Sintaxis de las sentencias de envío y recepción:
+* Los canales son punto a punto y no deben declararse.
+* No se puede usar la sentencia empty para saber si hay algún mensaje en un canal.
+* Tanto el envío como la recepción de mensajes es bloqueante.
+* Sintaxis de las sentencias de envío y recepción:
     Envío: nombreProcesoReceptor!port (datos a enviar)
     Recepción: nombreProcesoEmisor?port (datos a recibir)
     El port (o etiqueta) puede no ir. Se utiliza para diferenciar los tipos de mensajes que se podrían comunicarse entre dos procesos.
-• En la sentencia de comunicación de recepción se puede usar el comodín * si el origen es un proceso dentro de un arreglo de procesos. Ejemplo:
+* En la sentencia de comunicación de recepción se puede usar el comodín * si el origen es un proceso dentro de un arreglo de procesos. Ejemplo:
     Clientes[*]?port(datos).
-• Sintaxis de la Comunicación guardada:
+* Sintaxis de la Comunicación guardada:
         Guarda: (condición booleana); sentencia de recepción → sentencia a realizar
     Si no se especifica la condición booleana se considera verdadera (la condición booleana sólo puede hacer referencia a variables locales al proceso).
     Cada guarda tiene tres posibles estados:
