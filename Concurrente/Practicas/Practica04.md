@@ -190,6 +190,35 @@ Repetidamente cada cocinero toma un pedido pendiente dejado por los vendedores, 
 
 Nota: maximizar la concurrencia.
 
+```
+Process Cocinero [c = 1..2] {
+    while (true) {
+        receive hacerPedido(c, pedido)
+        plato = preparar(pedido)
+        send plato[c]()
+    }
+}
+
+Process Vendedores [v = 1..3] {
+    while (true) {
+        while (empty(pedido)) {
+            delay(random(1..3))     // Reponer bebidas
+        }
+        if (!empty(pedido)) {
+            receive pedido(c, pedido)
+            send hacerPedido(c, pedido)
+        }
+    }
+}
+
+Process Cliente [c = 1..C] {
+    string pedido = generar()
+    send pedido(c, pedido)
+    receive plato[c]()
+}
+
+```
+
 ---
 
 ### Ejercicio 4.
