@@ -271,6 +271,11 @@ NOTAS: el proceso portero NO puede contabilizar nada, su única función es habi
 ### Ejercicio 5.
 Suponga que N personas llegan a la cola de un banco. Una vez que la persona se agrega en la cola no espera más de 15 minutos para su atención, si pasado ese tiempo no fue atendida se retira. Para atender a las personas existen 2 empleados que van atendiendo de a una y por orden de llegada a las personas.
 
+```
+lostimersmedanmiedo
+
+```
+
 ---
 
 ### Ejercicio 6.
