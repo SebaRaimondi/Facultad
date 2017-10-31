@@ -342,12 +342,46 @@ En una estación de comunicaciones se cuenta con 10 radares y una unidad de proc
 
 Nota: maximizar la concurrencia.
 
+```
+Process Radar [r = 1 .. 10] {
+    while true {
+        delay(15)           // Segundos
+        Buffer!SeñalDeRadio(datos)
+    }
+}
+
+Process Procesador {
+    while true {
+        Buffer!PuedeProcesar()
+        Buffer!Señal(datos)
+        delay()         // Lo que tarde en procesar los datos.
+    }
+
+}
+
+Process Buffer {
+    cola cola
+    while true {
+        do {
+            Radar?SeñalDeRadio(datos)   --> cola.encolar(datos)
+            (!empty(cola) && Procesador?PuedeProcesar())    --> Procesador!Señal(cola.desencolar())
+        }
+    }
+}
+
+```
+
 ---
 
 ### Ejercicio 8.
 Supongamos que tenemos una abuela que tiene dos tipos de lápices para dibujar: 10 de colores y 15 negros. Además tenemos tres clases de niños que quieren dibujar con los lápices: los que quieren usar sólo los lápices de colores (tipo C), los que usan sólo los lápices negros (tipo N), y los niños que usan cualquier tipo de lápiz (tipo A).
 
 a) Implemente un código para cada clase de niño de manera que ejecute pedido de lápiz, lo use por 10 minutos y luego lo devuelva y además el proceso abuela encargada de asignar los lápices.
+
+```
+
+
+```
 
 b) Modificar el ejercicio para que a los niños de tipo A se les puede asignar un lápiz sólo cuando: hay lápiz negro disponible y ningún pedido pendiente de tipo N, o si hay lápiz de color disponible y ningún pedido pendiente de tipo C.
 
