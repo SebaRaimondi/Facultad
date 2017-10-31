@@ -455,6 +455,33 @@ Se debe modelar la atención en una panadería por parte de 3 empleados. Hay C c
 
 Nota: maximizar la concurrencia.
 
+```
+Process Cliente [c = 1..N] {
+    Panaderia!DarPedido(c)
+    Empleado[*]?Atender()
+}
+
+Process Empleado [e = 1..3] {
+    while true {
+        Panaderia!Libre(e)
+        Panaderia?PuedeAtenderA(c)
+        Cliente[c]!Atender()
+    }
+}
+
+Process Panaderia {
+    cola clientes
+    
+    while true {
+        if {
+            Cliente[*]?DarPedido(c)            --> clientes.encolar(c)
+            !empty(clientes) && Empleado[*]?Libre(e)   --> Empleado!PuedeAtenderA(clientes.desencolar())
+        }
+    }
+}
+
+```
+
 ---
 
 ### Ejercicio 10.
