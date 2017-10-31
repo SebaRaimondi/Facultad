@@ -363,7 +363,7 @@ Process Buffer {
     cola cola
     while true {
         do {
-            Radar?SeñalDeRadio(datos)   --> cola.encolar(datos)
+            Radar?SeñalDeRadio[*](datos)   --> cola.encolar(datos)
             (!empty(cola) && Procesador?PuedeProcesar())    --> Procesador!Señal(cola.desencolar())
         }
     }
@@ -379,7 +379,63 @@ Supongamos que tenemos una abuela que tiene dos tipos de lápices para dibujar: 
 a) Implemente un código para cada clase de niño de manera que ejecute pedido de lápiz, lo use por 10 minutos y luego lo devuelva y además el proceso abuela encargada de asignar los lápices.
 
 ```
+Process Abuela {
+    color = 10
+    negro = 15
 
+    while (true) {
+        do {
+            ChicoC?PedidoColor[*](id) && color > 0      --> 
+                ChicoC!DarColor[id]()
+                color--
+            ChicoC?DevuelveColor[*]()                   --> 
+                color++
+
+            ChicoN?PedidoNegro[*](id) && negro > 0      --> 
+                ChicoN!DarNegro[id]()
+                negro--
+            ChicoN?DevuelveNegro[*]()                   --> 
+                negro++
+
+            ChicoA?PedidoCualquiera[*](id) && color > 0 --> 
+                ChicoC!DarCualquiera[id]("color")
+                color--
+            ChicoA?PedidoCualquiera[*](id) && negro > 0 --> 
+                ChicoC!DarCualquiera[id]("negro")
+                negro--
+            ChicoA?DevuelveCualquiera[*](lapiz)         --> 
+                if (lapiz == "color") color++
+                else negro++
+        }
+    }
+}
+
+Process ChicoC [c = 1 to C] {
+    while (true) {
+        Abuela!PedidoColor(c)
+        Abuela?DarColor()
+        delay(10)
+        Abuela!DevuelveColor()
+    }
+}
+
+Process ChicoN [n = C+1 to N+C] {
+    while (true) {
+        Abuela!PedidoNegro(n)
+        Abuela!DarNegro()
+        delay(10)
+        Abuela!DevuelveNegro()
+    }
+}
+
+Process ChicoA [a = N+C+1 to A+N+C] {
+    while (true) {
+        Abuela!PedidoCualquiera(a)
+        Abuela?DarCualquiera(lapiz)
+        delay(10)
+        Abuela!DevolverCualquiera(lapiz)
+    }
+}
 
 ```
 
