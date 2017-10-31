@@ -441,6 +441,11 @@ Process ChicoA [a = N+C+1 to A+N+C] {
 
 b) Modificar el ejercicio para que a los niños de tipo A se les puede asignar un lápiz sólo cuando: hay lápiz negro disponible y ningún pedido pendiente de tipo N, o si hay lápiz de color disponible y ningún pedido pendiente de tipo C.
 
+```
+Si lo de borre no esta bien rip
+
+```
+
 Nota: se deben modelar los procesos niño y el proceso abuela.
 
 ---
