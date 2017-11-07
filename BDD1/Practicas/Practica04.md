@@ -130,11 +130,11 @@ HAVING COUNT(DISTINCT(repuestoReparacion)) > 3
 
 8) Agregar la siguiente tabla:
 REPARACIONESPORCLIENTE
-idRC:	int(11)	PK	AI
-dniCliente:	int(11)
-cantidadReparaciones:	int(11)
-fechaultimaactualizacion:	datetime
-usuario:	char(16)
+idRC: int(11) PK AI
+dniCliente: int(11)
+cantidadReparaciones: int(11)
+fechaultimaactualizacion: datetime
+usuario: char(16)
 
 ```
 ```
@@ -160,13 +160,13 @@ b) Ejecute el stored procedure.
 ```
 
 12) Ejecutar el stored procedure del punto 11 con los siguientes datos:
-dniCliente:	1009443
-codSucursal:	100
-fechaReparacion:	2013-12-14	12:20:31
-empleadoReparacion:	‘Maidana’
-repuestoReparacion:	‘bomba	de	combustible’
-cantDiasReparacion:	4
-telefonoReparacion:	4243-4255
+dniCliente: 1009443
+codSucursal: 100
+fechaReparacion: 2013-12-14 12:20:31
+empleadoReparacion: ‘Maidana’
+repuestoReparacion: ‘bomba de combustible’
+cantDiasReparacion: 4
+telefonoReparacion: 4243-4255
 
 ```
 ```
