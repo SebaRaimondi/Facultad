@@ -184,6 +184,16 @@ END;
 10) Crear un trigger de modo que al insertar un dato en la tabla REPARACION, se actualice la cantidad de reparaciones del cliente, la fecha de actualización y el usuario responsable de la misma (actualiza la tabla REPARACIONESPORCLIENTE).
 
 ```
+CREATE TRIGGER after_reparacion_insert
+    AFTER INSERT ON reparacion
+    FOR EACH ROW BEGIN
+
+    UPDATE REPARACIONESPORCLIENTE
+    SET cantidadReparaciones = cantidadReparaciones + 1,
+        fechaultimaactualizacion = NOW(),
+        usuario = CURRENT_USER()
+    WHERE NEW.dniCliente = REPARACIONESPORCLIENTE.dniCliente;
+END;
 ```
 
 11) Crear un stored procedure que sirva para agregar una reparación, junto con una revisión de un empleado (REVISIONREPARACION) y un repuesto (REPUESTOREPARACION) relacionados dentro de una sola transacción. El stored procedure debe recibir los siguientes parámetros: dniCliente, codSucursal, fechaReparacion, cantDiasReparacion, telefonoReparacion, empleadoReparacion, repuestoReparacion.
