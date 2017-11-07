@@ -137,16 +137,48 @@ fechaultimaactualizacion: datetime
 usuario: char(16)
 
 ```
+CREATE TABLE reparacionesporcliente (
+    idRC int(11) PRIMARY KEY AUTO_INCREMENT,
+    dniCliente int(11) NOT NULL,
+    cantidadReparaciones int(11) NOT NULL,
+    fechaultimaactualizacion datetime NOT NULL,
+    usuario char(16) NOT NULL
+);
 ```
 
 9) Stored procedures
-a) Crear un stored procedure que realice los siguientes pasos dentro de una transacción: o Realizar una consulta que para cada cliente (dniCliente), calcule la cantidad de reparaciones que tiene registradas.
-    o Registrar la fecha en la que se realiza la consulta y el usuario con el que la realizó.
-    o Guardar el resultado de la consulta en un cursor.
-    o Iterar el cursor e insertar los valores correspondientes en la tabla REPARACIONESPORCLIENTE.
-b) Ejecute el stored procedure.
+    a) Crear un stored procedure que realice los siguientes pasos dentro de una transacción: o Realizar una consulta que para cada cliente (dniCliente), calcule la cantidad de reparaciones que tiene registradas.
+        o Registrar la fecha en la que se realiza la consulta y el usuario con el que la realizó.
+        o Guardar el resultado de la consulta en un cursor.
+        o Iterar el cursor e insertar los valores correspondientes en la tabla REPARACIONESPORCLIENTE.
+    b) Ejecute el stored procedure.
 
 ```
+CREATE PROCEDURE punto9()
+BEGIN
+
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE cant INT;
+    DECLARE dni INT;
+    DECLARE cur CURSOR FOR
+        SELECT count(*), dniCliente
+        FROM reparacion
+        GROUP BY dniCliente;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    START TRANSACTION;
+        OPEN cur;
+        loop_1: LOOP
+            FETCH cur INTO cant, dni;
+            IF done THEN
+                LEAVE loop_1;
+            END IF;
+            INSERT INTO REPARACIONESPORCLIENTE (dniCliente, cantidadReparaciones, fechaultimaactualizacion, usuario)
+            VALUES (dni, cant, NOW(), CURRENT_USER);
+        END LOOP;
+        CLOSE cur;
+    COMMIT;
+END;
 ```
 
 10) Crear un trigger de modo que al insertar un dato en la tabla REPARACION, se actualice la cantidad de reparaciones del cliente, la fecha de actualización y el usuario responsable de la misma (actualiza la tabla REPARACIONESPORCLIENTE).
