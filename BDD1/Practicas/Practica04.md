@@ -1,5 +1,5 @@
 ### Ejercicio 2.
-2) Listar dni, nombre y apellido de todos los clientes ordenados por dni en forma ascendente. Realice la consulta en ambas bases. ¿Qué diferencia nota en cuanto a performance? ¿Arrojan los mismos resultados? ¿Qué puede concluir en base a las diferencias halladas?
+Listar dni, nombre y apellido de todos los clientes ordenados por dni en forma ascendente. Realice la consulta en ambas bases. ¿Qué diferencia nota en cuanto a performance? ¿Arrojan los mismos resultados? ¿Qué puede concluir en base a las diferencias halladas?
 
 ```
 reparacion:
@@ -15,7 +15,7 @@ Puedo concluir que la base reparacion esta mejor diseñada que reparacion_dn
 ---
 
 ### Ejercicio 3.
-3) Hallar aquellos clientes que para todas sus reparaciones siempre hayan usado su tarjeta de crédito primaria (nunca la tarjeta secundaria). Realice la consulta en ambas bases.
+Hallar aquellos clientes que para todas sus reparaciones siempre hayan usado su tarjeta de crédito primaria (nunca la tarjeta secundaria). Realice la consulta en ambas bases.
 
 ```
 SELECT * FROM cliente WHERE NOT EXISTS (
@@ -28,7 +28,7 @@ SELECT * FROM cliente WHERE NOT EXISTS (
 ---
 
 ### Ejercicio 4.
-4) Crear una vista llamada ‘sucursalesPorCliente’ que muestre los dni de los clientes y los códigos de sucursales de la ciudad donde vive el cliente. Cree la vista en ambas bases.
+Crear una vista llamada ‘sucursalesPorCliente’ que muestre los dni de los clientes y los códigos de sucursales de la ciudad donde vive el cliente. Cree la vista en ambas bases.
 
 ```
 CREATE VIEW sucursalesPorCliente AS
@@ -48,11 +48,12 @@ GROUP BY dniCliente, codSucursal
 ---
 
 ### Ejercicio 5.
-5) En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
+En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
 * Realice la consulta sin utilizar la vista creada en el ej 4.
 * Realice la consulta utilizando la vista creada en el ej 4.
 
 Restricción: resolver este ejercicio sin usar la cláusula “NOT EXIST”.
+
 Nota: limite su consulta a los primeros 100 resultados, caso contrario el tiempo que tome puede ser excesivo.
 
 ```
@@ -106,7 +107,7 @@ b.
 ---
 
 ### Ejercicio 6.
-6) Hallar los clientes que en alguna de sus reparaciones hayan dejado como dato de contacto el mismo domicilio y ciudad que figura en su DNI. Realice la consulta en ambas bases.
+Hallar los clientes que en alguna de sus reparaciones hayan dejado como dato de contacto el mismo domicilio y ciudad que figura en su DNI. Realice la consulta en ambas bases.
 
 ```
 SELECT *
@@ -129,7 +130,7 @@ WHERE domicilioCliente = direccionReparacionCLiente
 ---
 
 ### Ejercicio 7.
-7) Para aquellas reparaciones que tengan registrados mas de 3 repuestos, listar el DNI del cliente, el código de sucursal, la fecha de reparación y la cantidad de repuestos utilizados. Realice la consulta en ambas bases.
+Para aquellas reparaciones que tengan registrados mas de 3 repuestos, listar el DNI del cliente, el código de sucursal, la fecha de reparación y la cantidad de repuestos utilizados. Realice la consulta en ambas bases.
 
 ```
 SELECT reparacion.dniCliente, codSucursal, reparacion.fechaInicioReparacion, COUNT(repuestoReparacion)
@@ -150,7 +151,7 @@ HAVING COUNT(DISTINCT(repuestoReparacion)) > 3
 ---
 
 ### Ejercicio 8.
-8) Agregar la siguiente tabla:
+Agregar la siguiente tabla:
 
 ```
 REPARACIONESPORCLIENTE
@@ -174,7 +175,7 @@ CREATE TABLE reparacionesporcliente (
 ---
 
 ### Ejercicio 9.
-9) Stored procedures
+Stored procedures
 
 a) Crear un stored procedure que realice los siguientes pasos dentro de una transacción: o Realizar una consulta que para cada cliente (dniCliente), calcule la cantidad de reparaciones que tiene registradas.
 * Registrar la fecha en la que se realiza la consulta y el usuario con el que la realizó.
@@ -214,7 +215,7 @@ END;
 ---
 
 ### Ejercicio 10.
-10) Crear un trigger de modo que al insertar un dato en la tabla REPARACION, se actualice la cantidad de reparaciones del cliente, la fecha de actualización y el usuario responsable de la misma (actualiza la tabla REPARACIONESPORCLIENTE).
+Crear un trigger de modo que al insertar un dato en la tabla REPARACION, se actualice la cantidad de reparaciones del cliente, la fecha de actualización y el usuario responsable de la misma (actualiza la tabla REPARACIONESPORCLIENTE).
 
 ```
 CREATE TRIGGER after_reparacion_insert
@@ -232,7 +233,7 @@ END;
 ---
 
 ### Ejercicio 11.
-11) Crear un stored procedure que sirva para agregar una reparación, junto con una revisión de un empleado (REVISIONREPARACION) y un repuesto (REPUESTOREPARACION) relacionados dentro de una sola transacción. El stored procedure debe recibir los siguientes parámetros: dniCliente, codSucursal, fechaReparacion, cantDiasReparacion, telefonoReparacion, empleadoReparacion, repuestoReparacion.
+Crear un stored procedure que sirva para agregar una reparación, junto con una revisión de un empleado (REVISIONREPARACION) y un repuesto (REPUESTOREPARACION) relacionados dentro de una sola transacción. El stored procedure debe recibir los siguientes parámetros: dniCliente, codSucursal, fechaReparacion, cantDiasReparacion, telefonoReparacion, empleadoReparacion, repuestoReparacion.
 
 ```
 CREATE PROCEDURE punto11(IN dni INT(11), IN sucursal INT, IN fechaReparacion DATETIME, IN dias INT, IN tel VARCHAR(45), IN empleado VARCHAR(30), IN repuesto VARCHAR(30))
@@ -261,7 +262,7 @@ END;
 ---
 
 ### Ejercicio 12.
-12) Ejecutar el stored procedure del punto 11 con los siguientes datos:
+Ejecutar el stored procedure del punto 11 con los siguientes datos:
 
 ```
 dniCliente: 1009443
@@ -280,7 +281,7 @@ CALL punto11(1009443, 100, 2013-12-14 12:20:31, 4, '4243-4255', 'Maidana', 'bomb
 ---
 
 ### Ejercicio 13.
-13) Realizar las inserciones provistas en el archivo inserciones.sql. Validar mediante una consulta que la tabla REPARACIONESPORCLIENTE se esté actualizando correctamente.
+Realizar las inserciones provistas en el archivo inserciones.sql. Validar mediante una consulta que la tabla REPARACIONESPORCLIENTE se esté actualizando correctamente.
 
 ```
 ```
@@ -288,7 +289,7 @@ CALL punto11(1009443, 100, 2013-12-14 12:20:31, 4, '4243-4255', 'Maidana', 'bomb
 ---
 
 ### Ejercicio 14.
-14) Considerando la siguiente consulta
+Considerando la siguiente consulta
 
 ```
 select count(r.dniCliente)
@@ -318,7 +319,7 @@ d) Aplique las mejoras propuestas y vuelva a analizar el plan de ejecución. ¿Q
 ---
 
 ### Ejercicio 15.
-15) Análisis de permisos.
+Análisis de permisos.
 
 a) Para cada punto de la práctica incluido en el cuadro, ejecutarlo con cada uno de los usuarios creados en el punto 1 e indicar con cuáles fue posible realizar la operación.
 
