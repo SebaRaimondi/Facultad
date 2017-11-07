@@ -29,11 +29,13 @@ SELECT dniCliente, codSucursal
 FROM cliente
 INNER JOIN sucursal
     ON cliente.ciudadCliente = sucursal.ciudadSucursal
+GROUP BY dniCliente, codSucursal
 
 CREATE VIEW sucursalesPorCliente AS
 SELECT dniCliente, codSucursal
 FROM reparacion
 WHERE ciudadCliente = ciudadSucursal
+GROUP BY dniCliente, codSucursal
 ```
 
 5) En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
