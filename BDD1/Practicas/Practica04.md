@@ -59,23 +59,49 @@ a.
     SELECT *
     FROM cliente
     HAVING (
-        SELECT COUNT(codSucursal) FROM sucursal
+        SELECT COUNT(codSucursal)
+        FROM sucursal
         WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
         ) = (
-        SELECT COUNT(sucursal.codSucursal) FROM reparacion
+        SELECT COUNT(sucursal.codSucursal)
+        FROM reparacion
         INNER JOIN sucursal
-        ON reparacion.codSucursal = sucursal.codSucursal
+            ON reparacion.codSucursal = sucursal.codSucursal
         WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
-        AND cliente.dniCliente = reparacion.dniCliente
+            AND cliente.dniCliente = reparacion.dniCliente
     )
 
-
+b.
+    SELECT dniCliente
+    FROM cliente
+    WHERE (
+        SELECT COUNT(codSucursal)
+        FROM sucursalesPorCliente
+        WHERE cliente.dniCliente = sucursalesPorCliente.dniCliente
+        ) = (
+        SELECT COUNT(sucursal.codSucursal)
+        FROM reparacion
+        INNER JOIN sucursal
+            ON reparacion.codSucursal = sucursal.codSucursal
+        WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
+            AND cliente.dniCliente = reparacion.dniCliente
+    )
 
 ```
 
 6) Hallar los clientes que en alguna de sus reparaciones hayan dejado como dato de contacto el mismo domicilio y ciudad que figura en su DNI. Realice la consulta en ambas bases.
 
 ```
+SELECT *
+FROM cliente
+WHERE EXISTS (
+    SELECT *
+    FROM reparacion
+    WHERE cliente.domicilioCliente = reparacion.direccionReparacionCLiente
+        AND cliente.ciudadCliente = reparacion.ciudadReparacionCliente
+        AND cliente.dniCliente = reparacion.dniCliente
+)
+
 ```
 
 7) Para aquellas reparaciones que tengan registrados mas de 3 repuestos, listar el DNI del cliente, el código de sucursal, la fecha de reparación y la cantidad de repuestos utilizados. Realice la consulta en ambas bases.
