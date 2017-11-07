@@ -174,3 +174,137 @@ end
 3. ¿La palabra reservada retry que función cumple? ¿Afectaría el funcionamiento del programa si se mueve la línea x = 0 dentro del segundo begin (inmediatamente antes de llamar a fun1 con x)?
 
 --------------------------------------------------------------------------------
+
+## Testing
+
+_Nota: Para esta práctica utilizaremos MiniTest en cualquiera de sus variantes (minitest/unit o minitest/spec)._
+
+--------------------------------------------------------------------------------
+
+### Ejercicio 1.
+
+¿En qué consiste la metodología TDD? ¿En qué se diferencia con la forma tradicional de escribir código y luego realizar los tests?
+
+--------------------------------------------------------------------------------
+
+### Ejercicio 2.
+
+Dado los siguientes tests, escribí el método correspondiente (el que se invoca en cada uno) para hacer que pasen:
+
+```ruby
+require 'minitest/autorun'
+require 'minitest/spec'
+
+describe '#incrementar' do
+    describe 'cuando el valor es numérico' do
+        it 'incrementa el valor en un delta recibido por parámetro' do
+            x = -9
+            delta = 10
+            assert_equal(1, incrementar(x, delta))
+        end
+
+        it 'incrementa el valor en un delta de 1 unidad por defecto' do
+            x = 10
+            assert_equal(11, incrementar(x))
+        end
+    end
+
+    describe 'cuando el valor es un string' do
+        it 'arroja un RuntimeError' do
+            x = '10'
+            assert_raises(RuntimeError) do
+                incrementar(x)
+            end
+            assert_raises(RuntimeError) do
+                incrementar(x, 9)
+            end
+        end
+    end
+end
+
+describe '#concatenar' do
+    it 'concatena todos los parámetros que recibe en un string, separando por espacios' do
+        class Dummies ; end
+        assert_equal('Lorem ipsum 4 Dummies', concatenar('Lorem', :ipsum, 4, Dummies))
+    end
+    it 'Elimina dobles espacios si los hubiera en la salida final' do
+        assert_equal('TTPS Ruby', concatenar('TTPS', nil, ' ', "\t", "\n", 'Ruby'))
+    end
+end
+```
+
+--------------------------------------------------------------------------------
+
+### Ejercicio 3.
+
+Implementá al menos 3 tests para cada uno de los siguientes ejercicios de las prácticas anteriores:
+
+1. De la práctica 1: 4 (en_palabras), 5 (contar), 6 (contar_palabras) y 9 (longitud).
+2. De la práctica 2: 1 (ordenar_arreglo), 2 (ordenar), 4 (longitud), 14 (opposite) y 16 (da_nil?).
+
+--------------------------------------------------------------------------------
+
+### Ejercicio 4.
+
+Implementá los tests que consideres necesarios para probar el Mixin Countable que desarrollaste en el ejercicio 11 de la práctica 2, sin dejar de cubrir los siguientes puntos:
+
+- Testear en una clase existente
+- Testear en una clase creada únicamente con el propósito de testear
+- Testear qué ocurre antes de que se invoque el método del que se está contando las invocaciones
+- Testear la inicialización correcta del Mixin
+- Testear algún caso extremo que se te ocurra
+
+--------------------------------------------------------------------------------
+
+### Ejercicio 5.
+
+Suponé que tenés que desarrollar una función llamada 'expansor' la cual recibe un string (conformado únicamente con letras) y devuelve otro string donde cada letra aparezca tantas veces según su lugar en el abecedario. Un ejemplo simple sería:
+
+```ruby
+expansor 'abcd'
+# => 'abbcccdddd'
+```
+
+```ruby
+require 'minitest/autorun'
+require 'minitest/spec'
+
+describe 'expansor' do
+    # Casos de prueba con situaciones y/o entradas de datos esperadas
+    describe 'Casos felices' do
+            describe 'cuando la entrada es el string "a"' do
+                it 'debe devolver "a"'
+            end
+
+            describe 'cuando la entrada es el string "f"' do
+                it 'debe devolver "ffffff"'
+            end
+
+            describe 'cuando la entrada es el string "escoba"' do
+                it 'debe devolver "eeeeessssssssssssssssssscccooooooooooooooobba"'
+            end
+        end
+
+    # Casos de pruebas sobre situaciones inesperadas y/o entradas de datos anómalas
+    describe 'Casos tristes' do
+        describe 'cuando la entrada no es un string' do
+            it 'debe disparar una excepción estándar con el mensaje "La entrada no es un string"'
+        end
+
+        describe 'cuando la entrada es el string vacío' do
+            it 'debe disparar una excepción estándar con el mensaje "El string es vacío"'
+        end
+
+        describe 'cuando la entrada es el string "9"' do
+            it 'debe disparar un excepción estándar con el mensaje "El formato del string es incorrecto"'
+        end
+
+        describe 'cuando la entrada es el string "*"' do
+            it 'debe disparar una excepción estándar con el mensaje "El formato del string es incorrecto"'
+        end
+    end
+end
+```
+
+1. Completar la especificación de los casos de prueba.
+2. Implementar la función expansor y verificar que todos los casos pasen.
