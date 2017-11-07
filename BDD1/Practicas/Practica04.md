@@ -15,15 +15,19 @@ Puedo concluir que la base reparacion esta mejor diseñada que reparacion_dn
 
 ```
 SELECT * FROM cliente WHERE NOT EXISTS(
-    SELECT * FROM cliente
-    INNER JOIN reparacion ON cliente.dniCliente = reparacion.dniCliente
+    SELECT * FROM reparacion
     WHERE cliente.tarjetaSecundaria = reparacion.tarjetaReparacion
+        AND cliente.dniCliente = reparacion.dniCliente
     )
 ```
 
 4) Crear una vista llamada ‘sucursalesPorCliente’ que muestre los dni de los clientes y los códigos de sucursales de la ciudad donde vive el cliente. Cree la vista en ambas bases.
 
 ```
+CREATE VIEW sucursalesPorCliente AS
+SELECT dniCliente, codSucursal
+FROM cliente
+INNER JOIN sucursal ON cliente.ciudadCliente = sucursal.ciudadSucursal
 ```
 
 5) En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
