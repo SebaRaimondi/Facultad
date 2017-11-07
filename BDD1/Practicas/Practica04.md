@@ -1,7 +1,10 @@
-### Ejercicio 2.
+# Practica 4 - SQL.
+
+## Ejercicio 2.
+
 Listar dni, nombre y apellido de todos los clientes ordenados por dni en forma ascendente. Realice la consulta en ambas bases. ¿Qué diferencia nota en cuanto a performance? ¿Arrojan los mismos resultados? ¿Qué puede concluir en base a las diferencias halladas?
 
-```
+```sql
 reparacion:
     SELECT dniCliente, nombreApellidoCliente FROM cliente ORDER BY dniCliente ASC
 
@@ -12,12 +15,13 @@ Ambas tardaron 0,0000 segundos pero en reparacion_dn se repiten las tuplas.
 Puedo concluir que la base reparacion esta mejor diseñada que reparacion_dn
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 3.
+
 Hallar aquellos clientes que para todas sus reparaciones siempre hayan usado su tarjeta de crédito primaria (nunca la tarjeta secundaria). Realice la consulta en ambas bases.
 
-```
+```sql
 SELECT * FROM cliente WHERE NOT EXISTS (
     SELECT * FROM reparacion
     WHERE cliente.tarjetaSecundaria = reparacion.tarjetaReparacion
@@ -25,12 +29,13 @@ SELECT * FROM cliente WHERE NOT EXISTS (
 )
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 4.
-Crear una vista llamada ‘sucursalesPorCliente’ que muestre los dni de los clientes y los códigos de sucursales de la ciudad donde vive el cliente. Cree la vista en ambas bases.
 
-```
+Crear una vista llamada 'sucursalesPorCliente' que muestre los dni de los clientes y los códigos de sucursales de la ciudad donde vive el cliente. Cree la vista en ambas bases.
+
+```sql
 CREATE VIEW sucursalesPorCliente AS
 SELECT dniCliente, codSucursal
 FROM cliente
@@ -45,18 +50,20 @@ WHERE ciudadCliente = ciudadSucursal
 GROUP BY dniCliente, codSucursal
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 5.
-En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
-* Realice la consulta sin utilizar la vista creada en el ej 4.
-* Realice la consulta utilizando la vista creada en el ej 4.
 
-Restricción: resolver este ejercicio sin usar la cláusula “NOT EXIST”.
+En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
+
+- Realice la consulta sin utilizar la vista creada en el ej 4.
+- Realice la consulta utilizando la vista creada en el ej 4.
+
+Restricción: resolver este ejercicio sin usar la cláusula "NOT EXIST".
 
 Nota: limite su consulta a los primeros 100 resultados, caso contrario el tiempo que tome puede ser excesivo.
 
-```
+```sql
 a.
     SELECT * FROM cliente
     WHERE NOT EXISTS (
@@ -101,15 +108,15 @@ b.
         WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
             AND cliente.dniCliente = reparacion.dniCliente
     )
-
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 6.
+
 Hallar los clientes que en alguna de sus reparaciones hayan dejado como dato de contacto el mismo domicilio y ciudad que figura en su DNI. Realice la consulta en ambas bases.
 
-```
+```sql
 SELECT *
 FROM cliente
 WHERE EXISTS (
@@ -124,15 +131,15 @@ SELECT DISTINCT(dniCliente)
 FROM reparacion
 WHERE domicilioCliente = direccionReparacionCLiente
     AND ciudadCliente = ciudadReparacionCliente
-
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 7.
+
 Para aquellas reparaciones que tengan registrados mas de 3 repuestos, listar el DNI del cliente, el código de sucursal, la fecha de reparación y la cantidad de repuestos utilizados. Realice la consulta en ambas bases.
 
-```
+```sql
 SELECT reparacion.dniCliente, codSucursal, reparacion.fechaInicioReparacion, COUNT(repuestoReparacion)
 FROM reparacion
 INNER JOIN repuestoreparacion
@@ -145,12 +152,12 @@ SELECT dniCliente, codSucursal, fechaInicioReparacion, COUNT(DISTINCT(repuestoRe
 FROM reparacion
 GROUP BY dniCliente, codSucursal, fechaInicioReparacion
 HAVING COUNT(DISTINCT(repuestoReparacion)) > 3
-
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 8.
+
 Agregar la siguiente tabla:
 
 ```
@@ -162,7 +169,7 @@ fechaultimaactualizacion: datetime
 usuario: char(16)
 ```
 
-```
+```sql
 CREATE TABLE reparacionesporcliente (
     idRC int(11) PRIMARY KEY AUTO_INCREMENT,
     dniCliente int(11) NOT NULL,
@@ -172,19 +179,21 @@ CREATE TABLE reparacionesporcliente (
 );
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 9.
+
 Stored procedures
 
 a) Crear un stored procedure que realice los siguientes pasos dentro de una transacción: o Realizar una consulta que para cada cliente (dniCliente), calcule la cantidad de reparaciones que tiene registradas.
-* Registrar la fecha en la que se realiza la consulta y el usuario con el que la realizó.
+
+- Registrar la fecha en la que se realiza la consulta y el usuario con el que la realizó.
 - Guardar el resultado de la consulta en un cursor.
 - Iterar el cursor e insertar los valores correspondientes en la tabla REPARACIONESPORCLIENTE.
 
 b) Ejecute el stored procedure.
 
-```
+```sql
 CREATE PROCEDURE punto9()
 BEGIN
 
@@ -212,12 +221,13 @@ BEGIN
 END;
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 10.
+
 Crear un trigger de modo que al insertar un dato en la tabla REPARACION, se actualice la cantidad de reparaciones del cliente, la fecha de actualización y el usuario responsable de la misma (actualiza la tabla REPARACIONESPORCLIENTE).
 
-```
+```sql
 CREATE TRIGGER after_reparacion_insert
     AFTER INSERT ON reparacion
     FOR EACH ROW BEGIN
@@ -230,12 +240,13 @@ CREATE TRIGGER after_reparacion_insert
 END;
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 11.
+
 Crear un stored procedure que sirva para agregar una reparación, junto con una revisión de un empleado (REVISIONREPARACION) y un repuesto (REPUESTOREPARACION) relacionados dentro de una sola transacción. El stored procedure debe recibir los siguientes parámetros: dniCliente, codSucursal, fechaReparacion, cantDiasReparacion, telefonoReparacion, empleadoReparacion, repuestoReparacion.
 
-```
+```sql
 CREATE PROCEDURE punto11(IN dni INT(11), IN sucursal INT, IN fechaReparacion DATETIME, IN dias INT, IN tel VARCHAR(45), IN empleado VARCHAR(30), IN repuesto VARCHAR(30))
 BEGIN
 
@@ -256,12 +267,12 @@ BEGIN
         VALUES (dni, fechaReparacion, repuesto);
     COMMIT;
 END;
-
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 12.
+
 Ejecutar el stored procedure del punto 11 con los siguientes datos:
 
 ```
@@ -274,24 +285,25 @@ cantDiasReparacion: 4
 telefonoReparacion: 4243-4255
 ```
 
-```
+```sql
 CALL punto11(1009443, 100, 2013-12-14 12:20:31, 4, '4243-4255', 'Maidana', 'bomba de combustible')
 ```
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 13.
+
 Realizar las inserciones provistas en el archivo inserciones.sql. Validar mediante una consulta que la tabla REPARACIONESPORCLIENTE se esté actualizando correctamente.
 
-```
-```
+``
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 14.
+
 Considerando la siguiente consulta
 
-```
+```sql
 select count(r.dniCliente)
 from reparacion r, cliente c, sucursal s, revisionreparacion rv
 where r.dnicliente = c.dnicliente
@@ -313,12 +325,12 @@ c) Según lo que observó en los puntos anteriores, ¿qué mejoras se pueden rea
 
 d) Aplique las mejoras propuestas y vuelva a analizar el plan de ejecución. ¿Qué cambios observa?
 
-```
-```
+``
 
----
+--------------------------------------------------------------------------------
 
 ### Ejercicio 15.
+
 Análisis de permisos.
 
 a) Para cada punto de la práctica incluido en el cuadro, ejecutarlo con cada uno de los usuarios creados en el punto 1 e indicar con cuáles fue posible realizar la operación.
@@ -327,5 +339,4 @@ b) Determine para cada caso, cuál es el conjunto de permisos mínimo.
 
 c) Desde su punto de vista y contemplando lo visto en la materia, explique cuál es la manera óptima de asignar permisos a los usuarios.
 
-```
-```
+``
