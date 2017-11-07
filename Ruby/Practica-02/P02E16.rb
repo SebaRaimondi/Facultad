@@ -1,5 +1,5 @@
 def da_nil?
-  yield.nil?
+    yield.nil?
 end
 
 p da_nil? {}
