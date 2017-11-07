@@ -28,6 +28,11 @@ CREATE VIEW sucursalesPorCliente AS
 SELECT dniCliente, codSucursal
 FROM cliente
 INNER JOIN sucursal ON cliente.ciudadCliente = sucursal.ciudadSucursal
+
+CREATE VIEW sucursalesPorCliente AS
+SELECT dniCliente, codSucursal
+FROM reparacion
+WHERE ciudadCliente = ciudadSucursal
 ```
 
 5) En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
@@ -37,6 +42,8 @@ Restricción: resolver este ejercicio sin usar la cláusula “NOT EXIST”.
 Nota: limite su consulta a los primeros 100 resultados, caso contrario el tiempo que tome puede ser excesivo.
 
 ```
+a.
+
 ```
 
 6) Hallar los clientes que en alguna de sus reparaciones hayan dejado como dato de contacto el mismo domicilio y ciudad que figura en su DNI. Realice la consulta en ambas bases.
