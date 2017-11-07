@@ -102,9 +102,23 @@ WHERE EXISTS (
         AND cliente.dniCliente = reparacion.dniCliente
 )
 
+SELECT DISTINCT(dniCliente)
+FROM reparacion
+WHERE domicilioCliente = direccionReparacionCLiente
+    AND ciudadCliente = ciudadReparacionCliente
+
 ```
 
 7) Para aquellas reparaciones que tengan registrados mas de 3 repuestos, listar el DNI del cliente, el código de sucursal, la fecha de reparación y la cantidad de repuestos utilizados. Realice la consulta en ambas bases.
 
 ```
+SELECT reparacion.dniCliente, codSucursal, reparacion.fechaInicioReparacion, COUNT(repuestoReparacion)
+FROM reparacion
+INNER JOIN repuestoreparacion
+ON reparacion.dniCliente = repuestoreparacion.dniCliente
+    AND reparacion.fechaInicioReparacion = repuestoreparacion.fechaInicioReparacion
+GROUP BY reparacion.dniCliente
+HAVING COUNT(repuestoReparacion) > 3
+
+
 ```
