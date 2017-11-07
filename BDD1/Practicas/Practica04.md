@@ -49,8 +49,9 @@ GROUP BY dniCliente, codSucursal
 
 ### Ejercicio 5.
 5) En la base normalizada, hallar los clientes que dejaron vehículos a reparar en todas las sucursales de la ciudad en la que viven
-* a) Realice la consulta sin utilizar la vista creada en el ej 4.
-* b) Realice la consulta utilizando la vista creada en el ej 4.
+* Realice la consulta sin utilizar la vista creada en el ej 4.
+* Realice la consulta utilizando la vista creada en el ej 4.
+
 Restricción: resolver este ejercicio sin usar la cláusula “NOT EXIST”.
 Nota: limite su consulta a los primeros 100 resultados, caso contrario el tiempo que tome puede ser excesivo.
 
