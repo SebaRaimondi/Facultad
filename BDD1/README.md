@@ -31,7 +31,7 @@
 
 --------------------------------------------------------------------------------
 
-## [Practica 4 - SQL](Practicas/Practica03.md)
+## [Practica 4 - SQL](Practicas/Practica04.md)
 
 - [Practica 4 - SQL - Ejercicio 2](Practicas/Practica04.md#ejercicio-2)
 - [Practica 4 - SQL - Ejercicio 3](Practicas/Practica04.md#ejercicio-3)
