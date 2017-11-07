@@ -27,7 +27,8 @@ SELECT * FROM cliente WHERE NOT EXISTS (
 CREATE VIEW sucursalesPorCliente AS
 SELECT dniCliente, codSucursal
 FROM cliente
-INNER JOIN sucursal ON cliente.ciudadCliente = sucursal.ciudadSucursal
+INNER JOIN sucursal
+    ON cliente.ciudadCliente = sucursal.ciudadSucursal
 
 CREATE VIEW sucursalesPorCliente AS
 SELECT dniCliente, codSucursal
@@ -125,4 +126,82 @@ FROM reparacion
 GROUP BY dniCliente, codSucursal, fechaInicioReparacion
 HAVING COUNT(DISTINCT(repuestoReparacion)) > 3
 
+```
+
+8) Agregar la siguiente tabla:
+REPARACIONESPORCLIENTE
+idRC:	int(11)	PK	AI
+dniCliente:	int(11)
+cantidadReparaciones:	int(11)
+fechaultimaactualizacion:	datetime
+usuario:	char(16)
+
+```
+```
+
+9) Stored procedures
+a) Crear un stored procedure que realice los siguientes pasos dentro de una transacción: o Realizar una consulta que para cada cliente (dniCliente), calcule la cantidad de reparaciones que tiene registradas.
+    o Registrar la fecha en la que se realiza la consulta y el usuario con el que la realizó.
+    o Guardar el resultado de la consulta en un cursor.
+    o Iterar el cursor e insertar los valores correspondientes en la tabla REPARACIONESPORCLIENTE.
+b) Ejecute el stored procedure.
+
+```
+```
+
+10) Crear un trigger de modo que al insertar un dato en la tabla REPARACION, se actualice la cantidad de reparaciones del cliente, la fecha de actualización y el usuario responsable de la misma (actualiza la tabla REPARACIONESPORCLIENTE).
+
+```
+```
+
+11) Crear un stored procedure que sirva para agregar una reparación, junto con una revisión de un empleado (REVISIONREPARACION) y un repuesto (REPUESTOREPARACION) relacionados dentro de una sola transacción. El stored procedure debe recibir los siguientes parámetros: dniCliente, codSucursal, fechaReparacion, cantDiasReparacion, telefonoReparacion, empleadoReparacion, repuestoReparacion.
+
+```
+```
+
+12) Ejecutar el stored procedure del punto 11 con los siguientes datos:
+dniCliente:	1009443
+codSucursal:	100
+fechaReparacion:	2013-12-14	12:20:31
+empleadoReparacion:	‘Maidana’
+repuestoReparacion:	‘bomba	de	combustible’
+cantDiasReparacion:	4
+telefonoReparacion:	4243-4255
+
+```
+```
+
+13) Realizar las inserciones provistas en el archivo inserciones.sql. Validar mediante una consulta que la tabla REPARACIONESPORCLIENTE se esté actualizando correctamente.
+
+```
+```
+
+14) Considerando la siguiente consulta
+```
+select count(r.dniCliente)
+from reparacion r, cliente c, sucursal s, revisionreparacion rv
+where r.dnicliente = c.dnicliente
+    and r.codsucursal = s.codsucursal
+    and r.dnicliente = rv.dnicliente
+    and r.fechainicioreparacion = rv.fechainicioreparacion
+    and empleadoreparacion = 'Maidana'
+    and s.m2 < 200
+    and s.ciudadsucursal = 'La Plata';
+```
+Analice su plan de ejecución mediante el uso de la sentencia EXPLAIN.
+a) ¿Qué atributos del plan de ejecución encuentra relevantes para evaluar la performance de la consulta?
+b) Observe en particular el atributo type ¿cómo se están aplicando los JOIN entre las tablas involucradas?
+c) Según lo que observó en los puntos anteriores, ¿qué mejoras se pueden realizar para optimizar la consulta?
+d) Aplique las mejoras propuestas y vuelva a analizar el plan de ejecución. ¿Qué cambios observa?
+
+```
+```
+
+15) Análisis de permisos.
+a) Para cada punto de la práctica incluido en el cuadro, ejecutarlo con cada uno de los usuarios creados en el punto 1 e indicar con cuáles fue posible realizar la operación.
+b) Determine para cada caso, cuál es el conjunto de permisos mínimo.
+c) Desde su punto de vista y contemplando lo visto en la materia, explique cuál es la manera óptima de asignar
+permisos a los usuarios.
+
+```
 ```
