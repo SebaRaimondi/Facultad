@@ -117,8 +117,12 @@ FROM reparacion
 INNER JOIN repuestoreparacion
 ON reparacion.dniCliente = repuestoreparacion.dniCliente
     AND reparacion.fechaInicioReparacion = repuestoreparacion.fechaInicioReparacion
-GROUP BY reparacion.dniCliente
+GROUP BY reparacion.dniCliente, reparacion.fechaInicioReparacion
 HAVING COUNT(repuestoReparacion) > 3
 
+SELECT dniCliente, codSucursal, fechaInicioReparacion, COUNT(DISTINCT(repuestoReparacion))
+FROM reparacion
+GROUP BY dniCliente, codSucursal, fechaInicioReparacion
+HAVING COUNT(DISTINCT(repuestoReparacion)) > 3
 
 ```
