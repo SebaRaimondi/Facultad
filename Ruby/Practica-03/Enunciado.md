@@ -1,7 +1,5 @@
 # Práctica 3
 
---------------------------------------------------------------------------------
-
 Esta práctica incorpora ejercicios sobre excepciones, tanto definición y manejo de las misma como un breve sondeo de las principales clases de excepción, y a su vez introduce algunos ejercicios sobre testing en Ruby.
 
 ## Excepciones
