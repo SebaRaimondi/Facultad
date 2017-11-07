@@ -14,11 +14,11 @@ Puedo concluir que la base reparacion esta mejor diseñada que reparacion_dn
 3) Hallar aquellos clientes que para todas sus reparaciones siempre hayan usado su tarjeta de crédito primaria (nunca la tarjeta secundaria). Realice la consulta en ambas bases.
 
 ```
-SELECT * FROM cliente WHERE NOT EXISTS(
+SELECT * FROM cliente WHERE NOT EXISTS (
     SELECT * FROM reparacion
     WHERE cliente.tarjetaSecundaria = reparacion.tarjetaReparacion
         AND cliente.dniCliente = reparacion.dniCliente
-    )
+)
 ```
 
 4) Crear una vista llamada ‘sucursalesPorCliente’ que muestre los dni de los clientes y los códigos de sucursales de la ciudad donde vive el cliente. Cree la vista en ambas bases.
@@ -43,6 +43,33 @@ Nota: limite su consulta a los primeros 100 resultados, caso contrario el tiempo
 
 ```
 a.
+    SELECT * FROM cliente
+    WHERE NOT EXISTS (
+        SELECT * FROM sucursal
+        WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
+        AND NOT EXISTS (
+            SELECT * FROM reparacion
+            WHERE cliente.dniCliente = reparacion.dniCliente
+            AND reparacion.codSucursal = sucursal.codSucursal
+        )
+    )
+
+    Lei que no puedo usar NOT EXIST. Matenme.
+
+    SELECT *
+    FROM cliente
+    HAVING (
+        SELECT COUNT(codSucursal) FROM sucursal
+        WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
+        ) = (
+        SELECT COUNT(sucursal.codSucursal) FROM reparacion
+        INNER JOIN sucursal
+        ON reparacion.codSucursal = sucursal.codSucursal
+        WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
+        AND cliente.dniCliente = reparacion.dniCliente
+    )
+
+
 
 ```
 
