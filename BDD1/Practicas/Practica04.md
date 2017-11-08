@@ -348,9 +348,34 @@ Es importante ver las columnas rows y extra. En rows vemos la cantidad de tuplas
 
 b) Observe en particular el atributo type ¿cómo se están aplicando los JOIN entre las tablas involucradas?
 
+```
+Se estan aplicando en type index, ref y eq_ref.
+
+eq_ref:
+    Se lee una columna de la tabla por cada combinacion de columnas de las tablas previas. Se usa cuando todas las partes de un indice son usadas por el join y el indice es PRIMARY KEY o UNIQUE NOT NULL.
+    Es el mejor type posible despues de system y const.
+
+ref:
+    Todas las filas con valores de índice coincidentes se leen de esta tabla para cada combinación de filas de las tablas anteriores. Es un buen type si la clave que se utiliza coincide solo con algunas pocas filas.
+
+index:
+    Escaneo completo de la tabla para cada combinación de filas de las tablas previas, revisando únicamente el índice.
+```
+
 c) Según lo que observó en los puntos anteriores, ¿qué mejoras se pueden realizar para optimizar la consulta?
 
+```
+Puedo agregar indices a las tablas de las consultas.
+```
+
 d) Aplique las mejoras propuestas y vuelva a analizar el plan de ejecución. ¿Qué cambios observa?
+
+```
+CREATE INDEX empleados
+ON revisionreparacion (empleadoreparacion);
+
+Pasa de rows aprox 20000 a 735
+```
 
 --------------------------------------------------------------------------------
 
