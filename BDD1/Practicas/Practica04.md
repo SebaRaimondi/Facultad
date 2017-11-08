@@ -6,12 +6,23 @@ Listar dni, nombre y apellido de todos los clientes ordenados por dni en forma a
 
 ```sql
 reparacion:
-    SELECT dniCliente, nombreApellidoCliente FROM cliente ORDER BY dniCliente ASC
+    SELECT dniCliente, nombreApellidoCliente
+    FROM cliente
+    ORDER BY dniCliente ASC
 
 reparacion_dn:
-    SELECT dniCliente, nombreApellidoCliente FROM reparacion ORDER BY dniCliente ASC
+    SELECT dniCliente, nombreApellidoCliente
+    FROM reparacion
+    ORDER BY dniCliente ASC
 
-Ambas tardaron 0,0000 segundos pero en reparacion_dn se repiten las tuplas.
+En reparacion_dn se repiten las tuplas. Para evitarlo deberia ejecutar la siguiente consulta:
+
+reparacion_dn:
+    SELECT DISTINCT dniCliente, nombreApellidoCliente
+    FROM reparacion
+    ORDER BY dniCliente ASC
+
+La consulta de reparacion tarda menos que cualquiera de las dos consultas de reparacion_dn
 Puedo concluir que la base reparacion esta mejor diseñada que reparacion_dn
 ```
 
@@ -22,11 +33,25 @@ Puedo concluir que la base reparacion esta mejor diseñada que reparacion_dn
 Hallar aquellos clientes que para todas sus reparaciones siempre hayan usado su tarjeta de crédito primaria (nunca la tarjeta secundaria). Realice la consulta en ambas bases.
 
 ```sql
-SELECT * FROM cliente WHERE NOT EXISTS (
-    SELECT * FROM reparacion
-    WHERE cliente.tarjetaSecundaria = reparacion.tarjetaReparacion
-        AND cliente.dniCliente = reparacion.dniCliente
-)
+
+reparacion:
+    SELECT *
+    FROM cliente
+    WHERE NOT EXISTS (
+        SELECT * FROM reparacion
+        WHERE cliente.tarjetaSecundaria = reparacion.tarjetaReparacion
+            AND cliente.dniCliente = reparacion.dniCliente
+    )
+
+reparacion_dn:
+    SELECT DISTINCT dniCliente
+    FROM reparacion as r
+    WHERE NOT EXISTS (
+        SELECT DISTINCT reparacion.dniCliente
+        FROM reparacion
+        WHERE r.dniCliente = reparacion.dniCliente
+            AND r.tarjetaSecundaria = reparacion.tarjetaReparacion
+    )
 ```
 
 --------------------------------------------------------------------------------
@@ -65,27 +90,14 @@ Nota: limite su consulta a los primeros 100 resultados, caso contrario el tiempo
 
 ```sql
 a.
-    SELECT * FROM cliente
-    WHERE NOT EXISTS (
-        SELECT * FROM sucursal
-        WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
-        AND NOT EXISTS (
-            SELECT * FROM reparacion
-            WHERE cliente.dniCliente = reparacion.dniCliente
-            AND reparacion.codSucursal = sucursal.codSucursal
-        )
-    )
-
-    Lei que no puedo usar NOT EXIST. Matenme.
-
     SELECT *
     FROM cliente
-    HAVING (
+    WHERE (
         SELECT COUNT(codSucursal)
         FROM sucursal
         WHERE cliente.ciudadCliente = sucursal.ciudadSucursal
-        ) = (
-        SELECT COUNT(sucursal.codSucursal)
+    ) = (
+        SELECT COUNT(DISTINCT sucursal.codSucursal))
         FROM reparacion
         INNER JOIN sucursal
             ON reparacion.codSucursal = sucursal.codSucursal
@@ -100,8 +112,8 @@ b.
         SELECT COUNT(codSucursal)
         FROM sucursalesPorCliente
         WHERE cliente.dniCliente = sucursalesPorCliente.dniCliente
-        ) = (
-        SELECT COUNT(sucursal.codSucursal)
+    ) = (
+        SELECT COUNT(DISTINCT sucursal.codSucursal))
         FROM reparacion
         INNER JOIN sucursal
             ON reparacion.codSucursal = sucursal.codSucursal
@@ -109,6 +121,8 @@ b.
             AND cliente.dniCliente = reparacion.dniCliente
     )
 ```
+
+Los resultados de estas consultas incluyen los clientes que no tienen ninguna sucursal en su ciudad.
 
 --------------------------------------------------------------------------------
 
@@ -219,6 +233,8 @@ BEGIN
         CLOSE cur;
     COMMIT;
 END;
+
+b)  CALL punto9()
 ```
 
 --------------------------------------------------------------------------------
@@ -232,11 +248,16 @@ CREATE TRIGGER after_reparacion_insert
     AFTER INSERT ON reparacion
     FOR EACH ROW BEGIN
 
-    UPDATE REPARACIONESPORCLIENTE
-    SET cantidadReparaciones = cantidadReparaciones + 1,
-        fechaultimaactualizacion = NOW(),
-        usuario = CURRENT_USER()
-    WHERE NEW.dniCliente = REPARACIONESPORCLIENTE.dniCliente;
+    IF (NEW.dniCliente IN (SELECT dniCliente FROM reparacionesporcliente)) THEN
+        UPDATE reparacionesporcliente
+        SET cantidadReparaciones = cantidadReparaciones + 1,
+            fechaultimaactualizacion = NOW(), usuario = CURRENT_USER()
+        WHERE NEW.dniCliente = reparacionesporcliente.dniCliente;
+    ELSE
+        INSERT INTO reparacionesporcliente
+        (dniCliente, cantidadReparaciones, fechaultimaactualizacion, usuario)
+        VALUES (NEW.dniCliente, 1, NOW(), CURRENT_USER());
+    END IF;
 END;
 ```
 
