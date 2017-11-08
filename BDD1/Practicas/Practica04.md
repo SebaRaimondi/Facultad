@@ -316,7 +316,9 @@ CALL punto11(1009443, 100, 2013-12-14 12:20:31, 4, '4243-4255', 'Maidana', 'bomb
 
 Realizar las inserciones provistas en el archivo inserciones.sql. Validar mediante una consulta que la tabla REPARACIONESPORCLIENTE se esté actualizando correctamente.
 
-``
+```
+Las tuplas de la tabla REPARACIONESPORCLIENTE coinciden con los resultados del archivo reparacionesxcliente.hasta12.csv, menos la ultima tupla (esta 2 veces en el archivo de validacion).
+```
 
 --------------------------------------------------------------------------------
 
@@ -340,13 +342,15 @@ Analice su plan de ejecución mediante el uso de la sentencia EXPLAIN.
 
 a) ¿Qué atributos del plan de ejecución encuentra relevantes para evaluar la performance de la consulta?
 
+```
+Es importante ver las columnas rows y extra. En rows vemos la cantidad de tuplas examinadas. En extra si se usa un indice o no para resolver la consulta.
+```
+
 b) Observe en particular el atributo type ¿cómo se están aplicando los JOIN entre las tablas involucradas?
 
 c) Según lo que observó en los puntos anteriores, ¿qué mejoras se pueden realizar para optimizar la consulta?
 
 d) Aplique las mejoras propuestas y vuelva a analizar el plan de ejecución. ¿Qué cambios observa?
-
-``
 
 --------------------------------------------------------------------------------
 
