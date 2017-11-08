@@ -370,7 +370,7 @@ Puedo agregar indices a las tablas de las consultas.
 
 d) Aplique las mejoras propuestas y vuelva a analizar el plan de ejecución. ¿Qué cambios observa?
 
-```
+```sql
 CREATE INDEX empleados
 ON revisionreparacion (empleadoreparacion);
 
