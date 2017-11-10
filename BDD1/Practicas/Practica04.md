@@ -317,12 +317,7 @@ CALL punto11(1009443, 100, 2013-12-14 12:20:31, 4, '4243-4255', 'Maidana', 'bomb
 Realizar las inserciones provistas en el archivo inserciones.sql. Validar mediante una consulta que la tabla REPARACIONESPORCLIENTE se esté actualizando correctamente.
 
 ```
-<<<<<<< current
 Las tuplas de la tabla REPARACIONESPORCLIENTE coinciden con los resultados del archivo reparacionesxcliente.hasta12.csv, menos la ultima tupla (esta 2 veces en el archivo de validacion).
-=======
-
-
->>>>>>> before discard
 ```
 
 --------------------------------------------------------------------------------
