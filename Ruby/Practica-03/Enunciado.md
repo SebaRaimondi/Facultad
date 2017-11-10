@@ -16,11 +16,48 @@ Investigá la jerarquía de clases que presenta Ruby para las excepciones. ¿Par
 - TypeError
 - SystemExit
 
+```
+IOError:
+    Se lanza cuando falla una operacion de Entrada/Salida (In/Out). (Algunas operaciones IO lanzan SystemCallError).
+
+NameError:
+    Cuando un nombre es invalido o indefinido.
+    Ejemplos:
+        puts foo, sin antes haber definido al funcion foo,
+        Setear una constante con nombre en minuscula.
+
+RuntimeError:
+    Error generico, se lanza cuando se intenta realizar una operacion invalida.
+    Cuando se usa raise sin especificar clase de error, por defecto se lanza RuntimeError.
+
+NotImplementedError:
+    Se lanzan cuando una funcionalidad no esta implementada en la plataforma actual.
+
+StopIteration:
+    Se lanza para frenar una iteracion. Es la excepcion que Enumerator.next lanza cuando no quedan elementos.
+
+TypeError:
+    Se lanza cuando se encuentra un objeto que no es del tipo esperado.
+
+SystemExit:
+    Lanzado por exit para iniciar la terminacion del script.
+```
+
 --------------------------------------------------------------------------------
 
 ### Ejercicio 2.
 
 ¿Cuál es la diferencia entre raise y throw? ¿Para qué usarías una u otra opción?
+
+```ruby
+throw / catch
+    # Son instrucciones de control de flujo de ejecucion del programa. (de de de)
+    # Permiten salir de bloques hasta el punto en el que se haya definido un catch para un simbolo especifico.
+
+raise / rescue
+    # Sirven para el manejo real de excepciones que involucran el objeto Exception.
+    # Si la excepcion no hereda de StandardError no va a ser rescatada por defecto.
+```
 
 --------------------------------------------------------------------------------
 
@@ -28,11 +65,29 @@ Investigá la jerarquía de clases que presenta Ruby para las excepciones. ¿Par
 
 ¿Para qué sirven begin .. rescue .. else y ensure? Pensá al menos 2 casos concretos en que usarías estas sentencias en un script Ruby.
 
+- `begin`:
+
+  - Indica que el siguiente codigo puede lanzar una excepcion.
+
+- `rescue`:
+
+  - Indica el codigo que se debe ejecutar para un tipo de excepcion particular.
+
+- `else`:
+
+  - Indica codigo que se ejecuta si no se lanza ninguna excepcion.
+
+- `ensure`:
+
+  - Indica codigo que siempre se ejecutara, se hayan lanzado excepciones o no.
+
 --------------------------------------------------------------------------------
 
 ### Ejercicio 4.
 
 ¿Para qué sirve retry? ¿Cómo evitarías caer en un loop infinito al usarla?
+
+Vuelve a empezar desde el principio del begin. Se puede agregar una variable en la que cuento cuantos intentos se realizaron y hacer retry if (cantidad < cantMax)
 
 --------------------------------------------------------------------------------
 
@@ -80,6 +135,25 @@ def opcion_4
 end
 ```
 
+- `opcion_1`:
+
+  - Retorna 0, ya que el metodo * no esta definido en nil. No se ejecuta puts.
+
+- `opcion_2`:
+
+  - c = 0 ya que se lanza una excepcion cuandos e intenta hacer nil*3.
+  - Se ejecuta puts 0 y retorna nil.
+
+- `opcion_3`:
+
+  - Idem 2, la ejecucion del map lanza un error y por lo tanto c = 0.
+  - Luego se ejecuta puts 0 y returna nil.
+
+- `opcion_4`:
+
+  - Como el rescue se encuentra dentro del bloque de map, cuando se la operacion x*b lance una excepcion se rescata devolviendo 0, por lo tanto el map completa su ejecucion y retorna un arreglo.
+  - Por ultimo se ejecuta puts del arreglo mapeado y retorna nil.
+
 --------------------------------------------------------------------------------
 
 ### Ejercicio 6.
@@ -96,15 +170,20 @@ while cantidad < 15
     cantidad = gets.to_i
 end
 
-# Luego se almacenan los números
-numeros = 1.upto(cantidad).map do
-    puts 'Ingrese un número'
-    numero = gets.to_i
-end
+begin
+    # Luego se almacenan los números
+    numeros = 1.upto(cantidad).map do
+        puts 'Ingrese un número'
+        numero = gets.to_i
+    end
 
-# Y finalmente se imprime cada número dividido por su número entero inmediato anterior
-resultado = numeros.map { | x| x / (x - 1) }
-puts 'El resultado es: %s' % resultado.join(', ')
+    # Y finalmente se imprime cada número dividido por su número entero inmediato anterior
+    resultado = numeros.map { | x| x / (x - 1) }
+    puts 'El resultado es: %s' % resultado.join(', ')
+rescue ZeroDivisionError
+    puts '"1" no es un numero valido'
+    retry
+end
 ```
 
 --------------------------------------------------------------------------------
@@ -112,6 +191,39 @@ puts 'El resultado es: %s' % resultado.join(', ')
 ### Ejercicio 7.
 
 Partiendo del script del inciso anterior, implementá una nueva clase de excepción que se utilizará para indicar que la entrada del usuario no es un valor numérico entero válido. ¿De qué clase de la jerarquía de Exception heredaría?
+
+Heredaria de RangeError (o ArgumentError?)
+
+```ruby
+class IngresoUnoError < RangeError
+  def message
+    "El numero 1 no es un numero valido. Intente devuelta"
+  end
+end
+
+cantidad = 0
+while cantidad < 15
+    puts '¿Cuál es la cantidad de números que ingresará? Debe ser al menos 15'
+    cantidad = gets.to_i
+end
+
+# Luego se almacenan los números
+numeros = 1.upto(cantidad).map do
+    begin
+        puts 'Ingrese un número'
+        numero = gets.to_i
+        raise IngresoUnoError if numero == 1
+        return numero
+    rescue IngresoUnoError => e
+        puts e.message
+        retry
+    end
+end
+
+# Y finalmente se imprime cada número dividido por su número entero inmediato anterior
+resultado = numeros.map { | x| x / (x - 1) }
+puts 'El resultado es: %s' % resultado.join(', ')
+```
 
 --------------------------------------------------------------------------------
 
@@ -170,6 +282,61 @@ end
 1. Seguí el flujo de ejecución registrando la traza de impresiones que deja el programa y justificando paso a paso.
 2. ¿Qué pasaría si se permuta, dentro de fun3, el manejador de excepciones para RuntimeError y el manejador de excepciones genérico (el que tiene el rescue vacío)?
 3. ¿La palabra reservada retry que función cumple? ¿Afectaría el funcionamiento del programa si se mueve la línea x = 0 dentro del segundo begin (inmediatamente antes de llamar a fun1 con x)?
+
+```
+Entrando a fun1:
+    Se llama a fun1 con parametro x = 0
+
+Entrando a fun2:
+    fun1 llama a fun2 con parametro x = 0
+
+Entrando a fun3:
+    fun2 llama a fun3
+
+Tratando excepción provocada en tiempo de ejecución:
+    fun3 lanza una excepcion de tipo RuntimeError, se rescata y imprime el texto.
+
+Ejecutando ensure de fun3:
+    Cuando termina el bloque del rescue o begin (en este caso rescue) siempre se intenta ejecutar el ensure.
+
+Manejador de excepciones de fun1:
+    Termina la ejecucion de fun3, fun2 intenta hacer 5/0 lo cual lanza una excepcion.
+    Como fun2 no tiene manejador de funcion la atrapa el manejador de fun1.
+
+Ejecutando ensure de fun1:
+    Cuando termina el rescue de fun1 se ejecuta el ensure.
+
+Manejador de excepciones de Main:
+    Como ensure el manejador de fun1 relanzo la excepcion, la atrapa el manejador de main.
+
+Corrección de x:
+    Se ejecuta el manejador de main.
+    Se vuelve a ejecutar el bloque begin del main con el nuevo valor de x.
+
+Entrando a fun1:
+    blabla.
+
+Entrando a fun2:
+    blabla.
+
+Entrando a fun3:
+    blabla.
+
+Tratando excepción provocada en tiempo de ejecución:
+    fun3 lanza su excepcion nuevamente.
+
+Ejecutando ensure de fun3:
+    Se ejecuta el ensure de fun3 luego del rescue.
+
+Terminando fun2:
+    fun2 termina su ejecucion correctamente.
+
+Ejecutando ensure de fun1:
+    Luego del bloque begin se ejecuta el bloque ensure de fun1.
+
+Salida:
+    Termina la ejecucion del main.
+```
 
 --------------------------------------------------------------------------------
 
@@ -270,18 +437,18 @@ require 'minitest/spec'
 describe 'expansor' do
     # Casos de prueba con situaciones y/o entradas de datos esperadas
     describe 'Casos felices' do
-            describe 'cuando la entrada es el string "a"' do
-                it 'debe devolver "a"'
-            end
-
-            describe 'cuando la entrada es el string "f"' do
-                it 'debe devolver "ffffff"'
-            end
-
-            describe 'cuando la entrada es el string "escoba"' do
-                it 'debe devolver "eeeeessssssssssssssssssscccooooooooooooooobba"'
-            end
+        describe 'cuando la entrada es el string "a"' do
+            it 'debe devolver "a"'
         end
+
+        describe 'cuando la entrada es el string "f"' do
+            it 'debe devolver "ffffff"'
+        end
+
+        describe 'cuando la entrada es el string "escoba"' do
+            it 'debe devolver "eeeeessssssssssssssssssscccooooooooooooooobba"'
+        end
+    end
 
     # Casos de pruebas sobre situaciones inesperadas y/o entradas de datos anómalas
     describe 'Casos tristes' do
