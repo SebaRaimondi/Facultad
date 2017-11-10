@@ -252,6 +252,16 @@ Monitor Coordinador {
 
 # Punto 8
 
+Suponga que en una fábrica de camisas trabajan 40 operarios que deben realizarse 5000 camisas. Para realizar una camisa se requieren 8 materiales diferentes, por lo que existe un depósito para cada uno de estos donde se almacenan.
+
+Cuando todos los operarios han llegado el encargado los agrupa de a cuatro (les asigna un número de grupo de 1 a 10). Los 4 operarios de grupo deben juntarse y luego comenzar a fabricar las camisas.
+
+Para realizar cada camisa, entre los empleados del grupo deben buscar los 8 materiales necesarios, cuando lo han conseguido, los 4 la fabrican conjuntamente.
+
+Luego de que todas las camisas han sido fabricadas los operarios deben retirarse.
+
+Nota: no se deben fabricar camisas de más. No se puede suponer nada sobre los tiempos, es decir, el tiempo en que un operario tarda en buscar los elementos, ni el tiempo en que tarda un grupo en fabricar una camisa.
+
 ```
 Process Operario [o = 1..40] {
     int grupo
