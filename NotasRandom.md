@@ -292,7 +292,10 @@ Monitor Fabrica {
     procedure llegoOperario(int o, var int grupo) {
         grupo = grupoActual
         cantLlegaron++
-        if (cantLlegaron == 4) grupoActual++
+        if (cantLlegaron == 4) {
+            grupoActual++
+            cantLlegaron = 0
+        }
     }
     procedure fabricar?(var bool fabricar) {
         if (camisas == 5000) fabricar = false
@@ -318,6 +321,7 @@ Monitor Grupo [g = 1..10] {
     }
     procedure materiales?(var bool buscarMateriales, var int material) {
         material = 0
+        buscarMateriales = false
         for i = 1 to 8 if (materiales[i] == 0) material = i
         if (material != 0) {
             materiales[material]++
