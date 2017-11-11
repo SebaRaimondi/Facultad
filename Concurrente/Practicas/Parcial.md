@@ -82,7 +82,7 @@ Monitor Oftalmologia {
     }
 
     procedure atender(int m, var int p) {
-        while (!empty(colasMedico[m])) wait(medicos)
+        while (!empty(colasMedico[m])) wait(medicos[m])
         p = colasMedico[m].desencolar()
 
         if (m = 1) opuesto = 2
