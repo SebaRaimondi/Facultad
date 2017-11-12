@@ -336,6 +336,7 @@ Monitor Grupo [g = 1..10] {
         if (esperando == 4) {
             delay()                 // Fabrican la camisa
             chequeado = false
+            for i = 1 to 8 materiales[i] = 0
             signalAll(operarios)
         }
         else wait(operarios)
