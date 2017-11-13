@@ -280,6 +280,4 @@ Process Cola {
 
 **ADA**:
 
-```
-:thinking:
-```
+![Thinking emoji](https://emojipedia-us.s3.amazonaws.com/thumbs/160/google/110/thinking-face_1f914.png)
