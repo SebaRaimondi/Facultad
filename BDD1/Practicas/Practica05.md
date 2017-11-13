@@ -84,3 +84,26 @@ Resultado final:
         I5(#alumno, nombreAlumno, dniAlumno)
         I7(#comision, #inscripcion, #ayudante)
 ```
+
+--------------------------------------------------------------------------------
+
+# Ejercicio 11
+
+TransportesVIAJES(idTransporte, patenteT, idConductor,fechaViaje, idTipoMaterial, nombreM, gradoToxM, origen, destino, reglamentacionT, nombreC, domicilioC, modeloT, marcaT, toneladasT)
+
+```
+Dependencia Funcional:
+    df1: idTransporte --> patenteT, modeloT, marcaT, toneladasT
+    df2: patenteT   --> idTransporte, modeloT, marcaT, toneladasT
+    df3: idConductor --> nombreC, domicilioC
+    df4: idTipoMaterial --> nombreM, gradoToxM
+    df5: idTransporte, fechaViaje --> idConductor, origen, destino
+    df6: patenteT, fechaViaje   --> idConductor, origen, destino
+    df7: idConductor, fechaViaje --> idTransporte, origen, destino
+    df8: idConductor, fechaViaje --> patenteT, origen, destino
+
+cc:
+    (idConductor, fechaViaje, idTipoMaterial, reglamentacionT)
+    (idTransporte, fechaViaje, idTipoMaterial, reglamentacionT)
+    (patenteT, fechaViaje, idTipoMaterial, reglamentacionT)
+```
