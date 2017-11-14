@@ -111,6 +111,59 @@ Resultado final:
 
 --------------------------------------------------------------------------------
 
+# Ejercicio 10
+
+INSTALACIONES(idCuidador, nyAp, dni, idVivero, nombreVivero, mtrCuadradosVivero, tempPromedioVivero, idPlanta, nombrePlanta, idEspecie, nombreEspecie, quimicoPlanta, consultorVivero)
+
+Donde:
+
+- El idVivero es un identificador único que no se repite para diferentes viveros. Del vivero se conoce su nombre (diferentes viveros pueden tener el mismo nombre), los metros cuadrados que ocupa, la temperatura promedio que debe mantener y el cuidador responsable del mismo.
+- Un mismo cuidador (idCuidador) puede cuidar diversos viveros. Tener en cuenta que un vivero tiene solamente un cuidador responsable asignado.
+- Del cuidador se conoce su nombre y apellido y el dni. El idCuidador no se repite para diferentes cuidadores.
+- El dni registrado en el esquema pertenece a un cuidador. El dni es un valor único que no se repite para diferentes cuidadores.
+- El idPlanta es único. Por ejemplo, una planta es el helecho. De cada planta se conoce el nombre de la planta y la especie a la que pertenece
+- El idEspecie es único. Un ejemplo de especie es el árbol. Cada planta pertenece a una única especie y a una especie pertenecen diversas plantas.
+- A cada planta en un vivero (por ejemplo: helecho en el vivero 1) se le aplica un conjunto de químicos. Los mismos químicos se pueden aplicar a plantas de diferentes viveros y a diferentes plantas en el mismo vivero.
+- Cada vivero tiene diversos consultores de viveros (consultorVivero), que son quienes asesoran ante dudas eventuales. El mismo consultor puede asesorar en diversos viveros
+
+```
+Dependencias funcionales:
+    df1: idVivero   --> nombreVivero, mtrCuadradosVivero, tempPromedioVivero, idCuidador
+    df1: idCuidador --> nyAp, dni
+    df1: dni        --> nyAp, idCuidador
+    df1: idPlanta   --> nombrePlanta, idEspecie
+    df1: idEspecie  --> nombreEspecie
+
+cc: {idVivero, idPlanta, quimicoPlanta, consultorVivero}
+
+INSTALACIONES(idVivero, idPlanta, quimicoPlanta, consultorVivero)
+
+I5(idVivero, idPlanta, quimicoPlanta, consultorVivero)
+I1(idCuidador, nyAp, dni)
+I2(idVivero, nombreVivero, mtrCuadradosVivero, tempPromedioVivero, idCuidador)
+I3(idEspecie, nombreEspecie)
+I4(idPlanta, nombrePlanta, idEspecie)
+
+Dependencias Multivaluadas:
+    dm1: idVivero   -->> consultorVivero
+    dm2: consultorVivero    -->> idVivero
+    dm3: idVivero, idPlanta -->> quimicoPlanta
+    dm4: quimicoPlanta  -->> idVivero, idPlanta
+
+I6(idVivero, consultorVivero)
+I7(idVivero, idPlanta, quimicoPlanta)
+
+Final:
+    I1(idCuidador, nyAp, dni)
+    I2(idVivero, nombreVivero, mtrCuadradosVivero, tempPromedioVivero, idCuidador)
+    I3(idEspecie, nombreEspecie)
+    I4(idPlanta, nombrePlanta, idEspecie)
+    I6(idVivero, consultorVivero)
+    I7(idVivero, idPlanta, quimicoPlanta)
+```
+
+--------------------------------------------------------------------------------
+
 # Ejercicio 11
 
 TransportesVIAJES(idTransporte, patenteT, idConductor,fechaViaje, idTipoMaterial, nombreM, gradoToxM, origen, destino, reglamentacionT, nombreC, domicilioC, modeloT, marcaT, toneladasT)
