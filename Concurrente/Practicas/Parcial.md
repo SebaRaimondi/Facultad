@@ -207,7 +207,7 @@ Monitor Cola [c = 1..2] {
         atendido = true
         while (atendido) {
             inv = cola.desencolar()
-            if (esDoble[inv]) Dobles.fueAtendido(inv, atendido)
+            if (dobles[inv]) Dobles.fueAtendido(inv, atendido)
             else atendido = false
         }
     }
@@ -279,5 +279,57 @@ Process Cola {
 ```
 
 **ADA**:
+
+```
+PROCEDURE Punto2 IS
+
+TASK TYPE Investigador;
+
+TASK Super IS
+    ENTRY PrioridadA(IN int inv)
+    ENTRY PrioridadB(IN int inv)
+    ENTRY PrioridadC(IN int inv)
+END Super;
+
+TASK Investigador IS
+    ENTRY Termino;
+END Investigador;
+
+Investigadores := array (1..N) of Investigador;
+
+TASK BODY Investigador IS
+    char: categoria
+BEGIN
+    categoria = Categoria();
+    if (categoria == 'A') {
+        Super.PrioridadA(inv)
+    }
+    else if (categoria == 'B') {
+        Super.PrioridadB(inv)
+    }
+    else (categoria == 'C') {
+        Super.PrioridadC(inv)
+    }
+    ACCEPT Termino;
+END Investigador
+
+TASK BODY Super IS
+    int: i
+BEGIN
+    LOOP
+        SELECT
+        OR  WHEN ACCEPT PrioridadA(inv) IS i = inv END;
+
+        OR  WHEN (PrioridadA'count == 0) => ACCEPT PrioridadB(inv) IS i = inv END;
+
+        OR  WHEN (PrioridadA'count == 0 AND PrioridadB'count == 0) => ACCEPT PrioridadC(inv) IS i = inv END;
+
+        END SELECT
+        DELAY()         // Lo que tarde en usar la computadora
+        Super[i].Termino()
+    END LOOP;
+END
+BEGIN null; END Punto1;
+```
 
 ![Thinking emoji](https://emojipedia-us.s3.amazonaws.com/thumbs/160/google/110/thinking-face_1f914.png)
