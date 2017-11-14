@@ -1,3 +1,27 @@
+# Ejercicio 6
+
+Dado el siguiente esquema:
+
+```
+PELICULA (id, titulo, id_clasificacion)
+GENERO (id, nombre)
+PELICULA_GENERO (id_pelicula, id_genero)
+CLASIFICACION (id, descripcion)
+```
+
+Hallar los géneros que sólo tienen películas de clasificación descripta como "+16". Indicar el nombre de los géneros. Considerar que puede haber tanto géneros como clasificaciones sin películas.
+
+```
+!+16 <= P (id_clasificacion) (pi (id) (o (descripcion != +16) CLASIFICACION))
+P!+16 <= P (id_pelicula) (pi (id) PELICULA |X| !+16)
+G!+16 <= P (id) (pi (id_genero) (PELICULA_GENERO |X| P!+16))
+G+16 <= GENERO - (GENERO |X| G!+16)
+
+El resultado contiene los generos que no tienen ninguna pelicula, en caso que exista alguno.
+```
+
+--------------------------------------------------------------------------------
+
 # Ejercicio 9
 
 InscripcionesINSCRIPCIONES (#inscripcion, fechaInscripcion, #alumno, #comision, horario, #aula, nombreAula, capacidad, nombreAlumno, dniAlumno, #ayudante)
