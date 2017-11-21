@@ -68,11 +68,11 @@ En esta práctica veremos ejercicios para comprender el funcionamiento de las ge
   include MethodCounter::Countable
 
   def hola
-    puts "Hola"
+  puts "Hola"
   end
 
   def chau
-    puts "Chau"
+  puts "Chau"
   end
 
   count_invocations_of :hola, :chau
