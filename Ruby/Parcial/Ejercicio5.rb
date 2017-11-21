@@ -10,33 +10,28 @@ class Bingo
 
   def line?(num)
     return true if @line
-    if @line = moderador.line?(num)
-        puts "Hubo linea!"
-    end
-    return @line
+    puts 'Hubo linea!' if @line = moderador.line?(num)
+    @line
   end
 
   def bingo?(num)
     return true if @bingo
-    if @bingo = moderador.bingo?(num)
-        puts "Salio Bingo!"
-    end
-    return @bingo
+    puts 'Salio Bingo!' if @bingo = moderador.bingo?(num)
+    @bingo
   end
 
   def play
-    fin = false
-    until fin
+    loop do
       begin
         num = randomizer.next
       rescue => e
-        puts "#{e.message}"
+        puts e.message.to_s
         break
       end
       puts "Salio el numero #{num}"
-      fin = line?(num) && bingo?(num)
+      break if line?(num) && bingo?(num)
     end
-    puts "Fin del juego"
+    puts 'Fin del juego'
   end
 end
 
