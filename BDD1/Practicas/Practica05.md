@@ -129,20 +129,18 @@ Donde:
 ```
 Dependencias funcionales:
     df1: idVivero   --> nombreVivero, mtrCuadradosVivero, tempPromedioVivero, idCuidador
-    df1: idCuidador --> nyAp, dni
-    df1: dni        --> nyAp, idCuidador
-    df1: idPlanta   --> nombrePlanta, idEspecie
-    df1: idEspecie  --> nombreEspecie
+    df2: idCuidador --> nyAp, dni
+    df3: dni        --> nyAp, idCuidador
+    df4: idPlanta   --> nombrePlanta, idEspecie
+    df5: idEspecie  --> nombreEspecie
 
 cc: {idVivero, idPlanta, quimicoPlanta, consultorVivero}
 
-INSTALACIONES(idVivero, idPlanta, quimicoPlanta, consultorVivero)
-
-I5(idVivero, idPlanta, quimicoPlanta, consultorVivero)
 I1(idCuidador, nyAp, dni)
 I2(idVivero, nombreVivero, mtrCuadradosVivero, tempPromedioVivero, idCuidador)
 I3(idEspecie, nombreEspecie)
 I4(idPlanta, nombrePlanta, idEspecie)
+I5(idVivero, idPlanta, quimicoPlanta, consultorVivero)
 
 Dependencias Multivaluadas:
     dm1: idVivero   -->> consultorVivero
@@ -183,4 +181,27 @@ cc:
     (idConductor, fechaViaje, idTipoMaterial, reglamentacionT)
     (idTransporte, fechaViaje, idTipoMaterial, reglamentacionT)
     (patenteT, fechaViaje, idTipoMaterial, reglamentacionT)
+```
+
+```
+X+
+Res = X
+for i = 1 to N do {
+    si el determinante de dfi esta incluido en Res {
+        Res = Res + determinados de dfi
+    }
+}
+
+Se pierde df X -> A?
+Res = X
+for i = 1 to N do {
+    Res = Res U ((Res n Ri)+ n Ri)
+}
+
+Perdi informacion?
+    La interseccion de las dos particiones debe ser clave en alguna de las dos
+Perdi dependencias funcionales?
+    Todas tienen que valer en alguna de las dos particiones
+Cumple con la definicion de BCNF?
+    Todas los determinantes de las df que se cumplen en la particion deben ser superclave.
 ```

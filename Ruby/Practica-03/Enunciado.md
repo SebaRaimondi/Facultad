@@ -350,6 +350,10 @@ _Nota: Para esta práctica utilizaremos MiniTest en cualquiera de sus variantes 
 
 ¿En qué consiste la metodología TDD? ¿En qué se diferencia con la forma tradicional de escribir código y luego realizar los tests?
 
+```
+Se traducen los requerimientos a test, se desarrolla el codigo para que pasen los tests, se refactoriza el codigo.
+```
+
 --------------------------------------------------------------------------------
 
 ### Ejercicio 2.
