@@ -87,7 +87,7 @@ raise / rescue
 
 ¿Para qué sirve retry? ¿Cómo evitarías caer en un loop infinito al usarla?
 
-Vuelve a empezar desde el principio del begin. Se puede agregar una variable en la que cuento cuantos intentos se realizaron y hacer retry if (cantidad < cantMax)
+- Vuelve a empezar desde el principio del begin. Se puede agregar una variable en la que cuento cuantos intentos se realizaron y hacer retry if (cantidad < cantMax)
 
 --------------------------------------------------------------------------------
 
@@ -350,9 +350,11 @@ _Nota: Para esta práctica utilizaremos MiniTest en cualquiera de sus variantes 
 
 ¿En qué consiste la metodología TDD? ¿En qué se diferencia con la forma tradicional de escribir código y luego realizar los tests?
 
-```
-Se traducen los requerimientos a test, se desarrolla el codigo para que pasen los tests, se refactoriza el codigo.
-```
+- [By PedroBrost](https://github.com/pedrobrost/Informatica-UNLP/blob/master/Ruby/practica3/practica3.md#1-en-qué-consiste-la-metodología-tdd-en-qué-se-diferencia-con-la-forma-tradicional-de-escribir-código-y-luego-realizar-los-tests)
+
+Desarrollo guiado por pruebas de software, o Test-driven development (TDD) es una práctica de ingeniería de software que involucra otras dos prácticas: Escribir las pruebas primero (Test First Development) y Refactorización (Refactoring). Para escribir las pruebas generalmente se utilizan las pruebas unitarias (unit test en inglés). En primer lugar, se escribe una prueba y se verifica que las pruebas fallan. A continuación, se implementa el código que hace que la prueba pase satisfactoriamente y seguidamente se refactoriza el código escrito. El propósito del desarrollo guiado por pruebas es lograr un código limpio que funcione. La idea es que los requisitos sean traducidos a pruebas, de este modo, cuando las pruebas pasen se garantizará que el software cumple con los requisitos que se han establecido.
+
+Para que funcione el desarrollo guiado por pruebas, el sistema que se programa tiene que ser lo suficientemente flexible como para permitir que sea probado automáticamente. Cada prueba será suficientemente pequeña como para que permita determinar unívocamente si el código probado pasa o no la verificación que ésta le impone. El diseño se ve favorecido ya que se evita el indeseado "sobre diseño" de las aplicaciones y se logran interfaces más claras y un código más cohesivo. Frameworks como JUnit proveen de un mecanismo para manejar y ejecutar conjuntos de pruebas automatizadas.
 
 --------------------------------------------------------------------------------
 
