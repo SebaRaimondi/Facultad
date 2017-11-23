@@ -1,17 +1,17 @@
 module B
-    def uno
-        ", ¿cómo andás?"
-    end
+  def uno
+    ', ¿cómo andás?'
+  end
 end
 
 class A
-    extend B
+  extend B
 
-    def self.dos
-        @saludo = "Hola#{uno}"
-        puts @saludo
-        2
-    end
+  def self.dos
+    @saludo = "Hola#{uno}"
+    puts @saludo
+    2
+  end
 end
 
 A.dos
