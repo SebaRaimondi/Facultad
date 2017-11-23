@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 
+require_relative 'P03E02.rb'
+
 describe '#incrementar' do
     describe 'cuando el valor es numérico' do
         it 'incrementa el valor en un delta recibido por parámetro' do

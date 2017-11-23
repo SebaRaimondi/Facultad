@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 
+require_relative '../../Practica-01/P01E04.rb'
+
 describe '#en_palabras' do
     describe 'cuando 0 <= minutos <= 10' do
         it 'devuelve en punto' do
@@ -9,22 +11,22 @@ describe '#en_palabras' do
     end
     describe 'cuando 11 <= minutos <= 20' do
         it 'devuelve y cuarto' do
-            en_palabras(Time.new(2002, 10, 31, 2, 15, 2)).must_equal 'Son las 8 y cuarto'
+            en_palabras(Time.new(2002, 10, 31, 2, 15, 2)).must_equal 'Son las 2 y cuarto'
         end
     end
     describe 'cuando 21 <= minutos <= 34' do
         it 'devuelve y media' do
-            en_palabras(Time.new(2002, 10, 31, 2, 30, 2)).must_equal 'Son las 8 y media'
+            en_palabras(Time.new(2002, 10, 31, 2, 30, 2)).must_equal 'Son las 2 y media'
         end
     end
     describe 'cuando 35 <= minutos <= 44' do
         it 'devuelve menos veinticinco' do
-            en_palabras(Time.new(2002, 10, 31, 2, 37, 2)).must_equal 'Son las 8 menos veinticinco'
+            en_palabras(Time.new(2002, 10, 31, 2, 37, 2)).must_equal 'Son las 3 menos veinticinco'
         end
     end
     describe 'cuando 45 <= minutos <= 55' do
         it 'devuelve menos cuarto' do
-            en_palabras(Time.new(2002, 10, 31, 2, 48, 2)).must_equal 'Son las 8 menos cuarto'
+            en_palabras(Time.new(2002, 10, 31, 2, 48, 2)).must_equal 'Son las 3 menos cuarto'
         end
     end
     describe 'cuando 56 <= minutos <= 59' do
