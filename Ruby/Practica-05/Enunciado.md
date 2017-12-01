@@ -20,7 +20,33 @@ En esta práctica incorporaremos conceptos del framework Ruby on Rails, desarrol
   Para cada una de estas librerías, analizá y respondé las siguientes preguntas:
 
   1. ¿Qué funcion principal cumple?
+
+    - ActionMailer: Action Mailer allows you to send emails from your application using mailer classes and views. Mailers work very similarly to controllers. They inherit from ActionMailer::Base and live in app/mailers, and they have associated views that appear in app/views.
+
+    - ActionPack: Action Pack is a framework for handling and responding to web requests. It provides mechanisms for routing (mapping request URLs to actions), defining controllers that implement actions, and generating responses by rendering views, which are templates of various formats. In short, Action Pack provides the view and controller layers in the MVC paradigm.
+
+    - ActionView: In Rails, web requests are handled by Action Controller and Action View. Typically, Action Controller is concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.
+
+    - ActiveJob: Active Job is a framework for declaring jobs and making them run on a variety of queuing backends. These jobs can be everything from regularly scheduled clean-ups, to billing charges, to mailings. Anything that can be chopped up into small units of work and run in parallel, really.
+
+    - ActiveModel: Active Model is a library containing various modules used in developing classes that need some features present on Active Record. Some of these modules are explained below.
+
+    - ActiveRecord: If you're used to using raw SQL to find database records, then you will generally find that there are better ways to carry out the same operations in Rails. Active Record insulates you from the need to use SQL in most cases.
+
+    - ActiveSupport: Active Support is the Ruby on Rails component responsible for providing Ruby language extensions, utilities, and other transversal stuff.
+
+    - ActionCable: Action Cable seamlessly integrates WebSockets with the rest of your Rails application. It allows for real-time features to be written in Ruby in the same style and form as the rest of your Rails application, while still being performant and scalable. It's a full-stack offering that provides both a client-side JavaScript framework and a server-side Ruby framework. You have access to your full domain model written with Active Record or your ORM of choice.
+
   2. ¿En qué parte(s) del patrón Model-View-Controller (MVC) encajaría?
+
+    - ActionMailer: Controller
+    - ActionPack: Controller
+    - ActionView: Model
+    - ActiveJob: Controller
+    - ActiveModel: Model?
+    - ActiveRecord: Model
+    - ActiveSupport: Model
+    - ActionCable: Model?
 
 2. Investigá cómo se crea una aplicación Rails nueva y enumerá los pasos básicos para tener la aplicación funcionando con una base de datos SQLite.
 
