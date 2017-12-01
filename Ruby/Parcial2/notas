@@ -1,0 +1,19 @@
+class HealthCheck
+    def initialize(app)
+        @app = app
+    end
+
+    def call(env)
+        status, headers, response = @app.call(env)
+        status = 200 if env['PATH_INFO'] == '/healthcheck'
+        [status, headers, response]
+    end
+end
+
+
+En la aplicacion sinatra debo requerir el archivo que contenga esta clase 'HealthCheck'
+y agregar la linea:
+use HealthCheck
+
+Adjunto la resolucion del punto 7 con la implementacion del middleware. (No incluyo un
+archivo diferente sino que defino 
