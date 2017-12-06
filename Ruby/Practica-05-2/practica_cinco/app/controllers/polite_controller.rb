@@ -1,0 +1,2 @@
+class PoliteController < ApplicationController
+end
