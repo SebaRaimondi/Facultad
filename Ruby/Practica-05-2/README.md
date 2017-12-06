@@ -1,6 +1,6 @@
 # Practica 5
 
-## Comandos utilizados:
+## Rails
 
 ### Ejercicio 3
 
@@ -55,3 +55,37 @@ Creado archivo `config/initializers/booting.rb`
 Utilizando el generator adecuado, creá un controller llamado PoliteController que tenga una acción salute que responda con un saludo aleatorio de entre un arreglo de 5 diferentes, como por ejemplo "Good day sir/ma'am.".
 
 `rails generate controller Polite salute`, luego modificar el metodo `salute` de app/controllers/polite_controller.rb con la funcionalidad deseada
+
+--------------------------------------------------------------------------------
+
+### Ejercicio 8
+
+1. ¿Dónde se definen las rutas de la app Rails?
+
+  `config/routes.rb` Se chequean ejecutando `bin/rails routes`
+
+2. ¿De qué formas se pueden definir las rutas?
+
+  Terrible magia.
+
+3. ¿Qué ruta(s) agregó el generator que usaste antes?
+
+  `GET /polite/salute(.:format) polite#salute`
+
+4. ¿Con qué comando podés consultar todas las rutas definidas en tu app Rails?
+
+  `bin/rails routes`
+
+--------------------------------------------------------------------------------
+
+## ActiveSupport (AS)
+
+4 ¿De qué manera se le puede enseñar a AS cómo pasar de singular a plural (o viceversa) los sustantivos que usamos en nuestro código? Tip: Mirá el archivo config/initializers/inflections.rb
+
+5 Modificá la configuración de la aplicación Rails para que aprenda a pluralizar correctamente en español todas las palabras que terminen en l, n y r. Tip: el uso de expresiones regulares simples ayuda. :)
+
+4 y 5 los tendria que hacer pero quiero siesta :)
+
+--------------------------------------------------------------------------------
+
+## ActiveRecord (AR)
