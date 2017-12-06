@@ -89,3 +89,34 @@ Utilizando el generator adecuado, creá un controller llamado PoliteController q
 --------------------------------------------------------------------------------
 
 ## ActiveRecord (AR)
+
+1. ¿Cómo se define un modelo con ActiveRecord? ¿Qué requisitos tienen que cumplir las clases para utilizar la lógica de abstracción del acceso a la base de datos que esta librería ofrece?
+
+`$ bin/rails generate model Offices name:string phone_number:string, limit: 30 address:text available:boolean null: false`
+
+Esto tambien genera la migracion
+
+Los modelos se crean en `app/models` y las migraciones en `db/migrate`
+
+1. Creá el modelo Office para la tabla offices que creaste antes, e implementale el método `#to_s`.
+
+`bin/rails generate model Office name:string{255} phone_number:string{30} address:text available:boolean`
+
+Luego cambio la linea en la migracion de Offices:
+
+- Antes: `t.boolean :available`
+- Despues `t.boolean :available, default: false`
+
+Luego en el archivo del modelo de Offices
+
+1. Utilizando migraciones, creá la tabla y el modelo para la clase Employee, con la siguiente 4 of 5 estructura:
+
+  ```
+  name: string de 150 caracteres, no puede ser nulo.
+  e_number: integer, no puede ser nulo, debe ser único.
+  office_id: integer, foreign key hacia offices.
+  ```
+
+`bin/rails generate model Employee name:string{150} e_number:integer:uniq office:reference`
+
+Agrego `null: false` a las que lo requieran, lo de referencia no lo se bien. Si alguno lo puede hacer genial.
