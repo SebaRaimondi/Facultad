@@ -54,4 +54,4 @@ Creado archivo `config/initializers/booting.rb`
 
 Utilizando el generator adecuado, creá un controller llamado PoliteController que tenga una acción salute que responda con un saludo aleatorio de entre un arreglo de 5 diferentes, como por ejemplo "Good day sir/ma'am.".
 
-`rails generate controller Polite`
+`rails generate controller Polite salute`, luego modificar el metodo `salute` de app/controllers/polite_controller.rb con la funcionalidad deseada
