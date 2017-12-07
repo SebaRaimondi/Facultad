@@ -1,8 +1,10 @@
 class Office < ApplicationRecord
     has_many :employee
 
-    validates :name, presence: true, length: { maximum: 150 }
-    validates :e_number, presence: true, uniqueness: true
+    validates :name, presence: true, length: { maximum: 255 }
+    validates :phone_number, presence: true, length: { maximum: 30 }
+    validates :available, presence: true
+
     validates_with ArgTelValidator
 
     def to_s
