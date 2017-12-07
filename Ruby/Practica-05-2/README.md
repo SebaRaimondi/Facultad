@@ -117,6 +117,10 @@ Luego en el archivo del modelo de Offices
   office_id: integer, foreign key hacia offices.
   ```
 
-`bin/rails generate model Employee name:string{150} e_number:integer:uniq office:reference`
+`bin/rails generate migration CreateEmployees name:string{150} e_number:integer:uniq office:references`
 
 Agrego `null: false` a las que lo requieran, lo de referencia no lo se bien. Si alguno lo puede hacer genial.
+
+Para generar el modelo `bin/rails g model Employee --skip-migration`
+
+_`bin/rails g` es una abreviacion de `bin/rails generate`_
