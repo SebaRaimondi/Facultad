@@ -236,3 +236,39 @@ _`bin/rails g` es una abreviacion de `bin/rails generate`_
   resources :employees, except: :destroy
   resources :offices, except: :destroy
   ```
+
+--------------------------------------------------------------------------------
+
+## ActiveModel (AM)
+
+1. ¿Qué son los validadores de AM?
+2. Agregá a los modelos Office y Employee las validaciones necesarias para hacer que sus atributos cumplan las restricciones definidas para las columnas de la tabla que cada uno representa.
+
+  En employee (No se como hacer lo de available por defecto false)
+
+  ```ruby
+  validates :name, presence: true, length: { maximum: 255 }
+  validates :phone_number, presence: true, length: { maximum: 30 }
+  validates :available, presence: true
+  ```
+
+  En Office
+
+  ```ruby
+  validates :name, presence: true, length: { maximum: 150 }
+  validates :e_number, presence: true, uniqueness: true
+  ```
+
+3. Implementá un validador que chequee que un string sea un número telefónico con un formato válido para la Argentina.
+
+  archivo `app/models/concerns/arg_tel_validator.rb`
+
+4. Agregá el validador que definiste en el punto anterior a tu modelo Office para validar el campo phone_number.
+
+  NO ESTOY SEGURO QUE FUNCIONE `validates_with ArgTelValidator`
+
+--------------------------------------------------------------------------------
+
+## Internacionalizacion
+
+PREGUNTAR
