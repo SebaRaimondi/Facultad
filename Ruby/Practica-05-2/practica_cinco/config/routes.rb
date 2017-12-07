@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+    resources :employees, except: :destroy
+    resources :offices, except: :destroy
     get 'polite/salute'
 
     root 'polite#salute'

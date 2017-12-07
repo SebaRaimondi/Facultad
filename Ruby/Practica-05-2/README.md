@@ -148,15 +148,91 @@ _`bin/rails g` es una abreviacion de `bin/rails generate`_
   Si por metodos estaticos se refieren a metodos de clase, no tienen diferencia.
 
   ```ruby
-   scope :published, -> { where(published: true) }
+  scope :published, -> { where(published: true) }
 
-   def self.published
-       where(published: true)
-   end
+  def self.published
+  where(published: true)
+  end
   ```
 
   son equivalentes
 
 3. Agregá los siguientes scopes al modelo Employee: vacant: Filtra los empleados para quedarse únicamente con aquellos que no tengan una oficina asignada (asociada). occupied: Complemento del anterior, devuelve los empleados que sí tengan una oficina asignada.
 
+  En app/models/employee.rb
+
+  ```ruby
+  scope :vacant, -> { where(office: nil) }
+  scope :occupied, -> { where.not(office: nil) }
+  ```
+
 4. Agregá este scope al modelo Office: empty: Devuelve las oficinas que están disponibles (available = true) que no tienen empleados asignados.
+
+  En app/models/office.rb: `scope :empty, -> { where(available: true) }`
+
+--------------------------------------------------------------------------------
+
+#### Scaffold
+
+1. ¿Qué son? ¿Qué operaciones proveen sobre un modelo?
+
+  La mas magia de las magias de Rails
+
+  A scaffold in Rails is a full set of model, database migration for that model, controller to manipulate it, views to view and manipulate the data, and a test suite for each of the above.
+
+2. ¿Con qué comando se generan? `bin/rails generate scaffold HighScore game:string score:integer`
+
+3. Utilizando el generator anterior, generá un controlador de scaffold para el modelo Office y otro para el modelo Employee.
+
+  ```
+  bin/rails generate scaffold Employee --skip
+  bin/rails generate scaffold Office --skip
+  ```
+
+  `--skip` para que no modifique los archivos model y migration que ya existen.
+
+4. ¿Qué rutas agregó este generator?
+
+  ```
+  employees       GET    /employees(.:format)          employees#index
+  POST   /employees(.:format)          employees#create
+  new_employee    GET    /employees/new(.:format)      employees#new
+  edit_employee   GET    /employees/:id/edit(.:format) employees#edit
+  employee        GET    /employees/:id(.:format)      employees#show
+  PATCH  /employees/:id(.:format)      employees#update
+  PUT    /employees/:id(.:format)      employees#update
+  DELETE /employees/:id(.:format)      employees#destroy
+  offices         GET    /offices(.:format)            offices#index
+  POST   /offices(.:format)            offices#create
+  new_office      GET    /offices/new(.:format)        offices#new
+  edit_office     GET    /offices/:id/edit(.:format)   offices#edit
+  office          GET    /offices/:id(.:format)        offices#show
+  PATCH  /offices/:id(.:format)        offices#update
+  PUT    /offices/:id(.:format)        offices#update
+  DELETE /offices/:id(.:format)        offices#destroy
+  ```
+
+5. Analizá el código que se te generó para los controllers y para las vistas, y luego modificalo para que no permita el borrado de ninguno de los elementos. ¿Qué cambios debés hacer para que las vistas no muestren la opción, el controller no tenga la acción destroy y las rutas de borrado dejen de existir en la aplicación?
+
+  En las vistas borrar las lineas
+
+  ```ruby
+  <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <td><%= link_to 'Destroy', office, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  ```
+
+  En los controller eliminar los metodos `destroy`
+
+  En `config/routes.rb` modificar las lineas:
+
+  ```ruby
+  resources :employees
+  resources :offices
+  ```
+
+  agregandoles `, except: :destroy`:
+
+  ```ruby
+  resources :employees, except: :destroy
+  resources :offices, except: :destroy
+  ```
