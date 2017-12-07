@@ -124,3 +124,39 @@ Agrego `null: false` a las que lo requieran, lo de referencia no lo se bien. Si 
 Para generar el modelo `bin/rails g model Employee --skip-migration`
 
 _`bin/rails g` es una abreviacion de `bin/rails generate`_
+
+1. ¿Qué tipo de asociación declaraste en la clase Employee? `belongs_to :office`
+
+2. ¿Y en la clase Office? `has_many :employee`
+
+3. ¿Qué métodos generó AR en el modelo a partir de esto?
+
+  Getters y setters de las referencias?
+
+4. Modificá el mapeo de rutas de tu aplicación Rails para que al acceder a / se vaya al controller definido antes (polite#salute).
+
+  Agregado `root 'polite#salute'` en config/routes.rb
+
+### Scopes
+
+1. ¿Qué son los scopes de AR? ¿Para qué los utilizarías?
+
+  Permiten especificar queries comunmente usados que pueden ser referenciados como llamadas a metodos.
+
+2. Investigá qué diferencia principal existe entre un método estático y un scope.
+
+  Si por metodos estaticos se refieren a metodos de clase, no tienen diferencia.
+
+  ```ruby
+   scope :published, -> { where(published: true) }
+
+   def self.published
+       where(published: true)
+   end
+  ```
+
+  son equivalentes
+
+3. Agregá los siguientes scopes al modelo Employee: vacant: Filtra los empleados para quedarse únicamente con aquellos que no tengan una oficina asignada (asociada). occupied: Complemento del anterior, devuelve los empleados que sí tengan una oficina asignada.
+
+4. Agregá este scope al modelo Office: empty: Devuelve las oficinas que están disponibles (available = true) que no tienen empleados asignados.
